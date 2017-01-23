@@ -11,4 +11,25 @@
     <string name="login_text_ortherway">第三方账号登录</string>
     <string name="register_text_ivitecode">填写邀请码</string>
     <string name="register_text_next">下一步</string>
+    <string name="register_hint_fillphone">输入手机号码</string>
+    <string name="register_hint_identfycode">输入验证码</string>
+    <string name="register_text_sendidentfycode">发送验证码</string>
+    <string name="register_text_setpwd">设置密码</string>
+    <string name="register_hint_inputpwd">6~16个字符</string>
+    <string name="register_hint_setuname">6~20个字符</string>
+    <string name="register_text_setuname">设置用户名</string>
+    <string name="register_text_notify">固定骑阅名，保存后无法修改</string>
+    <string name="register_text_complete">完成</string>
+    <string name="forgetpwd_text_complete">确定</string>
+    <string name="forgetpwd_text_findpwd">找回密码</string>
+    <string name="forgetpwd_text_resetpwd">重置密码</string>
+    <string name="useragreement_text_read">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus
+        accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus
+        mollis orci, sed rhoncus sapien nunc eget.</string>
+
+
+
 </resources>

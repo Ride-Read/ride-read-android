@@ -1,40 +1,71 @@
 package com.rideread.rideread;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.rideread.rideread.bean.LoginMessageEntity;
+import com.rideread.rideread.common.Api;
+import com.rideread.rideread.common.OkHttpUtils;
 
 /**
  * Created by Jackbing on 2017/1/21.
+ * 填写邀请码界面
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends RegisterBaseActivity {
+
+    private String inviteCode;
 
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar actionBar=getSupportActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(false);
-        actionBar.setHomeAsUpIndicator(R.mipmap.back_arrow_pressed);
         setContentView(R.layout.register_main);
 
     }
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        return super.onSupportNavigateUp();
+
+    public void onBack(View v){
+        finish();
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public void onNext(View v){
+        EditText editText=(EditText)findViewById(R.id.register_edt_invitationcode);
+        inviteCode=editText.getText().toString().trim();
 
-        if(item.getItemId()==android.R.id.home){
-            finish();
-            return true;
+        if(inviteCode==null){
+            Toast.makeText(getBaseContext(),"未填写邀请码",Toast.LENGTH_SHORT).show();
+        }else{
+            new InviteCodeAysncTask().execute(inviteCode, Api.TEST_INVITE_CODE);
         }
-        return super.onOptionsItemSelected(item);
+
+
     }
+
+    class InviteCodeAysncTask extends AsyncTask<String,String,LoginMessageEntity>{
+        @Override
+        protected LoginMessageEntity doInBackground(String... params) {
+            return OkHttpUtils.getInstance().testInviteCode(params[0],params[1]);
+        }
+
+        @Override
+        protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
+            super.onPostExecute(loginMessageEntity);
+            if(loginMessageEntity!=null){
+                int resultCode=loginMessageEntity.getResultCode();
+                String msg=loginMessageEntity.getMsg();
+                if(resultCode==1){
+                    startActivity(new Intent(RegisterActivity.this,RegisterPhoneActivity.class));
+                }else {
+                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(getBaseContext(),"未知错误",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }

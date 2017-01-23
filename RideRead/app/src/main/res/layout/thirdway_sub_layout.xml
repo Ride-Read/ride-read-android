@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dip"
+    android:orientation="vertical"
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_weight="1"
+            android:background="@color/login_textcolor_gray"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text_ortherway"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:textSize="16sp"
+            android:textColor="@color/login_textcolor_gray"/>
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1dip"
+            android:layout_weight="1"
+            android:background="@color/login_textcolor_gray"/>
+
+    </LinearLayout>
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="25dip"
+        android:layout_marginBottom="25dip">
+        <ImageView
+            android:layout_width="72dip"
+            android:layout_height="72dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/sina_weibo"/>
+        <ImageView
+            android:layout_width="72dip"
+            android:layout_height="72dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/sina_weibo"/>
+        <ImageView
+            android:layout_width="72dip"
+            android:layout_height="72dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginLeft="5dip"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:src="@mipmap/sina_weibo"/>
+    </LinearLayout>
+</LinearLayout>
