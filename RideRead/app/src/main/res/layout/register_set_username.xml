@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="100dip"
+            android:onClick="setHeadImg"
             android:minWidth="100dip"
             android:src="@mipmap/me"
             />

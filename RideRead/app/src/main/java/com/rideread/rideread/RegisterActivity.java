@@ -35,12 +35,12 @@ public class RegisterActivity extends RegisterBaseActivity {
     public void onNext(View v){
         EditText editText=(EditText)findViewById(R.id.register_edt_invitationcode);
         inviteCode=editText.getText().toString().trim();
-
-        if(inviteCode==null){
-            Toast.makeText(getBaseContext(),"未填写邀请码",Toast.LENGTH_SHORT).show();
-        }else{
-            new InviteCodeAysncTask().execute(inviteCode, Api.TEST_INVITE_CODE);
-        }
+        startActivity(new Intent(RegisterActivity.this,RegisterPhoneActivity.class));
+//        if(inviteCode==null){
+//            Toast.makeText(getBaseContext(),"未填写邀请码",Toast.LENGTH_SHORT).show();
+//        }else{
+//            new InviteCodeAysncTask().execute(inviteCode, Api.TEST_INVITE_CODE);
+//        }
 
 
     }

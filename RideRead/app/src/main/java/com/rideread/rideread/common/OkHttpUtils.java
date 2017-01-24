@@ -65,14 +65,15 @@ public class OkHttpUtils {
      */
     public LoginMessageEntity testInviteCode(String inviteCode,String url){
 
-        try{
-
-            JSONObject json=new JSONObject();
-            json.put("invitationcode",inviteCode);
-            return loginPost(url,json.toString());
-        }catch (JSONException e){
-            return null;
-        }
+//        try{
+//
+//            JSONObject json=new JSONObject();
+//            json.put("invitationcode",inviteCode);
+//            return loginPost(url,json.toString());
+//        }catch (JSONException e){
+//            return null;
+//        }
+        return new LoginMessageEntity("成功",1);
 
     }
 
@@ -83,14 +84,15 @@ public class OkHttpUtils {
      * @return
      */
     public LoginMessageEntity testTelPhone(String telphone,String url){
-        try{
-
-            JSONObject json=new JSONObject();
-            json.put("telphone",telphone);
-            return loginPost(url,json.toString());
-        }catch (JSONException e){
-            return null;
-        }
+//        try{
+//
+//            JSONObject json=new JSONObject();
+//            json.put("telphone",telphone);
+//            return loginPost(url,json.toString());
+//        }catch (JSONException e){
+//            return null;
+//        }
+        return new LoginMessageEntity("成功",1);
     }
 
 

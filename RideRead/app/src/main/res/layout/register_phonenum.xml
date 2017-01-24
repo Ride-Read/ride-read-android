@@ -74,15 +74,18 @@
                     android:layout_marginRight="10dip"
                     android:layout_marginLeft="10dip"/>
 
-                <Button
+                <TextView
                     android:padding="5dip"
-                    android:id="@+id/register_btn_sendidentfycode"
+                    android:id="@+id/register_tv_sendidentfycode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/register_text_sendidentfycode"
                     android:textColor="@android:color/white"
                     android:textSize="18sp"
+                    android:minHeight="45dip"
                     android:onClick="onSendIdentCode"
+                    android:gravity="center"
+                    android:clickable="true"
                     android:layout_weight="1"
                     android:background="@drawable/login_btn_style_selector"/>
             </LinearLayout>

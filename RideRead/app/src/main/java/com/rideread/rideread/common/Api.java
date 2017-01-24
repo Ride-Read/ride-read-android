@@ -8,4 +8,5 @@ public class Api {
 
     public final static String USER_LOGIN="";
     public final static String TEST_INVITE_CODE="";
+    public final static String TEST_IDENTFY_CODE="";
 }

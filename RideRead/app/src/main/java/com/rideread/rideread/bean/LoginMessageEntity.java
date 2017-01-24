@@ -9,6 +9,11 @@ public class LoginMessageEntity {
     private int resultCode;
     private String msg;
 
+    public LoginMessageEntity(String msg, int resultCode) {
+        this.msg = msg;
+        this.resultCode = resultCode;
+    }
+
     public String getMsg() {
         return msg;
     }
