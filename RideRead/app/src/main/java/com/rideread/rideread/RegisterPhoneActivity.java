@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
+import com.rideread.rideread.common.PreferenceUtils;
 
 
 /**
@@ -49,7 +50,7 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
     //发送验证码
     public void onSendIdentCode(View v){
 
-        String telPhone=registerPhone.getText().toString().trim();
+        telPhone=registerPhone.getText().toString().trim();
         if(telPhone!=null&&(!telPhone.isEmpty())){
             new CountDownTimer(30000,1000){
 
@@ -90,6 +91,8 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
                 String msg=loginMessageEntity.getMsg();
                 int resultCode=loginMessageEntity.getResultCode();
                 if(resultCode==1){
+                    //把偶才能手机号码
+                    PreferenceUtils.getInstance().saveTelPhone(telPhone,getApplicationContext());
                     startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
                 }else{
                     Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
