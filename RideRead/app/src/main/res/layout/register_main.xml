@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+    <com.rideread.rideread.widget.RegisterToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:leftArrowIcon="@mipmap/back_arrow_pressed"
+        android:elevation="3dip"
+        >
+
+    </com.rideread.rideread.widget.RegisterToolBar>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="45dip"
+        android:layout_marginRight="45dip"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_black"
+            android:gravity="center"
+            android:textSize="22sp"
+            android:text="@string/register_text_ivitecode"/>
+        <EditText
+            android:id="@+id/register_edt_invitationcode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:drawablePadding="4dip"
+            android:textSize="18sp"
+            android:background="@null"
+            android:drawableBottom="@drawable/login_bottom_line"
+            android:paddingLeft="3dip"
+            android:paddingRight="3dip"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/login_textcolor_gray"
+            android:maxLines="1"
+            android:maxLength="20"
+            android:minEms="3"
+            tools:ignore="TextFields"
+            android:layout_marginBottom="45dip"/>
+
+        <include
+            layout="@layout/next_btn_layout"/>
+
+    </TableLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        />
+
+</LinearLayout>

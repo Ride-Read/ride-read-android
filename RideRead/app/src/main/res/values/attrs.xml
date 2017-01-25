@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="RegisterToolBar">
+        <attr name="leftArrowIcon" format="reference"></attr>
+        <attr name="isShowTitle" format="boolean"></attr>
+    </declare-styleable>
+
+</resources>

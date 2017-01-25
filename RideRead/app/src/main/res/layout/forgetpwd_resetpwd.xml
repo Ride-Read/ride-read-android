@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+    <com.rideread.rideread.widget.RegisterToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        app:leftArrowIcon="@mipmap/back_arrow_pressed"
+        app:title="@string/forgetpwd_text_resetpwd"
+        app:isShowTitle="true"
+        android:elevation="3dip"
+        >
+
+    </com.rideread.rideread.widget.RegisterToolBar>
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginLeft="45dip"
+        android:layout_marginRight="45dip"
+        android:layout_weight="1">
+
+        <EditText
+            android:id="@+id/forgetpwd_edt_resetpwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip"
+            android:minHeight="45dip"
+            android:textSize="18sp"
+            android:background="@null"
+            android:drawableBottom="@drawable/login_bottom_line"
+            android:paddingLeft="3dip"
+            android:paddingRight="3dip"
+            android:hint="@string/register_hint_inputpwd"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/login_textcolor_gray"
+            android:maxLines="1"
+            android:maxLength="16"
+            android:minEms="3"
+            android:inputType="textPassword"
+            android:layout_marginBottom="45dip"
+
+            />
+
+        <Button
+            android:id="@+id/forget_btn_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/forgetpwd_text_complete"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="30dip"
+            android:textSize="22sp"
+            android:onClick="onComplete"
+            android:background="@drawable/login_btn_style_selector"/>
+
+    </TableLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        />
+
+</LinearLayout>
