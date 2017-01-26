@@ -47,7 +47,7 @@ public class RegisterToolBar extends Toolbar {
 
             boolean isShowTitle = a.getBoolean(R.styleable.RegisterToolBar_isShowTitle, false);
 
-            int resId=a.getResourceId(R.styleable.RegisterToolBar_leftArrowIcon,R.mipmap.back_arrow_pressed);
+            int resId=a.getResourceId(R.styleable.RegisterToolBar_leftArrowIcon,R.mipmap.left_arrow);
             leftArrowIcon.setImageResource(resId);
 
             if (isShowTitle) {

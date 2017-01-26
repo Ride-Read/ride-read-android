@@ -6,6 +6,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.PreferenceUtils;
@@ -28,19 +30,29 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
     private final int REQUEST_IMAGE=1;
     private final int CROP=0;
     private final String TYPE="image/*";
-    private String fileName;//原图的路径+文件名
+    private String fileName,userName;//原图的路径+文件名
     private String TAG="Reg";
     private CircleImageView img;
+    private EditText etUserName;
     private File file=null;
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_set_username);
         img=(CircleImageView)findViewById(R.id.register_civ_userhead);
+        etUserName=(EditText)findViewById(R.id.register_edt_setusername);
     }
 
     //完成注册
     public void onComplete(View v){
+        userName=etUserName.getText().toString().trim();
+        if(userName!=null&&!userName.isEmpty()){
+            //在这里发送用户名和头像给后台
+
+            startActivity(new Intent(this,LoginActivity.class));
+        }else{
+            Toast.makeText(getBaseContext(),"未填写用户名",Toast.LENGTH_SHORT).show();
+        }
 
     }
 

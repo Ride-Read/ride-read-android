@@ -52,53 +52,72 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
 
         telPhone=registerPhone.getText().toString().trim();
         if(telPhone!=null&&(!telPhone.isEmpty())){
-            new CountDownTimer(30000,1000){
-
-                @Override
-                public void onTick(long millisUntilFinished) {
-
-                    indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
-                    indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
-                    indentfyCodeTv.setClickable(false);
-
-                }
-
-                @Override
-                public void onFinish() {
-                    indentfyCodeTv.setText("发送验证码");
-                    indentfyCodeTv.setTextColor(Color.WHITE);
-                    indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
-                    indentfyCodeTv.setClickable(true);
-                }
-            }.start();
+            new SendCodeTask().execute(telPhone);
         }else{
             Toast.makeText(getBaseContext(),"未填手机号码",Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    class TestIdentfyCode extends AsyncTask<String,String,LoginMessageEntity>{
+    /**
+     * 发送短信验证码
+     * params : mobilePhoneNumber
+     */
+    private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
         @Override
-        protected LoginMessageEntity doInBackground(String... params) {
-
-            return  OkHttpUtils.getInstance().testTelPhone(params[0],params[1]);
+        protected Boolean doInBackground(String... params) {
+            //ttl后面的值是短信有效时间(分钟)
+            String json = "{\"mobilePhoneNumber\":\"{0}\",\"ttl\":30,\"name\":\"注册\"}";
+            json = json.replace("{0}", params[0]);
+            return OkHttpUtils.getInstance().postJson("https://api.leancloud.cn/1.1/requestSmsCode", json);
         }
 
         @Override
-        protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
-            super.onPostExecute(loginMessageEntity);
-            if(loginMessageEntity!=null){
-                String msg=loginMessageEntity.getMsg();
-                int resultCode=loginMessageEntity.getResultCode();
-                if(resultCode==1){
-                    //把偶才能手机号码
-                    PreferenceUtils.getInstance().saveTelPhone(telPhone,getApplicationContext());
-                    startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
-                }else{
-                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
-                }
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if (result) {
+                new CountDownTimer(30000,1000){
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                        indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
+                        indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
+                        indentfyCodeTv.setClickable(false);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        indentfyCodeTv.setText("发送验证码");
+                        indentfyCodeTv.setTextColor(Color.WHITE);
+                        indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
+                        indentfyCodeTv.setClickable(true);
+                    }
+                }.start();
+            } else Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    class TestIdentfyCode extends AsyncTask<String,String,Boolean>{
+        @Override
+        protected Boolean doInBackground(String... params) {
+            //ttl后面的值是短信有效时间(分钟)
+            String json = "{\"mobilePhoneNumber\":\"{0}\"}";
+            json = json.replace("{0}", params[0]);
+            return OkHttpUtils.getInstance().postJson("https://api.leancloud.cn/1.1/verifySmsCode/" + params[1], json);
+
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+            if(result){
+
+                PreferenceUtils.getInstance().saveTelPhone(telPhone,getApplicationContext());
+                startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
             }else{
-                Toast.makeText(getBaseContext(),"未知错误",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getBaseContext(),"验证码不匹配",Toast.LENGTH_SHORT).show();
             }
 
         }

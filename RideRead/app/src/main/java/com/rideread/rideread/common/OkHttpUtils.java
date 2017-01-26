@@ -1,5 +1,7 @@
 package com.rideread.rideread.common;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.rideread.rideread.bean.LoginMessageEntity;
 
@@ -114,6 +116,31 @@ public class OkHttpUtils {
             return null;
         }
 
+    }
+
+    public Boolean postJson(String target, String json) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        long timestamp = System.currentTimeMillis();
+        String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
+        Request request = new Request.Builder()
+                .addHeader("X-LC-Id", Api.APP_ID)
+                .addHeader("X-LC-Sign", sign + "," + timestamp)
+                .url(target)
+                .post(requestBody)
+                .build();
+        try {
+            Response response = clients.newCall(request).execute();
+            //判断请求是否成功
+            if (response.isSuccessful()) {
+                return true;
+            } else {
+                Log.e("response",response.body().string());
+            }
+        } catch (Exception e) {
+            Log.e("error",e.toString());
+        }
+        return false;
     }
 
 }

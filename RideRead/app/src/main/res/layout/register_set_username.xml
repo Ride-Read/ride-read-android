@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:leftArrowIcon="@mipmap/back_arrow_pressed"
+        app:leftArrowIcon="@mipmap/left_arrow"
         android:elevation="3dip"
         app:isShowTitle="true"
         app:title="@string/register_text_setuname"

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.rideread.rideread.widget.MainToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dip"
+        android:background="@android:color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:isShowLeftIcon="true"
+        app:isShowRightIcon="false"
+        app:title="@string/main_text_mine"
+        >
+
+    </com.rideread.rideread.widget.MainToolBar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dip"
+        android:text="我的"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        />
+
+</LinearLayout>
