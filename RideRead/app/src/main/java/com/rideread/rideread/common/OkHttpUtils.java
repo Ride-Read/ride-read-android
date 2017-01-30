@@ -80,15 +80,34 @@ public class OkHttpUtils {
     }
 
     /**
-     * 验证手机号
-     * @param telphone
+     * 发送用户名，手机号码，密码（暂时没加密），头像url给后台
+     * @param userName
+     * @param telPhone
+     * @param password
+     * @param userHeadUrl
      * @param url
      * @return
      */
-    public LoginMessageEntity testTelPhone(String telphone,String url){
+    public LoginMessageEntity send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url){
 //        try{
 //
 //            JSONObject json=new JSONObject();
+//            json.put("userName",userName);
+//            json.put("userPic",userHeadUrl);
+//            json.put("telphone",telPhone);
+//            json.put("password",password);
+//            return loginPost(url,json.toString());
+//        }catch (JSONException e){
+//            return null;
+//        }
+        return new LoginMessageEntity("成功",1);
+    }
+
+    public LoginMessageEntity resetPassword(String resetPassword,String telphone,String url){
+//        try{
+//
+//            JSONObject json=new JSONObject();
+//            json.put("resetpwd",resetPassword);
 //            json.put("telphone",telphone);
 //            return loginPost(url,json.toString());
 //        }catch (JSONException e){
@@ -121,11 +140,12 @@ public class OkHttpUtils {
     public Boolean postJson(String target, String json) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(JSON, json);
-        long timestamp = System.currentTimeMillis();
-        String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
+        //long timestamp = System.currentTimeMillis();
+        //String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
         Request request = new Request.Builder()
                 .addHeader("X-LC-Id", Api.APP_ID)
-                .addHeader("X-LC-Sign", sign + "," + timestamp)
+                .addHeader("X-LC-Key", Api.APP_KEY)
+                //.addHeader("ContentType","application/json")
                 .url(target)
                 .post(requestBody)
                 .build();

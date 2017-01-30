@@ -5,15 +5,15 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rideread.rideread.bean.LoginMessageEntity;
-import com.rideread.rideread.common.Api;
-import com.rideread.rideread.common.OkHttpUtils;
-import com.rideread.rideread.common.PreferenceUtils;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
+import com.avos.avoscloud.AVOSCloud;
 
 
 /**
@@ -39,8 +39,23 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
     //下一步
     public void onNext(View v){
         String code = indentfyCodeEdt.getText().toString().trim();
+        Log.e("----->>>>",code+","+telPhone);
+        //startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));//下面的注释已经完成手机注册功能
         if(!code.isEmpty()){
-            new TestIdentfyCode().execute(code,Api.TEST_IDENTFY_CODE);
+            AVOSCloud.verifySMSCodeInBackground(code, telPhone,
+                    new AVMobilePhoneVerifyCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if (e == null) {
+
+                                startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
+                            } else {
+                                Log.e("----->>>>",e.getMessage());
+                                e.printStackTrace();
+                                Toast.makeText(getBaseContext(),"验证码不匹配",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }else{
             Toast.makeText(getBaseContext(),"未填写验证码",Toast.LENGTH_SHORT).show();
         }
@@ -52,6 +67,7 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
 
         telPhone=registerPhone.getText().toString().trim();
         if(telPhone!=null&&(!telPhone.isEmpty())){
+            Log.i("手机号码：",telPhone);
             new SendCodeTask().execute(telPhone);
         }else{
             Toast.makeText(getBaseContext(),"未填手机号码",Toast.LENGTH_SHORT).show();
@@ -66,17 +82,21 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
     private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
         @Override
         protected Boolean doInBackground(String... params) {
-            //ttl后面的值是短信有效时间(分钟)
-            String json = "{\"mobilePhoneNumber\":\"{0}\",\"ttl\":30,\"name\":\"注册\"}";
-            json = json.replace("{0}", params[0]);
-            return OkHttpUtils.getInstance().postJson("https://api.leancloud.cn/1.1/requestSmsCode", json);
+          try{
+              AVOSCloud.requestSMSCode(params[0], "骑阅", "注册", 1);//有效时间1分钟
+              return true;
+          }catch (AVException e){
+              e.printStackTrace();
+              Log.e("-------.........",e.getMessage());
+            return false;
+          }
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             super.onPostExecute(result);
             if (result) {
-                new CountDownTimer(30000,1000){
+                new CountDownTimer(60000,1000){
 
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -99,29 +119,7 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
         }
     }
 
-    class TestIdentfyCode extends AsyncTask<String,String,Boolean>{
-        @Override
-        protected Boolean doInBackground(String... params) {
-            //ttl后面的值是短信有效时间(分钟)
-            String json = "{\"mobilePhoneNumber\":\"{0}\"}";
-            json = json.replace("{0}", params[0]);
-            return OkHttpUtils.getInstance().postJson("https://api.leancloud.cn/1.1/verifySmsCode/" + params[1], json);
 
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if(result){
-
-                PreferenceUtils.getInstance().saveTelPhone(telPhone,getApplicationContext());
-                startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
-            }else{
-                Toast.makeText(getBaseContext(),"验证码不匹配",Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
 
     public void onBack(View v){
         finish();

@@ -3,14 +3,22 @@ package com.rideread.rideread;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.rideread.rideread.bean.LoginMessageEntity;
+import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.FileUtils;
+import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -30,26 +38,53 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
     private final int REQUEST_IMAGE=1;
     private final int CROP=0;
     private final String TYPE="image/*";
-    private String fileName,userName;//原图的路径+文件名
+    private String fileName,userName,password;//原图的路径+文件名
     private String TAG="Reg";
     private CircleImageView img;
     private EditText etUserName;
     private File file=null;
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_set_username);
         img=(CircleImageView)findViewById(R.id.register_civ_userhead);
         etUserName=(EditText)findViewById(R.id.register_edt_setusername);
+        password=getIntent().getStringExtra("password");
     }
 
     //完成注册
     public void onComplete(View v){
         userName=etUserName.getText().toString().trim();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+        String key = "icon_" + sdf.format(new Date());
         if(userName!=null&&!userName.isEmpty()){
             //在这里发送用户名和头像给后台
+            App app=(App)getApplication();
+            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
+                @Override
+                public void complete(String key, ResponseInfo info, JSONObject response) {
+                    //res包含hash、key等信息，具体字段取决于上传策略的设置
 
-            startActivity(new Intent(this,LoginActivity.class));
+                    if(info.isOK())
+                    {
+                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
+                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getApplicationContext()),password,
+                                Api.USERHEAD_LINK+key,Api.SET_USERNAME);
+                    }
+                    else{
+                        Log.e("qiniu", "Upload Fail");
+                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                    }
+                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
+                    Log.e("qiniu", key + ",\r\n " + info +","+response);
+
+                }
+
+            },null);
+
+
+            //startActivity(new Intent(this,LoginActivity.class));
         }else{
             Toast.makeText(getBaseContext(),"未填写用户名",Toast.LENGTH_SHORT).show();
         }
@@ -137,6 +172,29 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
             }
         }
 
+    }
+
+
+    class Send2Background extends AsyncTask<String,Void,LoginMessageEntity>{
+        @Override
+        protected LoginMessageEntity doInBackground(String... params) {
+
+            return OkHttpUtils.getInstance().send2BackGround(params[0],params[1],
+                    params[2], params[3],params[4]);
+        }
+
+        @Override
+        protected void onPostExecute(LoginMessageEntity entity) {
+            super.onPostExecute(entity);
+            int resultCode=entity.getResultCode();
+            String msg=entity.getMsg();
+            if(resultCode==1){
+                startActivity(new Intent(RegisterUnameActivtiy.this,LoginActivity.class));
+                RegisterUnameActivtiy.this.finish();
+            }else{
+                Toast.makeText(getApplicationContext(),"设置失败",Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
 
