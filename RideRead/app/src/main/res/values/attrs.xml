@@ -8,6 +8,8 @@
     <declare-styleable name="MainToolBar">
         <attr name="isShowLeftIcon" format="boolean"></attr>
         <attr name="isShowRightIcon" format="boolean"></attr>
+        <attr name="LeftIcon" format="reference"></attr>
+        <attr name="RightIcon" format="reference"></attr>
     </declare-styleable>
 
 </resources>

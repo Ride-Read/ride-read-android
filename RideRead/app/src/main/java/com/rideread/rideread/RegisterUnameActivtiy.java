@@ -98,7 +98,7 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
     //图片相册选择图片或者拍照
     public void setHeadImg(View v){
 
-       Intent intent=new Intent(getBaseContext(), MultiImageSelectorActivity.class);
+        Intent intent=new Intent(getBaseContext(), MultiImageSelectorActivity.class);
         // 是否显示调用相机拍照
         intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
 
@@ -189,8 +189,8 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
             int resultCode=entity.getResultCode();
             String msg=entity.getMsg();
             if(resultCode==1){
-                startActivity(new Intent(RegisterUnameActivtiy.this,LoginActivity.class));
-                RegisterUnameActivtiy.this.finish();
+                App app=(App)getApplication();
+                app.finishAll();
             }else{
                 Toast.makeText(getApplicationContext(),"设置失败",Toast.LENGTH_SHORT).show();
             }

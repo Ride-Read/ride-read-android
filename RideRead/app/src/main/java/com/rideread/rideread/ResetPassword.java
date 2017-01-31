@@ -16,7 +16,7 @@ import com.rideread.rideread.common.OkHttpUtils;
  * Created by Jackbing on 2017/1/22.
  */
 
-public class ResetPassword extends AppCompatActivity {
+public class ResetPassword extends RegisterBaseActivity {
 
 
     @Override
@@ -51,8 +51,8 @@ public class ResetPassword extends AppCompatActivity {
             int resultCode=loginMessageEntity.getResultCode();
             String msg=loginMessageEntity.getMsg();
             if(resultCode==1){
-                startActivity(new Intent(ResetPassword.this,LoginActivity.class));
-                ResetPassword.this.finish();
+                App app=(App)getApplication();
+                app.finishAll();
             }else{
                 Toast.makeText(ResetPassword.this.getApplicationContext(),msg,Toast.LENGTH_SHORT).show();
             }

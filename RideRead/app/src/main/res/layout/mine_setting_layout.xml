@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:slideswitch="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.rideread.rideread.widget.MainToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dip"
+        android:background="@android:color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:isShowLeftIcon="true"
+        app:isShowRightIcon="false"
+        app:LeftIcon="@mipmap/left_arrow"
+        app:title="设置">
+
+    </com.rideread.rideread.widget.MainToolBar>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:minHeight="48dip">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="8dip"
+            android:layout_marginBottom="8dip"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:text="声音"/>
+            <com.leaking.slideswitch.SlideSwitch
+                android:layout_width="64dip"
+                android:layout_height="32dip"
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:layout_marginRight="20dip"
+                android:layout_gravity="center_vertical"
+                slideswitch:isOpen="false"
+                slideswitch:shape="circle"
+                slideswitch:themeColor="@color/login_btncolor_dodgerblue_normal"/>
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="48dip">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="振动"/>
+            <com.leaking.slideswitch.SlideSwitch
+                android:layout_width="64dip"
+                android:layout_height="32dip"
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:layout_marginRight="20dip"
+                android:layout_gravity="center_vertical"
+                slideswitch:isOpen="false"
+                slideswitch:shape="circle"
+                slideswitch:themeColor="@color/login_btncolor_dodgerblue_normal"/>
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="48dip">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="清理缓存"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dip"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_weight="1"
+                >
+                <ImageView
+                    android:id="@+id/mine_setting_iv_rightarrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="36dip"
+                    android:maxWidth="36dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_arrow"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/mine_setting_iv_rightarrow"
+                    android:textSize="18sp"
+                    android:textColor="@android:color/black"
+                    android:text="100M"
+                    />
+
+            </RelativeLayout>
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="48dip"
+            android:onClick="onAboutRideRead"
+            android:clickable="true">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="关于骑阅"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dip"
+                android:paddingTop="8dip"
+                android:paddingBottom="8dip"
+                android:layout_weight="1"
+                >
+                <ImageView
+                    android:id="@+id/mine_setting_iv_rightarrow2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="36dip"
+                    android:maxWidth="36dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_arrow"/>
+
+            </RelativeLayout>
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="48dip">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="8dip"
+                android:layout_marginBottom="8dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="使用指南"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dip"
+                android:paddingTop="8dip"
+                android:paddingBottom="8dip"
+                android:layout_weight="1"
+                >
+                <ImageView
+                    android:id="@+id/mine_setting_iv_rightarrow3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxHeight="36dip"
+                    android:maxWidth="36dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:src="@mipmap/right_arrow"/>
+
+            </RelativeLayout>
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow android:minHeight="56dip"></TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:layout_weight="3"
+            android:onClick="onExit"
+            android:clickable="true"
+            android:background="@drawable/login_btn_style_selector"
+            android:text="退出账号"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+</LinearLayout>

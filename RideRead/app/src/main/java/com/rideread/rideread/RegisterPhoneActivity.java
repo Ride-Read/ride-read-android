@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.RequestMobileCodeCallback;
 
 
 /**
@@ -68,35 +69,12 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
         telPhone=registerPhone.getText().toString().trim();
         if(telPhone!=null&&(!telPhone.isEmpty())){
             Log.i("手机号码：",telPhone);
-            new SendCodeTask().execute(telPhone);
-        }else{
-            Toast.makeText(getBaseContext(),"未填手机号码",Toast.LENGTH_SHORT).show();
-        }
+            AVOSCloud.requestSMSCodeInBackground(telPhone,"骑阅","注册",1,new RequestMobileCodeCallback(){
 
-    }
-
-    /**
-     * 发送短信验证码
-     * params : mobilePhoneNumber
-     */
-    private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
-        @Override
-        protected Boolean doInBackground(String... params) {
-          try{
-              AVOSCloud.requestSMSCode(params[0], "骑阅", "注册", 1);//有效时间1分钟
-              return true;
-          }catch (AVException e){
-              e.printStackTrace();
-              Log.e("-------.........",e.getMessage());
-            return false;
-          }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            if (result) {
-                new CountDownTimer(60000,1000){
+                @Override
+                public void done(AVException e) {
+                    if(e==null){
+                        new CountDownTimer(60000,1000){
 
                     @Override
                     public void onTick(long millisUntilFinished) {
@@ -115,9 +93,65 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
                         indentfyCodeTv.setClickable(true);
                     }
                 }.start();
-            } else Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+           // new SendCodeTask().execute(telPhone);
+        }else{
+            Toast.makeText(getBaseContext(),"未填手机号码",Toast.LENGTH_SHORT).show();
         }
+
     }
+
+//    /**
+//     * 发送短信验证码
+//     * params : mobilePhoneNumber
+//     */
+//    private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
+//        @Override
+//        protected Boolean doInBackground(String... params) {
+//          try{
+//
+//              Log.i("手机号码params：","已经发送"+params[0]);
+//              AVOSCloud.requestSMSCode(params[0], "骑阅", "注册", 2);//有效时间1分钟
+//              Log.i("手机号码：","已经发送");
+//              return true;
+//          }catch (AVException e){
+//              e.printStackTrace();
+//              Log.i("手机号码：","没有发送");
+//              Log.e("-------.........",e.getMessage());
+//            return false;
+//          }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean result) {
+//            super.onPostExecute(result);
+//            if (result) {
+//                new CountDownTimer(60000,1000){
+//
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//
+//                        indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
+//                        indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
+//                        indentfyCodeTv.setClickable(false);
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        indentfyCodeTv.setText("发送验证码");
+//                        indentfyCodeTv.setTextColor(Color.WHITE);
+//                        indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
+//                        indentfyCodeTv.setClickable(true);
+//                    }
+//                }.start();
+//            } else Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
 
 

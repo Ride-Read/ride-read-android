@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <ImageView
+        android:id="@+id/mine_attention_listiv_head"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="64dip"
+        android:minHeight="64dip"
+        android:layout_marginTop="10dip"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:src="@mipmap/me"/>
+
+        <TextView
+            android:id="@+id/mine_attention_listiv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="小明"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="12dip"
+            android:layout_toRightOf="@id/mine_attention_listiv_head"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="10dip"/>
+        <TextView
+            android:id="@+id/mine_attention_listiv_signture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个性签名"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:paddingBottom="12dip"
+            android:layout_toRightOf="@id/mine_attention_listiv_head"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dip"/>
+
+
+</RelativeLayout>

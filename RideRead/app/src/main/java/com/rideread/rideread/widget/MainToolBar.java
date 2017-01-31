@@ -45,6 +45,13 @@ public class MainToolBar extends Toolbar {
             boolean isShowSearchIcon = a.getBoolean(R.styleable.MainToolBar_isShowRightIcon, false);
             boolean isShowSettingIcon=a.getBoolean(R.styleable.MainToolBar_isShowLeftIcon,false);
 
+            int lefticonResId=a.getResourceId(R.styleable.MainToolBar_LeftIcon,R.mipmap.icon_setting);
+            int righticonResId=a.getResourceId(R.styleable.MainToolBar_RightIcon,R.mipmap.icon_search);
+
+            leftSettingIcon.setImageResource(lefticonResId);
+            rightSearchIcon.setImageResource(righticonResId);
+
+
             if(isShowSettingIcon){
                 showSettingIcon();
             }else{

@@ -44,6 +44,8 @@ dependencies {
     compile 'com.qiniu:qiniu-android-sdk:7.3.3'
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
+    compile 'com.leaking.slideswitch:slideswitch:1.0.0'
+
 
     // LeanCloud 基础包
     compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
@@ -54,4 +56,5 @@ dependencies {
     // avoscloud-sns：LeanCloud 第三方登录包
     compile ('cn.leancloud.android:avoscloud-sns:v3.+@aar')
     compile ('cn.leancloud.android:qq-sdk:1.6.1-leancloud')
+
 }

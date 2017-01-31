@@ -116,6 +116,31 @@ public class OkHttpUtils {
         return new LoginMessageEntity("成功",1);
     }
 
+    /**
+     *
+     * @param url
+     * @param headPath
+     * @param phone
+     * @param birthDate
+     * @param sex
+     * @param name
+     * @param signture
+     * @param locale
+     * @param school
+     * @param job
+     * @param hometown
+     * @return
+     */
+
+    public LoginMessageEntity editMessage(String url,String headPath,String phone
+    ,String birthDate,String sex,String name,String signture,String locale,String school,
+                                          String job,String hometown){
+
+        //如上
+
+        return new LoginMessageEntity("成功",1);
+    }
+
 
     /**
      * 登录注册的post

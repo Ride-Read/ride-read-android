@@ -14,5 +14,8 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!App.baseQueue.contains(this)){
+            App.baseQueue.add(this);
+        }
     }
 }
