@@ -5,5 +5,11 @@
         <attr name="leftArrowIcon" format="reference"></attr>
         <attr name="isShowTitle" format="boolean"></attr>
     </declare-styleable>
+    <declare-styleable name="MainToolBar">
+        <attr name="isShowLeftIcon" format="boolean"></attr>
+        <attr name="isShowRightIcon" format="boolean"></attr>
+        <attr name="LeftIcon" format="reference"></attr>
+        <attr name="RightIcon" format="reference"></attr>
+    </declare-styleable>
 
 </resources>

@@ -30,6 +30,10 @@
         ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus
         mollis orci, sed rhoncus sapien nunc eget.</string>
 
+    <string name="main_text_map">阅图</string>
+    <string name="main_text_timeline">阅圈</string>
+    <string name="main_text_mine">我的</string>
+
 
 
 </resources>

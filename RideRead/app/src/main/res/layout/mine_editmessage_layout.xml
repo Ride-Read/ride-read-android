@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.rideread.rideread.widget.MainToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dip"
+        android:background="@android:color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:isShowLeftIcon="true"
+        app:isShowRightIcon="true"
+        app:LeftIcon="@mipmap/left_arrow"
+        app:RightIcon="@mipmap/icon_save"
+        app:title="编辑资料"
+        >
+
+    </com.rideread.rideread.widget.MainToolBar>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dip">
+        <TableRow>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="头像"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="3dip"
+                android:layout_marginBottom="2dip"
+                android:layout_weight="1"
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/mine_editmsg_iv_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxWidth="36dip"
+                    android:maxHeight="36dip"
+                    android:src="@mipmap/me"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dip"
+                    />
+
+            </RelativeLayout>
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="真实姓名"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="李某某"
+                android:background="@null"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="性别"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_sex"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:text="男"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="个性签名"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_signture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:layout_marginBottom="5dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="5"
+                android:text="个性签名哈哈哈哈哈哈哈哈哈哈哈"
+                android:background="@null"
+                android:maxLines="2"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="生日"/>
+
+            <TextView
+                android:id="@+id/mine_editmsg_tv_birthdate"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:inputType="datetime"
+                android:text="2012-12-1"
+                android:clickable="true"
+                android:onClick="onPickData"
+                android:background="@null"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="手机号码"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="18826243390"
+                android:background="@null"
+                android:inputType="phone"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="地区"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_locale"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="广东省广州市"
+                android:background="@null"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="毕业或在读学校"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_school"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="肇庆学院"
+                android:background="@null"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="职业"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_job"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="营业员"
+                android:background="@null"
+                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+        <TableRow
+            android:minHeight="42dip"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginLeft="15dip"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="10dip"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:text="老家"/>
+
+            <EditText
+                android:id="@+id/mine_editmsg_et_hometown"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:layout_marginRight="20dip"
+                android:layout_weight="1"
+                android:text="湛江市遂溪县"
+                android:background="@null"
+                android:textCursorDrawable="@null"
+                android:textColor="@color/login_textcolorhint_gray"
+                android:textSize="16sp"
+                android:gravity="right|center_vertical"
+                />
+
+        </TableRow>
+        <View android:layout_width="match_parent"
+            android:layout_height="0.5dip"
+            android:background="@color/login_textcolor_gray"/>
+
+    </TableLayout>
+
+</LinearLayout>

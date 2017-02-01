@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
-        app:leftArrowIcon="@mipmap/back_arrow_pressed"
+        app:leftArrowIcon="@mipmap/left_arrow"
         android:elevation="3dip"
         app:isShowTitle="true"
         app:title="@string/register_text_setuname"
@@ -27,6 +27,7 @@
         android:layout_weight="1">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/register_civ_userhead"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:minHeight="100dip"

@@ -5,14 +5,16 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.rideread.rideread.bean.LoginMessageEntity;
-import com.rideread.rideread.common.Api;
-import com.rideread.rideread.common.OkHttpUtils;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
+import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.RequestMobileCodeCallback;
 
 
 /**
@@ -38,8 +40,23 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
     //下一步
     public void onNext(View v){
         String code = indentfyCodeEdt.getText().toString().trim();
+        Log.e("----->>>>",code+","+telPhone);
+        //startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));//下面的注释已经完成手机注册功能
         if(!code.isEmpty()){
-            new TestIdentfyCode().execute(code,Api.TEST_IDENTFY_CODE);
+            AVOSCloud.verifySMSCodeInBackground(code, telPhone,
+                    new AVMobilePhoneVerifyCallback() {
+                        @Override
+                        public void done(AVException e) {
+                            if (e == null) {
+
+                                startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
+                            } else {
+                                Log.e("----->>>>",e.getMessage());
+                                e.printStackTrace();
+                                Toast.makeText(getBaseContext(),"验证码不匹配",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }else{
             Toast.makeText(getBaseContext(),"未填写验证码",Toast.LENGTH_SHORT).show();
         }
@@ -49,57 +66,94 @@ public class RegisterPhoneActivity extends RegisterBaseActivity {
     //发送验证码
     public void onSendIdentCode(View v){
 
-        String telPhone=registerPhone.getText().toString().trim();
+        telPhone=registerPhone.getText().toString().trim();
         if(telPhone!=null&&(!telPhone.isEmpty())){
-            new CountDownTimer(30000,1000){
+            Log.i("手机号码：",telPhone);
+            AVOSCloud.requestSMSCodeInBackground(telPhone,"骑阅","注册",1,new RequestMobileCodeCallback(){
 
                 @Override
-                public void onTick(long millisUntilFinished) {
+                public void done(AVException e) {
+                    if(e==null){
+                        new CountDownTimer(60000,1000){
 
-                    indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
-                    indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
-                    indentfyCodeTv.setClickable(false);
+                    @Override
+                    public void onTick(long millisUntilFinished) {
 
+                        indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
+                        indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
+                        indentfyCodeTv.setClickable(false);
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        indentfyCodeTv.setText("发送验证码");
+                        indentfyCodeTv.setTextColor(Color.WHITE);
+                        indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
+                        indentfyCodeTv.setClickable(true);
+                    }
+                }.start();
+                    }else{
+                        Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+                    }
                 }
-
-                @Override
-                public void onFinish() {
-                    indentfyCodeTv.setText("发送验证码");
-                    indentfyCodeTv.setTextColor(Color.WHITE);
-                    indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
-                    indentfyCodeTv.setClickable(true);
-                }
-            }.start();
+            });
+           // new SendCodeTask().execute(telPhone);
         }else{
             Toast.makeText(getBaseContext(),"未填手机号码",Toast.LENGTH_SHORT).show();
         }
 
     }
 
-    class TestIdentfyCode extends AsyncTask<String,String,LoginMessageEntity>{
-        @Override
-        protected LoginMessageEntity doInBackground(String... params) {
+//    /**
+//     * 发送短信验证码
+//     * params : mobilePhoneNumber
+//     */
+//    private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
+//        @Override
+//        protected Boolean doInBackground(String... params) {
+//          try{
+//
+//              Log.i("手机号码params：","已经发送"+params[0]);
+//              AVOSCloud.requestSMSCode(params[0], "骑阅", "注册", 2);//有效时间1分钟
+//              Log.i("手机号码：","已经发送");
+//              return true;
+//          }catch (AVException e){
+//              e.printStackTrace();
+//              Log.i("手机号码：","没有发送");
+//              Log.e("-------.........",e.getMessage());
+//            return false;
+//          }
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Boolean result) {
+//            super.onPostExecute(result);
+//            if (result) {
+//                new CountDownTimer(60000,1000){
+//
+//                    @Override
+//                    public void onTick(long millisUntilFinished) {
+//
+//                        indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
+//                        indentfyCodeTv.setBackgroundDrawable(getResources().getDrawable(R.drawable.indetifycode_bg));
+//                        indentfyCodeTv.setClickable(false);
+//
+//                    }
+//
+//                    @Override
+//                    public void onFinish() {
+//                        indentfyCodeTv.setText("发送验证码");
+//                        indentfyCodeTv.setTextColor(Color.WHITE);
+//                        indentfyCodeTv.setBackgroundResource(R.drawable.login_btn_style_selector);
+//                        indentfyCodeTv.setClickable(true);
+//                    }
+//                }.start();
+//            } else Toast.makeText(getBaseContext(), "验证码发送失败",Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
-            return  OkHttpUtils.getInstance().testTelPhone(params[0],params[1]);
-        }
 
-        @Override
-        protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
-            super.onPostExecute(loginMessageEntity);
-            if(loginMessageEntity!=null){
-                String msg=loginMessageEntity.getMsg();
-                int resultCode=loginMessageEntity.getResultCode();
-                if(resultCode==1){
-                    startActivity(new Intent(RegisterPhoneActivity.this,RegisterSetPwdActivity.class));
-                }else{
-                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
-                }
-            }else{
-                Toast.makeText(getBaseContext(),"未知错误",Toast.LENGTH_SHORT).show();
-            }
-
-        }
-    }
 
     public void onBack(View v){
         finish();

@@ -3,6 +3,9 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url "http://mvn.leancloud.cn/nexus/content/repositories/public"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -15,6 +18,17 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        maven{
+            url "https://jitpack.io"
+
+        }
+        maven {
+            url "http://mvn.leancloud.cn/nexus/content/repositories/public"
+        }
+
+        maven {
+            url "https://dl.bintray.com/leaking/maven"
+        }
     }
 }
 

@@ -43,13 +43,14 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogin(View v){
         account=accountEdt.getText().toString().trim();
         password=passwordEdt.getText().toString().trim();
-        if(account==null||password==null){
-            Toast.makeText(getBaseContext(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
-        }else if(!hasNetWork()){
-            Toast.makeText(getBaseContext(),"未连接到网络",Toast.LENGTH_SHORT).show();
-        }else{
-            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
-        }
+        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//        if(account==null||password==null){
+//            Toast.makeText(getBaseContext(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
+//        }else if(!hasNetWork()){
+//            Toast.makeText(getBaseContext(),"未连接到网络",Toast.LENGTH_SHORT).show();
+//        }else{
+//            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
+//        }
 
     }
 
@@ -68,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                 String msg=entity.getMsg();
                 if(resultCode==1){
                     //从这里跳转主界面
-
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
                 }else if(resultCode==0){
                     Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
                 }else{

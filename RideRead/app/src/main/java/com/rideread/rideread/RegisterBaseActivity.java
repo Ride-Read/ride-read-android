@@ -5,6 +5,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import java.util.Iterator;
+import java.util.LinkedList;
+
 /**
  * Created by Jackbing on 2017/1/22.
  */
@@ -12,11 +15,16 @@ import android.view.MenuItem;
 public class RegisterBaseActivity extends AppCompatActivity {
 
 
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
-
+       if(!App.queue.contains(this)){
+           App.queue.add(this);
+       }
     }
+
+
 
 }

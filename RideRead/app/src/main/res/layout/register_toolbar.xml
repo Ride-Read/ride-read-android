@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:visibility="visible"
-        android:src="@mipmap/back_arrow_pressed"
+        android:src="@mipmap/left_arrow"
         android:paddingLeft="10dip"
         android:onClick="onBack"
         />

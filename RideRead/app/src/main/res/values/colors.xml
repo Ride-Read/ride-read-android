@@ -15,4 +15,6 @@
 
     <color name="login_btncolor_dodgerblue_normal">#1E90FF</color>
     <color name="login_btncolor_blue_pressed">#4169E1</color>
+
+    <color name="main_topline_gray">#999999</color>
 </resources>
