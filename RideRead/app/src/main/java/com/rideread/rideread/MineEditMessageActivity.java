@@ -6,13 +6,20 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
+import com.rideread.rideread.common.DBCopyUtil;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
@@ -38,6 +45,9 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
     private String fileName;
     private CircleImageView civ;
 
+    public final int REQUEST_DISTRICT=2;
+    private TextView edtDistrict,editmsgSex;
+
     private File file=null;
 
     private TextView birthDate;
@@ -53,10 +63,66 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         birthDate=(TextView)findViewById(R.id.mine_editmsg_tv_birthdate);
         ImageView save=(ImageView)findViewById(R.id.right_search_icon);
         civ=(CircleImageView)findViewById(R.id.mine_editmsg_iv_head);
+        edtDistrict=(TextView)findViewById(R.id.mine_editmsg_et_locale);
+        ImageView back=(ImageView)findViewById(R.id.left_setting_icon);
+        editmsgSex=(TextView)findViewById(R.id.mine_editmsg_et_sex);
+
 
         save.setOnClickListener(this);
         civ.setOnClickListener(this);
+        back.setOnClickListener(this);
     }
+
+    public void onSelectSex(View v){
+        final AlertDialog alertDialog=new AlertDialog.Builder(this).create();
+        alertDialog.show();
+        Window window=alertDialog.getWindow();
+        View mView= LayoutInflater.from(this).inflate(R.layout.mine_editmsg_selectsex_layout,null);
+        RadioGroup group=(RadioGroup) mView.findViewById(R.id.mine_editmsg_sex_radiogroup);
+        final RadioButton maleBtn=(RadioButton)mView.findViewById(R.id.mine_editmsg_sex_radiomale);
+        final RadioButton femaleBtn=(RadioButton)mView.findViewById(R.id.mine_editmsg_sex_radiofemale);
+        String defaultSex=editmsgSex.getText().toString().trim();
+        if(defaultSex!=null&&!defaultSex.isEmpty()){
+            if(defaultSex.equals("男")){
+                maleBtn.setChecked(true);
+            }else{
+                femaleBtn.setChecked(true);
+            }
+        }
+        window.setContentView(mView);
+
+
+
+
+        maleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                maleBtn.setChecked(true);
+                editmsgSex.setText("男");
+                alertDialog.cancel();
+            }
+        });
+        femaleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                femaleBtn.setChecked(true);
+                editmsgSex.setText("女");
+                alertDialog.cancel();
+            }
+        });
+
+    }
+
+    //地区选择
+    public void onSelectDitrict(View v){
+        synchronized (this){
+            DBCopyUtil.copyDataBaseFromAssets(this, "region.db");
+        }
+        Intent intent=new Intent(this,MineEdtMsgDistrictActivity.class);
+        startActivityForResult(intent,REQUEST_DISTRICT);
+    }
+
+
 
     //生日日期选择
     public void onPickData(View v){
@@ -74,11 +140,11 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         switch (v.getId()){
             case R.id.right_search_icon:
                 String name=((EditText)findViewById(R.id.mine_editmsg_et_name)).getText().toString().trim();
-                String sex=((EditText)findViewById(R.id.mine_editmsg_et_sex)).getText().toString().trim();
+                String sex=((TextView)findViewById(R.id.mine_editmsg_et_sex)).getText().toString().trim();
                 String telphone=((EditText)findViewById(R.id.mine_editmsg_et_phone)).getText().toString().trim();
                 String signture=((EditText)findViewById(R.id.mine_editmsg_et_signture)).getText().toString().trim();
                 String date=birthDate.getText().toString().trim();
-                String locale=((EditText)findViewById(R.id.mine_editmsg_et_locale)).getText().toString().trim();
+                String locale=((TextView)findViewById(R.id.mine_editmsg_et_locale)).getText().toString().trim();
                 String school =((EditText)findViewById(R.id.mine_editmsg_et_school)).getText().toString().trim();
                 String job=((EditText)findViewById(R.id.mine_editmsg_et_job)).getText().toString().trim();
                 String hometown=((EditText)findViewById(R.id.mine_editmsg_et_hometown)).getText().toString().trim();
@@ -88,6 +154,9 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.mine_editmsg_iv_head:
                 setHeadImg();
+                break;
+            case R.id.left_setting_icon:
+                onBackPressed();
                 break;
         }
 
@@ -162,8 +231,13 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                     }
                     break;
                 case CROP:
-
                     civ.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    break;
+                case REQUEST_DISTRICT:
+                    String province = data.getStringExtra(MineEdtMsgDistrictActivity.REGION_PROVINCE);
+                    String city = data.getStringExtra(MineEdtMsgDistrictActivity.REGION_CITY);
+                    Log.e("district","province="+province+",city="+city);
+                    edtDistrict.setText(province+"-"+city);
                     break;
             }
         }

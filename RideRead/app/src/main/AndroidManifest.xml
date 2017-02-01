@@ -54,8 +54,10 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MineEditMessageActivity"
             android:screenOrientation="portrait"></activity>
-
-
+        <activity android:name=".ContactActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MineEdtMsgDistrictActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         //选择图片的activity

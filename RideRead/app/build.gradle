@@ -34,6 +34,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
+    compile 'com.android.support:recyclerview-v7:25.0.1'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.okio:okio:1.11.0'
@@ -45,6 +46,7 @@ dependencies {
     compile 'com.android.support:support-v4:25.0.1'
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'com.leaking.slideswitch:slideswitch:1.0.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.8'
 
 
     // LeanCloud 基础包
