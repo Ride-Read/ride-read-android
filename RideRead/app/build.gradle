@@ -1,6 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'rideread'
+            keyPassword 'rideread'
+            storePassword 'rideread'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -17,9 +24,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-
     //为了解决部分第三方库重复打包了META-INF的问题
-    packagingOptions{
+    packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
     }
@@ -47,16 +53,15 @@ dependencies {
     compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'com.leaking.slideswitch:slideswitch:1.0.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.8'
-
-
+    compile 'com.android.support:design:25.0.1'
+    compile 'com.melnykov:floatingactionbutton:1.2.0'
     // LeanCloud 基础包
-    compile ('cn.leancloud.android:avoscloud-sdk:v3.+')
-
+    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
     // 推送与实时聊天需要的包
-    compile ('cn.leancloud.android:avoscloud-push:v3.+@aar'){transitive = true}
-
+    compile('cn.leancloud.android:avoscloud-push:v3.+@aar') { transitive = true }
     // avoscloud-sns：LeanCloud 第三方登录包
-    compile ('cn.leancloud.android:avoscloud-sns:v3.+@aar')
-    compile ('cn.leancloud.android:qq-sdk:1.6.1-leancloud')
-
+    compile 'cn.leancloud.android:avoscloud-sns:v3.+@aar'
+    compile 'cn.leancloud.android:qq-sdk:1.6.1-leancloud'
+    compile files('libs/Amap_2DMap_V4.2.0_20170120.jar')
+    compile files('libs/AMap_Search_V4.0.0_20170111.jar')
 }

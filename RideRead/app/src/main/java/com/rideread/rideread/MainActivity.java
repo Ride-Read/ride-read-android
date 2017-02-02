@@ -61,7 +61,7 @@ public class MainActivity extends BaseActivity {
         }
 
         mTabhost.getTabWidget().setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
-        mTabhost.setCurrentTab(1);
+        mTabhost.setCurrentTab(0);
     }
 
     private View buildIndicator(Tab tab){

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.amap.api.maps.MapView
+        android:id="@+id/main_map_map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/main_map_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dip"
+        android:layout_marginRight="56dip"
+        android:layout_marginLeft="56dip"
+        android:src="@mipmap/icon_mine"
+        fab:fab_colorNormal="@color/login_btncolor_dodgerblue_normal"
+        fab:fab_colorPressed="@color/login_btncolor_blue_pressed"
+        fab:fab_colorRipple="@color/main_topline_gray" />
+
+</FrameLayout>
