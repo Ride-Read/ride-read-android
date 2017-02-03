@@ -17,6 +17,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH"></uses-permission>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"></uses-permission>
 
     <application
         android:allowBackup="true"
@@ -69,6 +72,9 @@
         <activity android:name=".MineEdtMsgDistrictActivity"
             android:screenOrientation="portrait"></activity>
 
+
+
+        <service android:name="com.amap.api.location.APSService"></service>
 
         //选择图片的activity
         <activity
