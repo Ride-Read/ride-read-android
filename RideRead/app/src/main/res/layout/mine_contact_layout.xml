@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.rideread.rideread.widget.MainToolBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dip"
+        android:background="@android:color/white"
+        android:minHeight="?attr/actionBarSize"
+        app:isShowLeftIcon="true"
+        app:isShowRightIcon="false"
+        app:LeftIcon="@mipmap/left_arrow"
+        app:title="联系骑阅"
+        >
+
+    </com.rideread.rideread.widget.MainToolBar>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dip"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/mine_settingcontact_text_email"
+        android:layout_marginTop="30dip"/>
+
+</LinearLayout>

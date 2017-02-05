@@ -35,5 +35,9 @@ public class AboutRideReadActivity extends BaseActivity {
         startActivity(new Intent(this,UserAgreement.class));
     }
 
+    public void onContactRideRead(View v){
+        startActivity(new Intent(this,ContactActivity.class));
+    }
+
 
 }

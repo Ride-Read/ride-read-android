@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingRight="15dip"
+    android:paddingLeft="15dip"
+    android:paddingTop="20dip"
+    android:paddingBottom="20dip">
+
+    <ImageView
+        android:id="@+id/timeline_head"
+        android:layout_width="36dip"
+        android:layout_height="36dip"
+        android:src="@mipmap/me"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dip">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            >
+
+            <TextView
+                android:id="@+id/timeline_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:textColor="@color/login_textcolor_gray"
+                android:text="张晓明"
+                android:textSize="16sp"/>
+            <Button
+                android:layout_width="65dip"
+                android:layout_height="30dip"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:layout_alignParentRight="true"
+                android:text="关注"
+                android:background="@drawable/login_btn_style_selector"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/timeline_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/login_textcolor_gray"
+            android:visibility="visible"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="风景很美"
+            />
+
+        <GridView
+            android:id="@+id/timeline_imgs"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="1dip"
+            android:numColumns="3"
+            android:columnWidth="1dip"
+            android:stretchMode="columnWidth"
+            android:visibility="visible">
+
+        </GridView>
+    </LinearLayout>
+
+</LinearLayout>

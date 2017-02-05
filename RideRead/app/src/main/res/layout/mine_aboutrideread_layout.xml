@@ -93,7 +93,9 @@
             android:background="@color/login_textcolor_gray"/>
 
         <TableRow
-            android:minHeight="48dip">
+            android:minHeight="48dip"
+            android:clickable="true"
+            android:onClick="onContactRideRead">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

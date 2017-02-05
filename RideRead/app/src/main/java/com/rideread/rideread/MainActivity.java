@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.amap.api.location.AMapLocationClientOption;
 import com.rideread.rideread.bean.Tab;
 import com.rideread.rideread.fragment.MapFragment;
 import com.rideread.rideread.fragment.MineFragment;
@@ -24,6 +25,8 @@ import java.util.List;
  */
 
 public class MainActivity extends BaseActivity {
+
+    public AMapLocationClientOption mLocationOption = null;
 
     private LayoutInflater mInflater;
     private MainFragmentTabHost mTabhost;

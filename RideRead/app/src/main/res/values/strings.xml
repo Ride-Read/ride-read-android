@@ -21,7 +21,6 @@
     <string name="register_text_notify">固定骑阅名，保存后无法修改</string>
     <string name="register_text_complete">完成</string>
     <string name="forgetpwd_text_complete">确定</string>
-    <string name="forgetpwd_text_findpwd">找回密码</string>
     <string name="forgetpwd_text_resetpwd">重置密码</string>
     <string name="useragreement_text_read">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus
@@ -34,6 +33,11 @@
     <string name="main_text_timeline">阅圈</string>
     <string name="main_text_mine">我的</string>
 
+    <string name="mine_settingcontact_text_email">邮箱：156456456454151@qq.com</string>
+    <string-array name="timeline_tab_title">
+        <item>附近</item>
+        <item>关注</item>
+    </string-array>
 
 
 </resources>

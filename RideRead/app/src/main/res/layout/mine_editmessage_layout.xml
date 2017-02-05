@@ -87,7 +87,7 @@
                 android:layout_weight="1"
                 android:text="李某某"
                 android:background="@null"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textCursorDrawable="@null"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
                 android:gravity="right|center_vertical"
@@ -100,6 +100,8 @@
 
         <TableRow
             android:minHeight="42dip"
+            android:onClick="onSelectSex"
+            android:clickable="true"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -110,10 +112,12 @@
                 android:layout_marginBottom="10dip"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
+                android:onClick="onSelectSex"
+                android:clickable="true"
                 android:textColor="@android:color/black"
                 android:text="性别"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/mine_editmsg_et_sex"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -122,7 +126,9 @@
                 android:layout_marginRight="20dip"
                 android:layout_weight="1"
                 android:background="@null"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:onClick="onSelectSex"
+                android:clickable="true"
+                android:textCursorDrawable="@null"
                 android:text="男"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
@@ -157,9 +163,9 @@
                 android:layout_marginRight="20dip"
                 android:layout_weight="5"
                 android:text="个性签名哈哈哈哈哈哈哈哈哈哈哈"
-                android:background="@null"
                 android:maxLines="2"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:background="@null"
+                android:textCursorDrawable="@null"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
                 android:gravity="right|center_vertical"
@@ -232,9 +238,9 @@
                 android:layout_marginRight="20dip"
                 android:layout_weight="1"
                 android:text="18826243390"
-                android:background="@null"
                 android:inputType="phone"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:background="@null"
+                android:textCursorDrawable="@null"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
                 android:gravity="right|center_vertical"
@@ -247,6 +253,8 @@
 
         <TableRow
             android:minHeight="42dip"
+            android:clickable="true"
+            android:onClick="onSelectDitrict"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -257,10 +265,12 @@
                 android:layout_marginBottom="10dip"
                 android:layout_gravity="center_vertical"
                 android:textSize="18sp"
+                android:clickable="true"
+                android:onClick="onSelectDitrict"
                 android:textColor="@android:color/black"
                 android:text="地区"/>
 
-            <EditText
+            <TextView
                 android:id="@+id/mine_editmsg_et_locale"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -268,7 +278,9 @@
                 android:paddingBottom="10dip"
                 android:layout_marginRight="20dip"
                 android:layout_weight="1"
-                android:text="广东省广州市"
+                android:text="广东省-广州市"
+                android:clickable="true"
+                android:onClick="onSelectDitrict"
                 android:background="@null"
                 android:textCursorDrawable="@color/login_textcolorhint_gray"
                 android:textColor="@color/login_textcolorhint_gray"
@@ -306,7 +318,7 @@
                 android:layout_weight="1"
                 android:text="肇庆学院"
                 android:background="@null"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textCursorDrawable="@null"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
                 android:gravity="right|center_vertical"
@@ -342,7 +354,7 @@
                 android:layout_weight="1"
                 android:text="营业员"
                 android:background="@null"
-                android:textCursorDrawable="@color/login_textcolorhint_gray"
+                android:textCursorDrawable="@null"
                 android:textColor="@color/login_textcolorhint_gray"
                 android:textSize="16sp"
                 android:gravity="right|center_vertical"
