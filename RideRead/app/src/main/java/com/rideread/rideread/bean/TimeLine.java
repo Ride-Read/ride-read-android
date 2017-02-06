@@ -9,57 +9,28 @@ import java.util.Map;
 
 public class TimeLine {
 
+    public boolean hasVideo;
     private boolean hasText;
     private boolean hasImg;
     private String text;
-    private int[] imgs;
-    private String[] from;
-    private int[] to;
-    private int imgLayout;
-    private List<Map<String,Object>> data_list=null;
+    private List<Integer> imgs;
 
-    public TimeLine(boolean hasImg, boolean hasText, int[] imgs, String text,String[] from,int[] to,
-                    List<Map<String,Object>> data_list,int imgLayout) {
+
+    public TimeLine(boolean hasImg, boolean hasText,boolean hasVideo, List<Integer> imgs,String text) {
         this.hasImg = hasImg;
         this.hasText = hasText;
         this.imgs = imgs;
         this.text = text;
-        this.from=from;
-        this.to=to;
-        this.data_list=data_list;
-        this.imgLayout=imgLayout;
+        this.hasVideo=hasVideo;
+
     }
 
-    public List<Map<String, Object>> getData_list() {
-        return data_list;
+    public boolean isHasVideo() {
+        return hasVideo;
     }
 
-    public void setData_list(List<Map<String, Object>> data_list) {
-        this.data_list = data_list;
-    }
-
-    public int getImgLayout() {
-        return imgLayout;
-    }
-
-    public void setImgLayout(int imgLayout) {
-        this.imgLayout = imgLayout;
-    }
-
-    public int[] getTo() {
-        return to;
-    }
-
-    public void setTo(int[] to) {
-        this.to = to;
-    }
-
-    public String[] getFrom() {
-        return from;
-    }
-
-    public void setFrom(String[] from) {
-        this.from = from;
+    public void setHasVideo(boolean hasVideo) {
+        this.hasVideo = hasVideo;
     }
 
     public boolean isHasImg() {
@@ -78,11 +49,11 @@ public class TimeLine {
         this.hasText = hasText;
     }
 
-    public int[] getImgs() {
+    public List<Integer> getImgs() {
         return imgs;
     }
 
-    public void setImgs(int[] imgs) {
+    public void setImgs(List<Integer> imgs) {
         this.imgs = imgs;
     }
 

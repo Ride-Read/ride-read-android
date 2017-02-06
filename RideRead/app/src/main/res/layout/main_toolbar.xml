@@ -7,9 +7,21 @@
         android:layout_width="36dip"
         android:layout_height="36dip"
         android:layout_alignParentLeft="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:paddingLeft="10dp"
         android:src="@mipmap/icon_setting"
+        />
+    <TextView
+        android:id="@+id/left_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/left_setting_icon"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dip"
+        android:visibility="gone"
+
         />
     <TextView
         android:id="@+id/main_toolbar_title"

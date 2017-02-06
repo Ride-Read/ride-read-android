@@ -10,6 +10,8 @@
         <attr name="isShowRightIcon" format="boolean"></attr>
         <attr name="LeftIcon" format="reference"></attr>
         <attr name="RightIcon" format="reference"></attr>
+        <attr name="leftTitle" format="reference|string"></attr>
+        <attr name="isShowLeftTitle" format="boolean"></attr>
     </declare-styleable>
 
 </resources>

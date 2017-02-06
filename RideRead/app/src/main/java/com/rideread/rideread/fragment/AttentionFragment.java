@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 import android.widget.ListView;
 
 import com.rideread.rideread.R;
@@ -14,9 +13,7 @@ import com.rideread.rideread.adapter.AttentionListAdapter;
 import com.rideread.rideread.bean.TimeLine;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jackbing on 2017/2/3.
@@ -26,13 +23,10 @@ public class AttentionFragment extends Fragment {
 
     private List<TimeLine> lists;
     private ListView listview;
-    private GridView gridView;
-    private String text="hjvghajvghdvgahjdvgahj";
     private View mView;
     private int[] imgs={R.mipmap.me,R.mipmap.me,R.mipmap.me,
             R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me};
-    private String[] from={"image"};
-    private int[] to={R.id.timeline_grid_img};
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,18 +39,17 @@ public class AttentionFragment extends Fragment {
 
     private void initData() {
         lists=new ArrayList<TimeLine>();
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
+        List<Integer> imgsL=new ArrayList<Integer>();
+        for(int i=0;i<imgs.length;i++){
+            imgsL.add(imgs[i]);
+        }
+
+        lists.add(new TimeLine(true,false,false,imgsL,null));
+        lists.add(new TimeLine(false,true,true,null,"今天风景很美，我先去看看"));
+        lists.add(new TimeLine(true,true,false,imgsL,"哈哈，我到这里了，过来看看"));
+        lists.add(new TimeLine(false,true,true,null,"不知道说什么，随便写写"));
+        lists.add(new TimeLine(false,true,false,null,"今天风景很美，我先去看看"));
+        lists.add(new TimeLine(true,true,false,imgsL,"哈哈，我到这里了，过来看看"));
 
     }
 
@@ -66,13 +59,13 @@ public class AttentionFragment extends Fragment {
         listview.setAdapter(adapter);
     }
 
-    public List<Map<String,Object>> getDataList(){
-        List<Map<String,Object>> lists=new ArrayList<Map<String,Object>>();
-        for(int i=0;i<imgs.length;i++){
-            Map<String,Object> map=new HashMap<String,Object>();
-            map.put("image",imgs[i]);
-            lists.add(map);
-        }
-        return lists;
-    }
+//    public List<Map<String,Object>> getDataList(){
+//        List<Map<String,Object>> lists=new ArrayList<Map<String,Object>>();
+//        for(int i=0;i<imgs.length;i++){
+//            Map<String,Object> map=new HashMap<String,Object>();
+//            map.put("image",imgs[i]);
+//            lists.add(map);
+//        }
+//        return lists;
+//    }
 }

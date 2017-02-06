@@ -1,8 +1,12 @@
 package com.rideread.rideread.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +17,10 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
 import com.amap.api.maps.MapView;
+import com.amap.api.maps.MapsInitializer;
 import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.TextureSupportMapFragment;
@@ -46,17 +52,31 @@ public class MapFragment extends Fragment implements LocationSource{
     }
 
     private AMap aMap;
-    private MapView mapView;
+    private TextureMapView mapView;
     private View mView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
+//        mView=inflater.inflate(R.layout.test,container,false);
+//        if(aMap==null){
+//            FragmentManager fm=getFragmentManager();
+//            FragmentTransaction ts=fm.beginTransaction();
+//            try{
+//                MapsInitializer.initialize(getActivity());
+//            }catch(RemoteException e){
+//                e.printStackTrace();
+//            }
+//
+//            SupportMapFragment supportMapFragment=new SupportMapFragment();
+//            ts.replace(R.id.nav_map,supportMapFragment);
+//            ts.commit();
+//            aMap=supportMapFragment.getMap();
+//        }
         if(mView==null){
-            mView=inflater.inflate(R.layout.main_map_layout,container,false);
+            mView=inflater.inflate(R.layout.main_map_layout,null);
 
-            mapView=(MapView) mView.findViewById(R.id.main_map_map);
+            mapView=(TextureMapView) mView.findViewById(R.id.main_map_map);
             mapView.onCreate(savedInstanceState);
             if(aMap==null){
                 aMap=mapView.getMap();
@@ -67,13 +87,16 @@ public class MapFragment extends Fragment implements LocationSource{
             }
         }
 
+        Log.e("eee","onCreateview");
         return mView;
     }
+
+
 
     @Override
     public void onStart() {
         super.onStart();
-
+        Log.e("eee","start");
         aMap.setLocationSource(this);
         aMap.setMyLocationEnabled(true);
         // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
@@ -94,31 +117,42 @@ public class MapFragment extends Fragment implements LocationSource{
         options.setOnceLocationLatest(true);
         options.setInterval(1000);
         options.setNeedAddress(true);
-        options.setLocationCacheEnable(true);
+        options.setLocationCacheEnable(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mapView.onResume();
+        Log.e("eee","onresume");
+        aMap.moveCamera(CameraUpdateFactory.zoomTo(14));
     }
 
     @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        mapView.onSaveInstanceState(bundle);
+        //mapView.onSaveInstanceState(bundle);
+        Log.e("eee","onsaveinstance");
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mapView.onPause();
+        Log.e("eee","onpause");
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e("eee","onCreate");
     }
 
     @Override
     public void onDestroy(){
         super.onDestroy();
         mapView.onDestroy();
+        Log.e("eee","ondestory");
 
     }
 
@@ -188,4 +222,6 @@ public class MapFragment extends Fragment implements LocationSource{
         aMapLocationClient=null;
 
     }
+
+
 }

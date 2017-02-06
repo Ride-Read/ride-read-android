@@ -3,9 +3,24 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <TextView
+        android:id="@+id/timeline_newmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/common_black"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"
+        android:textSize="14sp"
+        android:background="@drawable/timeline_newmsg_bg"
+        android:paddingTop="3dip"
+        android:paddingBottom="3dip"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip"
+        android:text="2个消息"/>
     <ListView
         android:id="@+id/timeline_attention_listview"
-        android:dividerHeight="1dip"
+        android:dividerHeight="0.5dip"
         android:divider="@color/login_textcolor_gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
