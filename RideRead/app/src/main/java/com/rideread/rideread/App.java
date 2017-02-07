@@ -30,6 +30,7 @@ public class App extends Application {
         // 请用你的AppId，AppKey。并在管理台启用手机号码短信验证
         AVOSCloud.initialize(this, Api.APP_ID,
                 Api.APP_KEY);
+        AVOSCloud.setDebugLogEnabled(true);//在应用发布之前，请关闭调试日志。
         Configuration config = new Configuration.Builder().zone(Zone.httpAutoZone).build();
         uploadManager = new UploadManager(config);
 

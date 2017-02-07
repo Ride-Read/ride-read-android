@@ -2,6 +2,8 @@ package com.rideread.rideread;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rideread.rideread.adapter.MessageListAdapter;
@@ -35,5 +37,11 @@ public class MessageListActivity extends BaseActivity {
         datas.add(new MessageEntity("系统","欢迎使用",R.mipmap.me,"13:25"));
         ListView listView=(ListView) findViewById(R.id.message_listview);
         listView.setAdapter(new MessageListAdapter(datas,this,R.layout.message_listitem));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                startActivity(ChatActivity.class,"15622705224");
+            }
+        });
     }
 }

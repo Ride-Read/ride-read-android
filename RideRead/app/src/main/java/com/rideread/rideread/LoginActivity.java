@@ -6,10 +6,14 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.SaveCallback;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
@@ -28,6 +32,17 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().hide();//隐藏标题栏
         accountEdt=(EditText) findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)findViewById(R.id.login_edt_password);
+        AVObject testObject = new AVObject("TestObject");
+        testObject.put("words","Hello World!");
+        testObject.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if(e == null){
+                    Log.d("saved","success!");
+                }
+            }
+        });
+
 
     }
 
