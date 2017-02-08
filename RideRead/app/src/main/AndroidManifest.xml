@@ -85,6 +85,8 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MessageListActivity"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".SelfTimelineActivity"
+            android:screenOrientation="portrait"></activity>
 
 
 

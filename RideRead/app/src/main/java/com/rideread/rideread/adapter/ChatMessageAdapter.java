@@ -35,6 +35,12 @@ public class ChatMessageAdapter extends BaseAdapter {
         return datas.size();
     }
 
+    public void addMessage(String msg){
+        if(datas!=null){
+            datas.add(new ChatMessage(null,msg,R.mipmap.me,null,1));
+        }
+    }
+
     @Override
     public Object getItem(int position) {
         return datas.get(position);

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rideread.rideread.R;
@@ -51,12 +52,20 @@ public class AttentionFragment extends Fragment {
         lists.add(new TimeLine(false,true,false,null,"今天风景很美，我先去看看"));
         lists.add(new TimeLine(true,true,false,imgsL,"哈哈，我到这里了，过来看看"));
 
+
     }
 
     private void initView(View mView) {
         listview=(ListView) mView.findViewById(R.id.timeline_attention_listview);
         AttentionListAdapter adapter=new AttentionListAdapter(lists,R.layout.timeline_attention_listitem,getContext());
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
 //    public List<Map<String,Object>> getDataList(){

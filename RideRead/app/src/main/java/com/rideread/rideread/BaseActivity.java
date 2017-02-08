@@ -6,6 +6,10 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.rideread.rideread.event.EmptyEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * Created by Jackbing on 2017/1/26.
  */
@@ -22,9 +26,12 @@ public class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void showToast(String content) {
-        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
     }
+
     protected void startActivity(Class<?> cls) {
         Intent intent = new Intent(this, cls);
         startActivity(intent);
@@ -33,8 +40,38 @@ public class BaseActivity extends AppCompatActivity {
     protected void startActivity(Class<?> cls, String... objs) {
         Intent intent = new Intent(this, cls);
         for (int i = 0; i < objs.length; i++) {
-            intent.putExtra(objs[i], objs[++i]);
+            intent.putExtra(objs[i], objs[i]);
         }
         startActivity(intent);
     }
+
+    protected boolean filterException(Exception e) {
+        if (e != null) {
+            e.printStackTrace();
+            toast(e.getMessage());
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    protected void toast(String str) {
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToast(String content) {
+        Toast.makeText(this, content, Toast.LENGTH_SHORT).show();
+    }
+
+    protected void showToast(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_SHORT).show();
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(EmptyEvent event) {}
 }
+

@@ -84,6 +84,7 @@
             android:textColor="@android:color/white"
             android:layout_gravity="center_vertical"
             android:padding="3dp"
+            android:onClick="sendMessage"
             android:textSize="16sp"
             android:text="发送"/>
     </LinearLayout>

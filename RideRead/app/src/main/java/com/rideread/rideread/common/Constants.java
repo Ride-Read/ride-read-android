@@ -19,4 +19,6 @@ public class Constants {
     private static String getPrefixConstant(String str) {
         return LEANMESSAGE_CONSTANTS_PREFIX + str;
     }
+
+    public static final String CLIENT_ID="11";
 }

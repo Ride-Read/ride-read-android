@@ -4,6 +4,12 @@ import android.app.Application;
 import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMConversation;
+import com.avos.avoscloud.im.v2.AVIMMessage;
+import com.avos.avoscloud.im.v2.AVIMMessageHandler;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
+import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
@@ -24,6 +30,21 @@ public class App extends Application {
     public static LinkedList<BaseActivity> baseQueue=new LinkedList<BaseActivity>();
     private  UploadManager uploadManager=null;
 
+    public static class CustomMessageHandler extends AVIMMessageHandler {
+        //接收到消息后的处理逻辑
+        @Override
+        public void onMessage(AVIMMessage message, AVIMConversation conversation, AVIMClient client){
+            if(message instanceof AVIMTextMessage){
+                Log.d("接收消息",((AVIMTextMessage)message).getText());
+            }
+        }
+
+        public void onMessageReceipt(AVIMMessage message,AVIMConversation conversation,AVIMClient client){
+
+        }
+    }
+
+
     @Override
     public void onCreate() {
 
@@ -33,6 +54,9 @@ public class App extends Application {
         AVOSCloud.setDebugLogEnabled(true);//在应用发布之前，请关闭调试日志。
         Configuration config = new Configuration.Builder().zone(Zone.httpAutoZone).build();
         uploadManager = new UploadManager(config);
+
+        //注册默认的消息处理逻辑
+        AVIMMessageManager.registerDefaultMessageHandler(new CustomMessageHandler());
 
     }
 
