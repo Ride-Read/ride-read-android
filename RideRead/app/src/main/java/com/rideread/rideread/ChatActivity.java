@@ -25,6 +25,8 @@ import com.rideread.rideread.event.ImTypeMessageEvent;
 import com.rideread.rideread.im.AVImClientManager;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,18 +61,16 @@ public class ChatActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        EventBus.getDefault().unregister(this);
     }
 
     private void initDatas() {
 
-        menberId=getIntent().getStringExtra("15622705224");
+        menberId=getIntent().getStringExtra("menberid");
         //模拟本地数据,此处应该是查询本地聊天记录.
         datas=new ArrayList<ChatMessage>();
         datas.add(new ChatMessage(null,"消息内容",R.mipmap.me,null,1));
@@ -100,6 +100,7 @@ public class ChatActivity extends BaseActivity {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ImTypeMessageEvent event) {
         if (null != imConversation && null != event &&
                 imConversation.getConversationId().equals(event.conversation.getConversationId())) {
@@ -112,7 +113,7 @@ public class ChatActivity extends BaseActivity {
     }
 
     public void getConservation(final String menberId){
-        final AVIMClient client = AVImClientManager.getInstance().getClient(Constants.CLIENT_ID);
+        final AVIMClient client = AVImClientManager.getInstance().getClient();
         AVIMConversationQuery conversationQuery = client.getQuery();
         conversationQuery.withMembers(Arrays.asList(menberId), true);
         conversationQuery.whereEqualTo("customConversationType",1);

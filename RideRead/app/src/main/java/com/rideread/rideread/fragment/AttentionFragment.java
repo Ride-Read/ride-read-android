@@ -1,8 +1,10 @@
 package com.rideread.rideread.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rideread.rideread.R;
+import com.rideread.rideread.SelfTimelineActivity;
 import com.rideread.rideread.adapter.AttentionListAdapter;
 import com.rideread.rideread.bean.TimeLine;
 
@@ -45,13 +48,12 @@ public class AttentionFragment extends Fragment {
             imgsL.add(imgs[i]);
         }
 
-        lists.add(new TimeLine(true,false,false,imgsL,null));
-        lists.add(new TimeLine(false,true,true,null,"今天风景很美，我先去看看"));
-        lists.add(new TimeLine(true,true,false,imgsL,"哈哈，我到这里了，过来看看"));
-        lists.add(new TimeLine(false,true,true,null,"不知道说什么，随便写写"));
-        lists.add(new TimeLine(false,true,false,null,"今天风景很美，我先去看看"));
-        lists.add(new TimeLine(true,true,false,imgsL,"哈哈，我到这里了，过来看看"));
-
+        lists.add(new TimeLine("涨小明","56","10km",true,false,false,imgsL,"广州","12:23","",null,"10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","12:23","","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","12:23","","哈哈，我到这里了，过来看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","12:23","","不知道说什么，随便写写","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,false,null,"广州","12:23","","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","12:23","","哈哈，我到这里了，过来看看","10"));
 
     }
 
@@ -63,6 +65,7 @@ public class AttentionFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.e("itemonclick","ito");
 
             }
         });

@@ -1,6 +1,7 @@
 package com.rideread.rideread.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,9 @@ import android.widget.TextView;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.rideread.rideread.R;
+import com.rideread.rideread.SelfTimelineActivity;
 import com.rideread.rideread.bean.TimeLine;
+import com.rideread.rideread.fragment.AttentionFragment;
 import com.rideread.rideread.widget.VideoTextureView;
 
 import java.util.List;
@@ -53,7 +56,7 @@ public class AttentionListAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        TimeLine timeline=(TimeLine) getItem(position);
+        final TimeLine timeline=(TimeLine) getItem(position);
         ViewHolder viewHolder=null;
         if(convertView==null){
             viewHolder=new ViewHolder();
@@ -62,11 +65,26 @@ public class AttentionListAdapter extends BaseAdapter{
             viewHolder.gridView=(NineGridImageView) convertView.findViewById(R.id.timeline_imgs);
             viewHolder.videoTextureView=(VideoTextureView)convertView.findViewById(R.id.timeline_videotextureview);
             viewHolder.iv_play=(ImageView)convertView.findViewById(R.id.iv_play);
+            viewHolder.author=(TextView)convertView.findViewById(R.id.timeline_nickname);
+            viewHolder.commentnum=(TextView)convertView.findViewById(R.id.timeline_comment_num);
+            viewHolder.zannum=(TextView)convertView.findViewById(R.id.timeline_like_num);
+            viewHolder.diasance=(TextView)convertView.findViewById(R.id.timeline_distance);
+            viewHolder.location=(TextView)convertView.findViewById(R.id.timeline_destinnation);
+            viewHolder.pushTime=(TextView)convertView.findViewById(R.id.timeline_time);
+            viewHolder.timeline_head=(ImageView)convertView.findViewById(R.id.timeline_head);
             convertView.setTag(viewHolder);
         }else{
             viewHolder=(ViewHolder) convertView.getTag();
         }
 
+        viewHolder.timeline_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, SelfTimelineActivity.class);
+                intent.putExtra("userName",timeline.getAuthor());
+                context.startActivity(intent);
+            }
+        });
 
         if(timeline.isHasText()==true){
             viewHolder.text.setText(timeline.getText());
@@ -95,16 +113,24 @@ public class AttentionListAdapter extends BaseAdapter{
             viewHolder.iv_play.setVisibility(View.GONE);
         }
 
+        viewHolder.author.setText(timeline.getAuthor());
+        viewHolder.pushTime.setText(timeline.getPushTime());
+        viewHolder.commentnum.setText(timeline.getCommentnum());
+        viewHolder.zannum.setText(timeline.getZanNum());
+        viewHolder.diasance.setText("距离我"+timeline.getDistance());
+        viewHolder.location.setText(timeline.getLocation());
+
         return convertView;
     }
 
 
 
     class ViewHolder {
-        public TextView text;
+        public TextView text,author,commentnum,zannum,pushTime,diasance,location;
         public NineGridImageView gridView;
         public VideoTextureView videoTextureView;
         public ImageView iv_play;
+        public ImageView timeline_head;
     }
 
 

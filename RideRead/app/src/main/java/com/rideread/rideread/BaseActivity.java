@@ -6,9 +6,12 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
 import com.rideread.rideread.event.EmptyEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 /**
  * Created by Jackbing on 2017/1/26.
@@ -17,6 +20,8 @@ import org.greenrobot.eventbus.EventBus;
 public class BaseActivity extends AppCompatActivity {
 
 
+    public  AVIMClient client;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +29,7 @@ public class BaseActivity extends AppCompatActivity {
             App.baseQueue.add(this);
         }
     }
+
 
 
     @Override
@@ -72,6 +78,15 @@ public class BaseActivity extends AppCompatActivity {
         EventBus.getDefault().unregister(this);
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(EmptyEvent event) {}
+
+    public AVIMClient getClient() {
+        return client;
+    }
+
+    public void setClient(AVIMClient client) {
+        this.client = client;
+    }
 }
 

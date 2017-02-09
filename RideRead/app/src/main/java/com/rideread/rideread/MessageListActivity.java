@@ -1,5 +1,6 @@
 package com.rideread.rideread;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -28,10 +29,10 @@ public class MessageListActivity extends BaseActivity {
 
     private void initData() {
 
-        List<MessageEntity> datas=new ArrayList<MessageEntity>();
+        final List<MessageEntity> datas=new ArrayList<MessageEntity>();
 
-        datas.add(new MessageEntity("梁小红","什么时候出发？",R.mipmap.me,"13:25"));
-        datas.add(new MessageEntity("菲菲","哦哦",R.mipmap.me,"13:25"));
+        datas.add(new MessageEntity("131","什么时候出发？",R.mipmap.me,"13:25"));
+        datas.add(new MessageEntity("121","哦哦",R.mipmap.me,"13:25"));
         datas.add(new MessageEntity("一缕阳光","什么时候出发？",R.mipmap.me,"13:25"));
         datas.add(new MessageEntity("阅约匹配","菲菲等3人",R.mipmap.me,"13:25"));
         datas.add(new MessageEntity("系统","欢迎使用",R.mipmap.me,"13:25"));
@@ -40,7 +41,10 @@ public class MessageListActivity extends BaseActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startActivity(ChatActivity.class,"15622705224");
+                String menberId=datas.get(position).getAuthor();
+                Intent intent=new Intent(MessageListActivity.this,ChatActivity.class);
+                intent.putExtra("menberid",menberId);
+                startActivity(intent);
             }
         });
     }

@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -14,9 +15,13 @@ import android.widget.Toast;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.SaveCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
+import com.rideread.rideread.im.AVImClientManager;
 
 import okhttp3.OkHttpClient;
 
@@ -49,7 +54,11 @@ public class LoginActivity extends AppCompatActivity {
     public void onLogin(View v){
         account=accountEdt.getText().toString().trim();
         password=passwordEdt.getText().toString().trim();
-        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        if(!TextUtils.isEmpty(account)){
+            openClient(account);
+        }else{
+            Toast.makeText(this,"请输入用户名",Toast.LENGTH_SHORT).show();
+        }
 //        if(account==null||password==null){
 //            Toast.makeText(getBaseContext(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
 //        }else if(!hasNetWork()){
@@ -58,6 +67,29 @@ public class LoginActivity extends AppCompatActivity {
 //            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
 //        }
 
+    }
+
+
+    /**
+     * 以用户名作为clientid登录leancloud的im服务器
+     * @param account
+     */
+    private void openClient(String account) {
+
+        accountEdt.setEnabled(false);
+        passwordEdt.setEnabled(false);
+        AVImClientManager.getInstance().open(account,new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if(e==null){
+                    accountEdt.setEnabled(true);
+                    passwordEdt.setEnabled(true);
+                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                }else{
+                    Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     class LoginAsyncTask extends AsyncTask<String,String,LoginMessageEntity>
