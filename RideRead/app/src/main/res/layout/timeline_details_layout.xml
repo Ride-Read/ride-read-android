@@ -4,8 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    >
+    android:background="@android:color/white">
     <com.rideread.rideread.widget.MainToolBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,23 +12,20 @@
         android:background="@android:color/white"
         android:minHeight="?attr/actionBarSize"
         app:isShowLeftIcon="true"
-        app:isShowRightIcon="false"
+        app:isShowRightIcon="true"
         app:LeftIcon="@mipmap/left_arrow"
+        app:RightIcon="@mipmap/icon_more"
         app:isShowLeftTitle="false"
+        app:title="@string/timeline_details_text"
         >
 
     </com.rideread.rideread.widget.MainToolBar>
 
-
-
     <ListView
-        android:id="@+id/self_timeline_list"
+        android:id="@+id/timeline_detail_commentlist"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:scrollbars="none"
-        android:divider="@android:color/white"
-        android:dividerHeight="20dip"
-        />
+        android:divider="@android:color/black"
+        android:dividerHeight="0.5dip"/>
 
 </LinearLayout>

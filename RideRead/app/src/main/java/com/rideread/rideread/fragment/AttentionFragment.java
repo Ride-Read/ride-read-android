@@ -13,6 +13,7 @@ import android.widget.ListView;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.SelfTimelineActivity;
+import com.rideread.rideread.TimelineDetailsActivity;
 import com.rideread.rideread.adapter.AttentionListAdapter;
 import com.rideread.rideread.bean.TimeLine;
 
@@ -48,12 +49,12 @@ public class AttentionFragment extends Fragment {
             imgsL.add(imgs[i]);
         }
 
-        lists.add(new TimeLine("涨小明","56","10km",true,false,false,imgsL,"广州","12:23","",null,"10"));
-        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","12:23","","今天风景很美，我先去看看","10"));
-        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","12:23","","哈哈，我到这里了，过来看看","10"));
-        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","12:23","","不知道说什么，随便写写","10"));
-        lists.add(new TimeLine("涨小明","56","10km",false,true,false,null,"广州","12:23","","今天风景很美，我先去看看","10"));
-        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","12:23","","哈哈，我到这里了，过来看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,false,false,imgsL,"广州","","6分钟前",null,"10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","","6分钟前","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","","6分钟前","哈哈，我到这里了，过来看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","","6分钟前","不知道说什么，随便写写","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,false,null,"广州","","6分钟前","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","","6分钟前","哈哈，我到这里了，过来看看","10"));
 
     }
 
@@ -65,7 +66,9 @@ public class AttentionFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("itemonclick","ito");
+                Intent intent=new Intent(AttentionFragment.this.getActivity(), TimelineDetailsActivity.class);
+                intent.putExtra("timeline",lists.get(position));
+                startActivity(intent);
 
             }
         });

@@ -2,9 +2,11 @@ package com.rideread.rideread;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,6 +15,7 @@ import com.rideread.rideread.adapter.SelfTimelineListAdapter;
 import com.rideread.rideread.bean.SelfTimeline;
 import com.rideread.rideread.bean.SelfTimelineList;
 import com.rideread.rideread.bean.SelfTimlineDetail;
+import com.rideread.rideread.common.ListViewMeasure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,17 +44,26 @@ public class SelfTimelineActivity extends BaseActivity {
 
     private void initView() {
 
+        ImageView back=(ImageView)findViewById(R.id.left_setting_icon);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        View v= LayoutInflater.from(getApplicationContext()).inflate(R.layout.self_timeline_listview_headerview,null);
         ListView listView=(ListView)findViewById(R.id.self_timeline_list);
-        TextView self_timeline_name=(TextView)findViewById(R.id.self_timeline_name);
-        CircleImageView circleiv=(CircleImageView)findViewById(R.id.self_timeline_civ);
-        ImageView ivsex=(ImageView)findViewById(R.id.self_timeline_sex);
-        TextView signture=(TextView)findViewById(R.id.self_timeline_signture);
-        TextView self_timeline_attention=(TextView)findViewById(R.id.self_timeline_attention);
-        TextView self_timeline_fans=(TextView)findViewById(R.id.self_timeline_fans);
-        TextView self_timeline_location=(TextView)findViewById(R.id.self_timeline_location);
-        TextView self_timeline_school=(TextView)findViewById(R.id.self_timeline_school);
-        TextView self_timeline_xizuo=(TextView)findViewById(R.id.self_timeline_xizuo);
-        TextView self_timeline_job=(TextView)findViewById(R.id.self_timeline_job);
+        listView.addHeaderView(v);
+        TextView self_timeline_name=(TextView)v.findViewById(R.id.self_timeline_name);
+        CircleImageView circleiv=(CircleImageView)v.findViewById(R.id.self_timeline_civ);
+        ImageView ivsex=(ImageView)v.findViewById(R.id.self_timeline_sex);
+        TextView signture=(TextView)v.findViewById(R.id.self_timeline_signture);
+        TextView self_timeline_attention=(TextView)v.findViewById(R.id.self_timeline_attention);
+        TextView self_timeline_fans=(TextView)v.findViewById(R.id.self_timeline_fans);
+        TextView self_timeline_location=(TextView)v.findViewById(R.id.self_timeline_location);
+        TextView self_timeline_school=(TextView)v.findViewById(R.id.self_timeline_school);
+        TextView self_timeline_xizuo=(TextView)v.findViewById(R.id.self_timeline_xizuo);
+        TextView self_timeline_job=(TextView)v.findViewById(R.id.self_timeline_job);
 
 
         self_timeline_attention.setText(selftimeline.getAttention());
@@ -64,12 +76,7 @@ public class SelfTimelineActivity extends BaseActivity {
         signture.setText(selftimeline.getSignture());
         ivsex.setImageResource(R.mipmap.female);
         circleiv.setImageResource(R.mipmap.me);
-
         listView.setAdapter(new SelfTimelineListAdapter(this,selftimeline.getSelftimelinelist(),R.layout.self_timeline_listitem));
-
-        setListViewHeightBaseAdapter(listView);
-
-
 
     }
 
@@ -83,29 +90,23 @@ public class SelfTimelineActivity extends BaseActivity {
         lists2.add(new SelfTimelineList("狼了一圈",""));
         lists2.add(new SelfTimelineList("好开心",""));
 
+        List<SelfTimelineList> lists3=new ArrayList<SelfTimelineList>();
+        lists3.add(new SelfTimelineList("狼了一圈",""));
+        lists3.add(new SelfTimelineList("好开心",""));
+
+        List<SelfTimelineList> lists4=new ArrayList<SelfTimelineList>();
+        lists4.add(new SelfTimelineList("狼了一圈",""));
+        lists4.add(new SelfTimelineList("好开心",""));
+
         ArrayList<SelfTimlineDetail> selftimelinedeatil=new ArrayList<SelfTimlineDetail>();
         selftimelinedeatil.add(new SelfTimlineDetail(lists1,"今天"));
         selftimelinedeatil.add(new SelfTimlineDetail(lists2,"1月14号"));
+        selftimelinedeatil.add(new SelfTimlineDetail(lists3,"6月12号"));
+        selftimelinedeatil.add(new SelfTimlineDetail(lists4,"7月12号"));
 
         selftimeline=new SelfTimeline("关注593", "阅粉5210万", "广州", "演员", "张小熊","", "广州大学",selftimelinedeatil, 1, "摩羯座", "个性签名");
     }
 
 
-    public void setListViewHeightBaseAdapter(ListView listViewHeightBaseAdapter) {
 
-        ListAdapter adapter=listViewHeightBaseAdapter.getAdapter();
-        if(adapter==null){
-            return;
-        }
-        int totalHeight=0;
-        for(int i=0,len=adapter.getCount();i<len;i++){
-            View listItem=adapter.getView(i,null,listViewHeightBaseAdapter);
-            listItem.measure(0,0);
-            totalHeight+=listItem.getMeasuredHeight();
-        }
-        ViewGroup.LayoutParams params=listViewHeightBaseAdapter.getLayoutParams();
-        params.height=totalHeight+(listViewHeightBaseAdapter.getDividerHeight()*(adapter.getCount()-1));
-        listViewHeightBaseAdapter.setLayoutParams(params);
-
-    }
 }

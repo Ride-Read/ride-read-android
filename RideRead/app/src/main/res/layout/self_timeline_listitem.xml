@@ -3,8 +3,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="20dip"
-    android:layout_marginRight="20dip">
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip">
     <TextView
         android:id="@+id/self_timelinelist_pushtime"
         android:layout_width="match_parent"
@@ -12,13 +12,12 @@
         android:padding="5dip"
         android:text="15日"
         android:textColor="@android:color/black"
-        android:textSize="22sp"/>
+        android:textSize="20sp"/>
     <ListView
         android:id="@+id/self_timeline_lv_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dip"
         android:divider="@android:color/white"
-        android:dividerHeight="20dip"/>
+        android:dividerHeight="10dip"/>
 
 </LinearLayout>

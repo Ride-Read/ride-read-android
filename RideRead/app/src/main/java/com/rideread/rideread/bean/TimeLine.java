@@ -1,5 +1,6 @@
 package com.rideread.rideread.bean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -7,7 +8,7 @@ import java.util.Map;
  * Created by Jackbing on 2017/2/4.
  */
 
-public class TimeLine {
+public class TimeLine implements Serializable{
 
     public boolean hasVideo;
     private boolean hasText;

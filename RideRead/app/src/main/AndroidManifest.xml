@@ -87,7 +87,10 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".SelfTimelineActivity"
             android:screenOrientation="portrait"></activity>
-
+        <activity android:name=".TimelineDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".common.ImageShower"
+            android:screenOrientation="portrait"></activity>
 
 
         <service android:name="com.amap.api.location.APSService"></service>

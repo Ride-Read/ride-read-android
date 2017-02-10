@@ -7,7 +7,8 @@
     android:paddingRight="15dip"
     android:paddingLeft="15dip"
     android:paddingTop="20dip"
-    android:paddingBottom="20dip">
+    android:paddingBottom="20dip"
+    android:descendantFocusability="blocksDescendants">
 
     <ImageView
         android:id="@+id/timeline_head"

@@ -21,7 +21,6 @@ allprojects {
         jcenter()
         maven{
             url "https://jitpack.io"
-
         }
         maven {
             url "http://mvn.leancloud.cn/nexus/content/repositories/public"

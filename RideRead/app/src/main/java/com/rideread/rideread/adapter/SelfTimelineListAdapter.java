@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.SelfTimlineDetail;
+import com.rideread.rideread.common.ListViewMeasure;
 
 import java.util.List;
 
@@ -63,7 +64,8 @@ public class SelfTimelineListAdapter extends BaseAdapter{
 
         viewHolder.pushtime.setText(detail.getPushTime());
         viewHolder.listdetail.setAdapter(new SelfTimelineDetailAdapter(context,detail.getLists(),R.layout.self_timelinelist_detail_item));
-
+        //设置listview 的高度
+        ListViewMeasure.setListViewHeightBaseAdapter(viewHolder.listdetail);
         return convertView;
     }
 
