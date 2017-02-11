@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip">
+    <TextView
+        android:id="@+id/self_timelinelist_pushtime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dip"
+        android:text="15日"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"/>
+    <ListView
+        android:id="@+id/self_timeline_lv_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@android:color/white"
+        android:dividerHeight="10dip"/>
+
+</LinearLayout>

@@ -10,6 +10,9 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocationClientOption;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.bean.Tab;
 import com.rideread.rideread.fragment.MapFragment;
 import com.rideread.rideread.fragment.MineFragment;
@@ -77,5 +80,21 @@ public class MainActivity extends BaseActivity {
         text.setText(tab.getTitle());
 
         return  view;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //Jerry登录
+        AVIMClient jerry = AVIMClient.getInstance("15622705224");
+        jerry.open(new AVIMClientCallback(){
+
+            @Override
+            public void done(AVIMClient client,AVIMException e){
+                if(e==null){
+
+                }
+            }
+        });
     }
 }

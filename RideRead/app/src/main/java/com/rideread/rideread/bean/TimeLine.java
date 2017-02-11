@@ -1,5 +1,6 @@
 package com.rideread.rideread.bean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -7,59 +8,108 @@ import java.util.Map;
  * Created by Jackbing on 2017/2/4.
  */
 
-public class TimeLine {
+public class TimeLine implements Serializable{
 
+    public boolean hasVideo;
     private boolean hasText;
     private boolean hasImg;
     private String text;
-    private int[] imgs;
-    private String[] from;
-    private int[] to;
-    private int imgLayout;
-    private List<Map<String,Object>> data_list=null;
+    private List<Integer> imgs;
+    private String author;//用户名
+    private String poritoait;//头像路径
+    private String location;//地点
+    private String distance;//距离
+    private String commentnum;//评论数量
+    private String zanNum;//点赞数量
+    private String pushTime;//发布时间
 
-    public TimeLine(boolean hasImg, boolean hasText, int[] imgs, String text,String[] from,int[] to,
-                    List<Map<String,Object>> data_list,int imgLayout) {
+
+    public TimeLine(boolean hasImg, boolean hasText,boolean hasVideo, List<Integer> imgs,String text) {
         this.hasImg = hasImg;
         this.hasText = hasText;
         this.imgs = imgs;
         this.text = text;
-        this.from=from;
-        this.to=to;
-        this.data_list=data_list;
-        this.imgLayout=imgLayout;
+        this.hasVideo=hasVideo;
+
     }
 
-    public List<Map<String, Object>> getData_list() {
-        return data_list;
+    public TimeLine(String author, String commentnum, String distance, boolean hasImg, boolean hasText, boolean hasVideo, List<Integer> imgs, String location, String poritoait, String pushTime, String text, String zanNum) {
+        this.author = author;
+        this.commentnum = commentnum;
+        this.distance = distance;
+        this.hasImg = hasImg;
+        this.hasText = hasText;
+        this.hasVideo = hasVideo;
+        this.imgs = imgs;
+        this.location = location;
+        this.poritoait = poritoait;
+        this.pushTime = pushTime;
+        this.text = text;
+        this.zanNum = zanNum;
     }
 
-    public void setData_list(List<Map<String, Object>> data_list) {
-        this.data_list = data_list;
+    public String getAuthor() {
+        return author;
     }
 
-    public int getImgLayout() {
-        return imgLayout;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public void setImgLayout(int imgLayout) {
-        this.imgLayout = imgLayout;
+    public String getCommentnum() {
+        return commentnum;
     }
 
-    public int[] getTo() {
-        return to;
+    public void setCommentnum(String commentnum) {
+        this.commentnum = commentnum;
     }
 
-    public void setTo(int[] to) {
-        this.to = to;
+    public String getDistance() {
+        return distance;
     }
 
-    public String[] getFrom() {
-        return from;
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 
-    public void setFrom(String[] from) {
-        this.from = from;
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getPoritoait() {
+        return poritoait;
+    }
+
+    public void setPoritoait(String poritoait) {
+        this.poritoait = poritoait;
+    }
+
+    public String getPushTime() {
+        return pushTime;
+    }
+
+    public void setPushTime(String pushTime) {
+        this.pushTime = pushTime;
+    }
+
+    public String getZanNum() {
+        return zanNum;
+    }
+
+    public void setZanNum(String zanNum) {
+        this.zanNum = zanNum;
+    }
+
+    public boolean isHasVideo() {
+        return hasVideo;
+    }
+
+    public void setHasVideo(boolean hasVideo) {
+        this.hasVideo = hasVideo;
     }
 
     public boolean isHasImg() {
@@ -78,11 +128,11 @@ public class TimeLine {
         this.hasText = hasText;
     }
 
-    public int[] getImgs() {
+    public List<Integer> getImgs() {
         return imgs;
     }
 
-    public void setImgs(int[] imgs) {
+    public void setImgs(List<Integer> imgs) {
         this.imgs = imgs;
     }
 

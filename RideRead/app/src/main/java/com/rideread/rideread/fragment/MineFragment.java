@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rideread.rideread.ChatActivity;
+import com.rideread.rideread.MessageListActivity;
 import com.rideread.rideread.MineAttentionActivity;
 import com.rideread.rideread.MineEditMessageActivity;
 import com.rideread.rideread.MineFansActivity;
@@ -57,7 +59,8 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v){
         switch (v.getId()){
             case R.id.mine_tv_message:
-                Toast.makeText(getContext(),"我的消息",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(),"我的消息",Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getActivity(),MessageListActivity.class));
                 break;
             case R.id.mine_tv_attention_num:
             case R.id.mine_tv_attention:

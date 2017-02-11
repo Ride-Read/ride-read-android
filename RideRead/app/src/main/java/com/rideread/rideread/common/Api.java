@@ -14,6 +14,8 @@ public class Api {
 
     public final static String EDIT_MESSAGE="";//编辑个人资料
 
+    public final static String MY_TIMELINE="";//我的阅圈的接口
+
 
     public final static String USERHEAD_LINK="http://okl6snsus.bkt.clouddn.com/";
     public final static String TOKEN="MRBbJCJr-MDVxa08p6eMv6SouPViY8wqSfZek7Pt:fYQJktezBxHakBx1UBvsfciRPjg=:eyJzY29wZSI6InJlYWRyaWRlIiwiZGVhZGxpbmUiOjE0ODU5MTMyNTd9";//测试用的token

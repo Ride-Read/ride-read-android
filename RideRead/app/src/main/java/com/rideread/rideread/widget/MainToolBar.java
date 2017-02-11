@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -22,7 +23,7 @@ import com.rideread.rideread.R;
 public class MainToolBar extends Toolbar {
     private View mView;
     private LayoutInflater inflater;
-    private TextView mTtitle;
+    private TextView mTtitle,leftTitle;
     private ImageView rightSearchIcon,leftSettingIcon;
 
     public MainToolBar(Context context) {
@@ -44,12 +45,13 @@ public class MainToolBar extends Toolbar {
 
             boolean isShowSearchIcon = a.getBoolean(R.styleable.MainToolBar_isShowRightIcon, false);
             boolean isShowSettingIcon=a.getBoolean(R.styleable.MainToolBar_isShowLeftIcon,false);
-
+            boolean isShowLeftTitle=a.getBoolean(R.styleable.MainToolBar_isShowLeftTitle,false);
             int lefticonResId=a.getResourceId(R.styleable.MainToolBar_LeftIcon,R.mipmap.icon_setting);
             int righticonResId=a.getResourceId(R.styleable.MainToolBar_RightIcon,R.mipmap.icon_search);
 
             leftSettingIcon.setImageResource(lefticonResId);
             rightSearchIcon.setImageResource(righticonResId);
+
 
 
             if(isShowSettingIcon){
@@ -64,9 +66,32 @@ public class MainToolBar extends Toolbar {
                 hideSearchIcon();
             }
 
+            if(isShowLeftTitle){
+                showLeftTitle();
+                final CharSequence title = a.getText(R.styleable.MainToolBar_leftTitle);
+                if(!TextUtils.isEmpty(title)){
+                    setLeftTitle(title);
+                }
+            }else{
+                hideLeftTitle();
+            }
+
             a.recycle();
         }
 
+    }
+
+
+    public void showLeftTitle(){
+        if(leftTitle!=null){
+            leftTitle.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void hideLeftTitle(){
+        if(leftTitle!=null){
+            leftTitle.setVisibility(View.GONE);
+        }
     }
 
     private void showSettingIcon(){
@@ -105,6 +130,7 @@ public class MainToolBar extends Toolbar {
             mTtitle = (TextView) mView.findViewById(R.id.main_toolbar_title);
             rightSearchIcon = (ImageView) mView.findViewById(R.id.right_search_icon);
             leftSettingIcon=(ImageView)mView.findViewById(R.id.left_setting_icon);
+            leftTitle=(TextView) mView.findViewById(R.id.left_title);
 
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
 
@@ -125,6 +151,17 @@ public class MainToolBar extends Toolbar {
         if (mTtitle != null) {
             mTtitle.setText(title);
         }
+    }
+
+
+    public void setLeftTitle(@StringRes int resId){
+        setLeftTitle(getContext().getText(resId));
+    }
+
+    public void setLeftTitle(CharSequence leftTitles){
+            if(leftTitle!=null){
+                leftTitle.setText(leftTitles);
+            }
     }
 
 

@@ -39,5 +39,7 @@
         <item>关注</item>
     </string-array>
 
+    <string name="unspport_message_type">不支持的消息类型</string>
 
+    <string name="timeline_details_text">详情</string>
 </resources>

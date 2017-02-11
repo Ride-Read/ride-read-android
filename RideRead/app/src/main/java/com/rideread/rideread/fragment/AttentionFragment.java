@@ -1,22 +1,24 @@
 package com.rideread.rideread.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.rideread.rideread.R;
+import com.rideread.rideread.SelfTimelineActivity;
+import com.rideread.rideread.TimelineDetailsActivity;
 import com.rideread.rideread.adapter.AttentionListAdapter;
 import com.rideread.rideread.bean.TimeLine;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jackbing on 2017/2/3.
@@ -26,13 +28,10 @@ public class AttentionFragment extends Fragment {
 
     private List<TimeLine> lists;
     private ListView listview;
-    private GridView gridView;
-    private String text="hjvghajvghdvgahjdvgahj";
     private View mView;
     private int[] imgs={R.mipmap.me,R.mipmap.me,R.mipmap.me,
             R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me,R.mipmap.me};
-    private String[] from={"image"};
-    private int[] to={R.id.timeline_grid_img};
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,18 +44,17 @@ public class AttentionFragment extends Fragment {
 
     private void initData() {
         lists=new ArrayList<TimeLine>();
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
-        lists.add(new TimeLine(false,true,null,text,null,null,null,0));
-        lists.add(new TimeLine(true,false,imgs,null,from,to,getDataList(),R.layout.timeline_grid_item));
+        List<Integer> imgsL=new ArrayList<Integer>();
+        for(int i=0;i<imgs.length;i++){
+            imgsL.add(imgs[i]);
+        }
+
+        lists.add(new TimeLine("涨小明","56","10km",true,false,false,imgsL,"广州","","6分钟前",null,"10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","","6分钟前","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","","6分钟前","哈哈，我到这里了，过来看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,true,null,"广州","","6分钟前","不知道说什么，随便写写","10"));
+        lists.add(new TimeLine("涨小明","56","10km",false,true,false,null,"广州","","6分钟前","今天风景很美，我先去看看","10"));
+        lists.add(new TimeLine("涨小明","56","10km",true,true,false,imgsL,"广州","","6分钟前","哈哈，我到这里了，过来看看","10"));
 
     }
 
@@ -64,15 +62,25 @@ public class AttentionFragment extends Fragment {
         listview=(ListView) mView.findViewById(R.id.timeline_attention_listview);
         AttentionListAdapter adapter=new AttentionListAdapter(lists,R.layout.timeline_attention_listitem,getContext());
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(AttentionFragment.this.getActivity(), TimelineDetailsActivity.class);
+                intent.putExtra("timeline",lists.get(position));
+                startActivity(intent);
+
+            }
+        });
     }
 
-    public List<Map<String,Object>> getDataList(){
-        List<Map<String,Object>> lists=new ArrayList<Map<String,Object>>();
-        for(int i=0;i<imgs.length;i++){
-            Map<String,Object> map=new HashMap<String,Object>();
-            map.put("image",imgs[i]);
-            lists.add(map);
-        }
-        return lists;
-    }
+//    public List<Map<String,Object>> getDataList(){
+//        List<Map<String,Object>> lists=new ArrayList<Map<String,Object>>();
+//        for(int i=0;i<imgs.length;i++){
+//            Map<String,Object> map=new HashMap<String,Object>();
+//            map.put("image",imgs[i]);
+//            lists.add(map);
+//        }
+//        return lists;
+//    }
 }

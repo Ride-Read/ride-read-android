@@ -28,6 +28,16 @@
         android:supportsRtl="true"
         android:name=".App"
         android:theme="@style/AppTheme">
+        <!-- 实时通信模块、推送（均需要加入以下声明） START -->
+        <!-- 实时通信模块、推送都要使用 PushService -->
+        <service android:name="com.avos.avoscloud.PushService"/>
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="7413513402aea054b560456afb6a00bb"/>
@@ -71,7 +81,16 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MineEdtMsgDistrictActivity"
             android:screenOrientation="portrait"></activity>
-
+        <activity android:name=".ChatActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".MessageListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".SelfTimelineActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".TimelineDetailsActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".common.ImageShower"
+            android:screenOrientation="portrait"></activity>
 
 
         <service android:name="com.amap.api.location.APSService"></service>
