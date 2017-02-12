@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
-import com.rideread.rideread.common.DBCopyUtil;
+import com.rideread.rideread.db.DBCopyUtil;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;

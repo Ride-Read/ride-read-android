@@ -9,6 +9,7 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.rideread.rideread.R;
+import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.event.ImTypeMessageEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -35,9 +36,9 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
                 // 过滤掉自己发的消息
                 if (!message.getFrom().equals(clientID)) {
                     sendEvent(message, conversation);
-//                    if (NotificationUtils.isShowNotification(conversation.getConversationId())) {
-//                        sendNotification(message, conversation);
-//                    }
+                    if (NotificationUtils.isShowNotification(conversation.getConversationId())) {
+                        sendNotification(message, conversation);
+                    }
                 }
             } else {
                 client.close(null);
@@ -61,13 +62,13 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
     }
 
     private void sendNotification(AVIMTypedMessage message, AVIMConversation conversation) {
-//        String notificationContent = message instanceof AVIMTextMessage ?
-//                ((AVIMTextMessage)message).getText() : context.getString(R.string.unspport_message_type);
-//
-//        Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
-//        intent.putExtra(Constants.CONVERSATION_ID, conversation.getConversationId());
-//        intent.putExtra(Constants.MEMBER_ID, message.getFrom());
-//        NotificationUtils.showNotification(context, "", notificationContent, null, intent);
+        String notificationContent = message instanceof AVIMTextMessage ?
+                ((AVIMTextMessage)message).getText() : context.getString(R.string.unspport_message_type);
+
+        Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
+        intent.putExtra(Constants.CONVERSATION_ID, conversation.getConversationId());
+        intent.putExtra(Constants.MEMBER_ID, message.getFrom());
+        NotificationUtils.showNotification(context, "", notificationContent, null, intent);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.rideread.rideread.common;
+package com.rideread.rideread.db;
 
 import android.content.Context;
 import android.util.Log;

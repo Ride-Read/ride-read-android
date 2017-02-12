@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Jackbing on 2017/2/1.
+ * 省市是数据库
  */
 
 public class RegionDao {

@@ -15,6 +15,8 @@ import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 import com.rideread.rideread.common.Api;
+import com.rideread.rideread.common.Constants;
+import com.rideread.rideread.db.RideReadDBHelper;
 import com.rideread.rideread.im.MessageHandler;
 
 import java.util.Iterator;
@@ -60,6 +62,8 @@ public class App extends Application {
         //注册默认的消息处理逻辑
         AVIMMessageManager.registerDefaultMessageHandler(new CustomMessageHandler());
         AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
+
+        RideReadDBHelper.getInstance().init(this, Constants.DEFAULT_DB_NAME,null);
     }
 
     public UploadManager getUploadManager(){

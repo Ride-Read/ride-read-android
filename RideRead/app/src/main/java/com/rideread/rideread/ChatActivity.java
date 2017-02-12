@@ -21,8 +21,11 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.rideread.rideread.adapter.ChatMessageAdapter;
 import com.rideread.rideread.bean.ChatMessage;
 import com.rideread.rideread.common.Constants;
+import com.rideread.rideread.db.RideReadDBHelper;
 import com.rideread.rideread.event.ImTypeMessageEvent;
+import com.rideread.rideread.gen.DaoSession;
 import com.rideread.rideread.im.AVImClientManager;
+import com.rideread.rideread.im.NotificationUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -44,6 +47,7 @@ public class ChatActivity extends BaseActivity {
     private ListView chatlist;
     private String menberId;
     private EditText editor;
+    private DaoSession mDaoSession;
 
     protected AVIMConversation imConversation;
 
@@ -54,30 +58,48 @@ public class ChatActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
         setContentView(R.layout.im_chat_layout);
+        EventBus.getDefault().register(this);
         initDatas();
 
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
+        if (null != imConversation) {
+            NotificationUtils.addTag(imConversation.getConversationId());
+        }
     }
 
     @Override
-    protected void onPause() {
+    public void onPause() {
         super.onPause();
+        NotificationUtils.removeTag(imConversation.getConversationId());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     private void initDatas() {
-
+        if(mDaoSession==null){
+            mDaoSession=RideReadDBHelper.getInstance().getmDaoSession();
+        }
         menberId=getIntent().getStringExtra("menberid");
         //模拟本地数据,此处应该是查询本地聊天记录.
-        datas=new ArrayList<ChatMessage>();
-        datas.add(new ChatMessage(null,"消息内容",R.mipmap.me,null,1));
+        //datas=new ArrayList<ChatMessage>();
 
-        datas.add(new ChatMessage(null,"消息内容消息内容消息内容",R.mipmap.me,null,0));
-        datas.add(new ChatMessage(null,"消息内容",R.mipmap.me,null,1));
-        datas.add(new ChatMessage(null,"消息内容消息内容消息内容消息内容消息内容",R.mipmap.me,null,0));
+        mDaoSession.insert(new ChatMessage(1,R.mipmap.me,menberId,"消息内容",null));
+        mDaoSession.insert(new ChatMessage(0,R.mipmap.me,"me","消息内容消息内容消息内容",null));
+//        datas.add();
+//        datas.add();
+//        datas.add(new ChatMessage(0,R.mipmap.me,"me","消息内容消息内容消息内容消息内容消息内容",null));
+
+
+        datas= mDaoSession.loadAll(ChatMessage.class);
+
 
         initView(datas);
 
@@ -105,7 +127,10 @@ public class ChatActivity extends BaseActivity {
         if (null != imConversation && null != event &&
                 imConversation.getConversationId().equals(event.conversation.getConversationId())) {
             if (event.message instanceof AVIMTextMessage) {
-                 adapter.addMessage(((AVIMTextMessage) event.message).getText());
+                String msg=((AVIMTextMessage) event.message).getText();
+                ChatMessage chatMessage=new ChatMessage(0,R.mipmap.me,menberId,msg,null);
+                adapter.addMessage(chatMessage);
+
                 adapter.notifyDataSetChanged();
                 chatlist.smoothScrollToPosition(adapter.getCount()-1);
             }
@@ -142,7 +167,7 @@ public class ChatActivity extends BaseActivity {
     private void sendTextMessage(String text){
         final  AVIMTextMessage message = new AVIMTextMessage();
         message.setText(text);
-        datas.add(new ChatMessage(null,text,R.mipmap.me,null,1));
+        datas.add(new ChatMessage(1,R.mipmap.me,null,text,null));
         adapter.notifyDataSetChanged();
         chatlist.smoothScrollToPosition(adapter.getCount()-1);
         editor.setText("");

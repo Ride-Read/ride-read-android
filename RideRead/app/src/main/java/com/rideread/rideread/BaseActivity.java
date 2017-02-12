@@ -35,7 +35,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        EventBus.getDefault().register(this);
+        //EventBus.getDefault().register(this);
     }
 
     protected void startActivity(Class<?> cls) {
@@ -75,11 +75,10 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        EventBus.getDefault().unregister(this);
+        //EventBus.getDefault().unregister(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(EmptyEvent event) {}
+
 
     public AVIMClient getClient() {
         return client;

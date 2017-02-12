@@ -65,7 +65,8 @@ public class NotificationUtils {
                         .setSmallIcon(R.mipmap.notification_icon)
                         .setContentTitle(title).setAutoCancel(true).setContentIntent(contentIntent)
                         .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
-                        .setContentText(content);
+                        .setContentText(content)
+                        .setPriority(Notification.PRIORITY_HIGH);
         NotificationManager manager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification = mBuilder.build();

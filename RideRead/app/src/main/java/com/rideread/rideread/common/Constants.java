@@ -21,4 +21,7 @@ public class Constants {
     }
 
     public static final String CLIENT_ID="11";
+
+    public static final String DEFAULT_DB_NAME="rideread.db";
+    public static final int DEFAULT_DB_VERSION=1;
 }

@@ -1,24 +1,37 @@
 package com.rideread.rideread.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.NotNull;
+
 /**
  * Created by Jackbing on 2017/2/6.
  */
-
+@Entity
 public class ChatMessage {
 
     private int type;//消息类型 1表示from，0表示to（发送出去）
     private int portait;//头像路径,这里暂时用id来代替
+    @NotNull
     private String author;//发送者用户名
     private String content;//消息内容
     private String pubDate;//发送时间
 
-    public ChatMessage(String author, String content, int  portait, String pubDate, int type) {
+    @Generated(hash = 2271208)
+    public ChatMessage() {
+    }
+
+    @Generated(hash = 1683694495)
+    public ChatMessage( int type, int portait, @NotNull String author, String content, String pubDate) {
+        this.type = type;
+        this.portait = portait;
         this.author = author;
         this.content = content;
-        this.portait = portait;
         this.pubDate = pubDate;
-        this.type = type;
+
     }
+
 
     public String getAuthor() {
         return author;
