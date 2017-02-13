@@ -14,4 +14,8 @@
         <attr name="isShowLeftTitle" format="boolean"></attr>
     </declare-styleable>
 
+    <declare-styleable name="ScrollTabView">
+        <attr name="indicatorView" format="reference"></attr>
+    </declare-styleable>
+
 </resources>

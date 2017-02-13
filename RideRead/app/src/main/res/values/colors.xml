@@ -9,7 +9,8 @@
     <color name="common_black">#000000</color>
 
     <color name="login_textcolor_gray">#808080</color>
-    <color name="login_textcolorhint_gray">#808080</color>
+    <color name="login_textcolorhint_gray">#c1c0c0</color>
+
 
 
     <color name="login_btncolor_dodgerblue_normal">#1E90FF</color>
@@ -18,4 +19,5 @@
     <color name="main_topline_gray">#999999</color>
 
     <color name="common_btnbg_gray">#e5e5e5</color>
+    <color name="common_bg_white">#eeeeee</color>
 </resources>

@@ -38,6 +38,10 @@
         <item>附近</item>
         <item>关注</item>
     </string-array>
+    <string-array name="scrollview_tab_title">
+        <item>登录</item>
+        <item>注册</item>
+    </string-array>
 
     <string name="unspport_message_type">不支持的消息类型</string>
 

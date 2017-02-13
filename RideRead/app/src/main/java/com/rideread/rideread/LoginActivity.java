@@ -4,12 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
@@ -18,10 +22,18 @@ import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.rideread.rideread.adapter.FragmentAdapter;
+import com.rideread.rideread.adapter.TabAdapterImp;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
+import com.rideread.rideread.fragment.LoginFragment;
+import com.rideread.rideread.fragment.RegisterFragment;
 import com.rideread.rideread.im.AVImClientManager;
+import com.rideread.rideread.widget.ScrollTabView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 
@@ -29,16 +41,49 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText accountEdt,passwordEdt;
     private String account,password;
+    private ViewPager viewPager;
+    private String[] titles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_main);
+        setContentView(R.layout.login_main2);
         getSupportActionBar().hide();//隐藏标题栏
         accountEdt=(EditText) findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)findViewById(R.id.login_edt_password);
+        initData();
+        initViewPager();
+        initTabs();
 
+    }
 
+    private void initViewPager() {
+        viewPager=(ViewPager) findViewById(R.id.login_tabview_viewpager);
+        FragmentAdapter fa=new FragmentAdapter(getSupportFragmentManager(),buildFragments());
+        viewPager.setAdapter(fa);
+    }
+
+    private List<Fragment> buildFragments() {
+
+        List<Fragment> fragments = new ArrayList<Fragment>(2);
+        fragments.add(new LoginFragment());
+        fragments.add(new RegisterFragment());
+        return fragments;
+    }
+
+    private void initTabs() {
+        ImageView indicatorView=(ImageView)findViewById(R.id.login_tabview_square);
+        ScrollTabView scrollTabView=(ScrollTabView)findViewById(R.id.login_scrollview_tab);
+        scrollTabView.initViewPager(viewPager);
+
+        TabAdapterImp tai=new TabAdapterImp(this);
+        tai.titles=titles;
+        scrollTabView.setTabAdapter(tai);
+        scrollTabView.setIndicatorView(indicatorView);
+    }
+
+    private void initData() {
+        titles=getResources().getStringArray(R.array.scrollview_tab_title);
 
     }
 
