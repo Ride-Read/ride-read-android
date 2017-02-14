@@ -35,7 +35,6 @@ import com.rideread.rideread.widget.ScrollTabView;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -49,6 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_main2);
         getSupportActionBar().hide();//隐藏标题栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         accountEdt=(EditText) findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)findViewById(R.id.login_edt_password);
         initData();
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         initTabs();
 
     }
+
 
     private void initViewPager() {
         viewPager=(ViewPager) findViewById(R.id.login_tabview_viewpager);
@@ -93,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void onForgetPwd(View v){
-        startActivity(new Intent(this,FindPassword.class));
+//        startActivity(new Intent(this,FindPassword.class));
     }
 
     public void onLogin(View v){

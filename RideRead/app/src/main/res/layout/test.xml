@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/nav_map"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
+    <include
+        android:id="@+id/login_include_layout"
+        layout="@layout/login_sub_layout"
+        />
+    <!--<ViewStub
+        android:id="@+id/viewstub_findpwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout="@layout/fill_phone_sub_layout"/>-->
+    <include
+        android:id="@+id/findpwd_include_layout"
+        layout="@layout/fill_phone_sub_layout"
+        android:visibility="gone"/>
 
-</FrameLayout>
+
+</RelativeLayout>

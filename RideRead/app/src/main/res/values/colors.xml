@@ -17,7 +17,11 @@
     <color name="login_btncolor_blue_pressed">#4169E1</color>
 
     <color name="main_topline_gray">#999999</color>
+    <color name="forgetpwd_text_color">#555555</color>
+
+
 
     <color name="common_btnbg_gray">#e5e5e5</color>
     <color name="common_bg_white">#eeeeee</color>
+    <color name="common_green">#52cace</color>
 </resources>

@@ -1,7 +1,7 @@
 package com.rideread.rideread.widget;
 
 import android.content.Context;
-import android.support.design.widget.TabLayout;
+import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.rideread.rideread.adapter.AbstractTabAdapter;
 
@@ -55,7 +54,7 @@ public class ScrollTabView extends HorizontalScrollView implements ViewPager.OnP
 
     public void initViewPager(ViewPager viewPager) {
         this.viewPager = viewPager;
-        viewPager.setOnPageChangeListener(this);
+        viewPager.addOnPageChangeListener(this);
     }
 
 
@@ -67,7 +66,9 @@ public class ScrollTabView extends HorizontalScrollView implements ViewPager.OnP
 //        lp.width = width;
 //        line.setLayoutParams(lp);
         //indicatorView.setLayoutParams(lp);
-        defalutLeftMargin=lp.leftMargin;
+        defalutLeftMargin=display.widthPixels/4-7;//
+        lp.leftMargin=defalutLeftMargin;
+        indicatorView.setLayoutParams(lp);
 
     }
 
@@ -118,7 +119,6 @@ public class ScrollTabView extends HorizontalScrollView implements ViewPager.OnP
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        Log.e("------onPageScrolled","position="+position+","+"positionOffset"+positionOffset+","+"positionOffsetPixels"+positionOffsetPixels);
         int length = adapter.getCount();
         if (positionOffset != 0 && positionOffsetPixels != 0) {
             lp.leftMargin =defalutLeftMargin+ positionOffsetPixels / length + lp.width * position;
@@ -130,7 +130,6 @@ public class ScrollTabView extends HorizontalScrollView implements ViewPager.OnP
 
     @Override
     public void onPageSelected(int position) {
-
         selectTab(position);
     }
 

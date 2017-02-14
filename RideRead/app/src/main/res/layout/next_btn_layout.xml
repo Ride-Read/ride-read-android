@@ -1,13 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Button xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/register_btn_next"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="@string/register_text_next"
-    android:textColor="@android:color/white"
-    android:layout_marginTop="30dip"
-    android:textSize="22sp"
-    android:onClick="onNext"
-    android:background="@drawable/login_btn_style_selector">
+    android:gravity="center">
 
-</Button>
+    <Button
+        android:id="@+id/register_btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_text_next"
+        android:textColor="@android:color/white"
+        android:paddingTop="14dip"
+        android:paddingBottom="16dip"
+        android:paddingLeft="45dip"
+        android:paddingRight="45dip"
+        android:textSize="44px"
+        android:onClick="onNext"
+        android:background="@mipmap/round_rectangle">
+
+    </Button>
+
+</LinearLayout>
+
+
+
+
