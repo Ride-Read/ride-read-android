@@ -16,9 +16,12 @@
     <string name="register_text_sendidentfycode">发送验证码</string>
     <string name="register_text_setpwd">设置密码</string>
     <string name="register_hint_inputpwd">6~16个字符</string>
+    <string name="register_hint_reinputpwd">确认密码</string>
     <string name="register_hint_setuname">6~20个字符</string>
     <string name="register_text_setuname">设置用户名</string>
-    <string name="register_text_notify">固定骑阅名，保存后无法修改</string>
+    <string name="register_text_notify1">确定</string>
+    <string name="register_text_notify2">骑阅名</string>
+    <string name="register_text_notify3">，保存后无法修改</string>
     <string name="register_text_complete">完成</string>
     <string name="forgetpwd_text_complete">确定</string>
     <string name="forgetpwd_text_resetpwd">重置密码</string>
@@ -46,4 +49,10 @@
     <string name="unspport_message_type">不支持的消息类型</string>
 
     <string name="timeline_details_text">详情</string>
+    <string name="register_invitecode_texthint">邀请人的骑阅号</string>
+    <string name="register_text_head">头像</string>
+    <string name="register_contact_text1">注册即视为同意</string>
+    <string name="register_contact_text2">骑阅用户协议</string>
+
+
 </resources>

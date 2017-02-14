@@ -8,14 +8,14 @@
         android:id="@+id/login_include_layout"
         layout="@layout/login_sub_layout"
         />
-    <!--<ViewStub
-        android:id="@+id/viewstub_findpwd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout="@layout/fill_phone_sub_layout"/>-->
+
     <include
         android:id="@+id/findpwd_include_layout"
         layout="@layout/fill_phone_sub_layout"
+        android:visibility="gone"/>
+    <include
+        android:id="@+id/resetpwd_include_layout"
+        layout="@layout/register_setpwd_sub_layout"
         android:visibility="gone"/>
 
 

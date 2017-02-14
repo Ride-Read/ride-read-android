@@ -11,10 +11,12 @@ public class Api {
     public final static String APP_ID="W8uDmfHGJ6bjr2x8vSG5O846-gzGzoHsz";
     public final static String SET_USERNAME="";//后端的设置用户名和头像的接口
     public final static String RESET_PWD="";//重置密码后台接口
+    public final static String CONFIM_INVITECODE="";//判断邀请码是否有效的后台连接
 
     public final static String EDIT_MESSAGE="";//编辑个人资料
 
     public final static String MY_TIMELINE="";//我的阅圈的接口
+
 
 
     public final static String USERHEAD_LINK="http://okl6snsus.bkt.clouddn.com/";

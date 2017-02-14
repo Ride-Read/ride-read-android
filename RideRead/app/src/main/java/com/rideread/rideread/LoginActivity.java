@@ -9,23 +9,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVObject;
-import com.avos.avoscloud.SaveCallback;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.adapter.FragmentAdapter;
 import com.rideread.rideread.adapter.TabAdapterImp;
 import com.rideread.rideread.bean.LoginMessageEntity;
-import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.fragment.LoginFragment;
 import com.rideread.rideread.fragment.RegisterFragment;
@@ -46,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_main2);
+        setContentView(R.layout.login_main);
         getSupportActionBar().hide();//隐藏标题栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);

@@ -93,26 +93,26 @@
         <include
             layout="@layout/next_btn_layout"
             />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="5dip"
-            android:gravity="center_horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注册即为同意"
-                android:textColor="@color/login_textcolor_gray"
-                android:textSize="14sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="注册即为同意"
-                android:onClick="readAgreement"
-                android:textColor="@color/login_btncolor_dodgerblue_normal"
-                android:textSize="14sp"/>
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:layout_marginTop="5dip"-->
+            <!--android:gravity="center_horizontal">-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="注册即为同意"-->
+                <!--android:textColor="@color/login_textcolor_gray"-->
+                <!--android:textSize="14sp"/>-->
+            <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="注册即为同意"-->
+                <!--android:onClick="readAgreement"-->
+                <!--android:textColor="@color/login_btncolor_dodgerblue_normal"-->
+                <!--android:textSize="14sp"/>-->
+        <!--</LinearLayout>-->
     </TableLayout>
 
 

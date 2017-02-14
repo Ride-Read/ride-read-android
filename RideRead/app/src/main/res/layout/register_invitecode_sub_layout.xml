@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_marginLeft="49dip"
+    android:layout_marginRight="49dip"
+    android:layout_weight="1">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/forgetpwd_text_color"
+        android:layout_marginTop="48dip"
+        android:gravity="center"
+        android:textSize="44px"
+        android:text="@string/register_text_ivitecode"/>
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="15dip"
+        android:background="@color/login_textcolorhint_gray"/>
+    <EditText
+        android:id="@+id/register_edt_invitationcode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:drawablePadding="22dip"
+        android:gravity="center"
+        android:textSize="44px"
+        android:background="@color/common_bg_white"
+        android:drawableBottom="@drawable/login_bottom_line"
+        android:paddingLeft="3dip"
+        android:paddingRight="3dip"
+        android:textCursorDrawable="@drawable/textcusor_drawable"
+        android:textColor="@color/login_textcolor_gray"
+        android:textColorHint="@color/login_textcolorhint_gray"
+        android:hint="@string/register_invitecode_texthint"
+        android:maxLines="1"
+        android:maxLength="20"
+        android:minEms="3"
+        android:layout_marginBottom="69dip"/>
+
+    <include
+
+        layout="@layout/next_btn_layout"
+        />
+
+</TableLayout>

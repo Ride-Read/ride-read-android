@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_weight="1"
+android:gravity="center_vertical"
+android:layout_marginLeft="48dip"
+android:layout_marginRight="48dip">
+<EditText
+    android:id="@+id/login_edt_account"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/login_hint_account"
+    android:textSize="44px"
+    android:textCursorDrawable="@drawable/textcusor_drawable"
+    android:background="@color/common_bg_white"
+    android:drawableBottom="@drawable/login_bottom_line"
+    android:drawablePadding="14dip"
+    android:gravity="center"
+    android:textColor="@color/login_textcolor_gray"
+    android:textColorHint="@color/login_textcolorhint_gray"
+    android:maxLines="1"
+    android:maxLength="20"
+    android:minEms="3"
+    />
+<EditText
+    android:id="@+id/login_edt_password"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/login_hint_pwd"
+    android:layout_marginTop="20dip"
+    android:layout_marginBottom="70dip"
+    android:textSize="44px"
+    android:textColor="@color/login_textcolor_gray"
+    android:textColorHint="@color/login_textcolorhint_gray"
+    android:inputType="textPassword"
+    android:maxLines="1"
+    android:background="@color/common_bg_white"
+    android:drawableBottom="@drawable/login_bottom_line"
+    android:drawablePadding="23dip"
+    android:gravity="center"
+    android:textCursorDrawable="@drawable/textcusor_drawable"
+    android:maxLength="16"
+    />
+
+<TableRow
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/register_text_next"
+        android:textColor="@android:color/white"
+        android:paddingTop="14dip"
+        android:paddingBottom="14dip"
+        android:paddingLeft="45dip"
+        android:paddingRight="45dip"
+        android:textSize="44px"
+        android:onClick="onLogin"
+        android:background="@mipmap/round_rectangle"
+        />
+
+</TableRow>
+
+    <TableRow
+        android:layout_marginTop="13dip"
+        >
+        <TextView
+            android:id="@+id/login_tv_forgetpwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_text_forgetpwd"
+            android:textSize="16sp"
+            android:layout_weight="1"
+            android:onClick="onForgetPwd"
+            android:gravity="center_horizontal"
+            android:textColor="@color/forgetpwd_text_color"/>
+
+    </TableRow>
+</TableLayout>
