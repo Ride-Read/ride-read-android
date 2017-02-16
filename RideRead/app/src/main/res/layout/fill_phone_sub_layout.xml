@@ -10,7 +10,7 @@
     >
 
     <EditText
-        android:id="@+id/register__edt_phone"
+        android:id="@+id/register_edt_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/register_hint_fillphone"
@@ -37,7 +37,7 @@
             android:orientation="horizontal"
             >
             <EditText
-                android:id="@+id/register__edt_identfycode"
+                android:id="@+id/register_edt_identfycode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -67,7 +67,6 @@
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/forgetpwd_text_color"
                 android:textSize="44px"
-                android:onClick="onSendIdentCode"
                 android:clickable="true"
                 android:layout_weight="1"
                 />

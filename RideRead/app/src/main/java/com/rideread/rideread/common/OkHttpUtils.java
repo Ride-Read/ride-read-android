@@ -65,7 +65,7 @@ public class OkHttpUtils {
      * @param url
      * @return
      */
-    public LoginMessageEntity testInviteCode(String inviteCode,String url){
+    public Integer testInviteCode(String inviteCode,String url){
 
 //        try{
 //
@@ -75,7 +75,7 @@ public class OkHttpUtils {
 //        }catch (JSONException e){
 //            return null;
 //        }
-        return new LoginMessageEntity("成功",1);
+        return 1;
 
     }
 
@@ -100,7 +100,7 @@ public class OkHttpUtils {
 //        }catch (JSONException e){
 //            return null;
 //        }
-        return new LoginMessageEntity("成功",1);
+        return null;
     }
 
     public LoginMessageEntity resetPassword(String resetPassword,String telphone,String url){
@@ -113,7 +113,7 @@ public class OkHttpUtils {
 //        }catch (JSONException e){
 //            return null;
 //        }
-        return new LoginMessageEntity("成功",1);
+        return null;
     }
 
     /**
@@ -138,7 +138,7 @@ public class OkHttpUtils {
 
         //如上
 
-        return new LoginMessageEntity("成功",1);
+        return null;
     }
 
 

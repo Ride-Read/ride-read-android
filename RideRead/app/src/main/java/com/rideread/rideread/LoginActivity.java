@@ -93,87 +93,87 @@ public class LoginActivity extends AppCompatActivity {
 //        startActivity(new Intent(this,FindPassword.class));
     }
 
-    public void onLogin(View v){
-        account=accountEdt.getText().toString().trim();
-        password=passwordEdt.getText().toString().trim();
-        if(!TextUtils.isEmpty(account)){
-            openClient(account);
-        }else{
-            Toast.makeText(this,"请输入用户名",Toast.LENGTH_SHORT).show();
-        }
-//        if(account==null||password==null){
-//            Toast.makeText(getBaseContext(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
-//        }else if(!hasNetWork()){
-//            Toast.makeText(getBaseContext(),"未连接到网络",Toast.LENGTH_SHORT).show();
+//    public void onLogin(View v){
+//        account=accountEdt.getText().toString().trim();
+//        password=passwordEdt.getText().toString().trim();
+//        if(!TextUtils.isEmpty(account)){
+//            openClient(account);
 //        }else{
-//            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
+//            Toast.makeText(this,"请输入用户名",Toast.LENGTH_SHORT).show();
 //        }
-
-    }
-
-
-    /**
-     * 以用户名作为clientid登录leancloud的im服务器
-     * @param account
-     */
-    private void openClient(String account) {
-
-        accountEdt.setEnabled(false);
-        passwordEdt.setEnabled(false);
-        AVImClientManager.getInstance().open(account,new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient avimClient, AVIMException e) {
-                if(e==null){
-                    accountEdt.setEnabled(true);
-                    passwordEdt.setEnabled(true);
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                }else{
-                    Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-
-    class LoginAsyncTask extends AsyncTask<String,String,LoginMessageEntity>
-    {
-        @Override
-        protected LoginMessageEntity doInBackground(String... params) {
-            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[3]);
-        }
-
-        @Override
-        protected void onPostExecute(LoginMessageEntity entity) {
-            super.onPostExecute(entity);
-            if(entity!=null){
-                int resultCode=entity.getResultCode();
-                String msg=entity.getMsg();
-                if(resultCode==1){
-                    //从这里跳转主界面
-                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                }else if(resultCode==0){
-                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
-                }
+////        if(account==null||password==null){
+////            Toast.makeText(getBaseContext(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
+////        }else if(!hasNetWork()){
+////            Toast.makeText(getBaseContext(),"未连接到网络",Toast.LENGTH_SHORT).show();
+////        }else{
+////            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
+////        }
+//
+//    }
 
 
-            }else {
-                Toast.makeText(getBaseContext(),"未知错误",Toast.LENGTH_SHORT).show();
-            }
+//    /**
+//     * 以用户名作为clientid登录leancloud的im服务器
+//     * @param account
+//     */
+//    private void openClient(String account) {
+//
+//        accountEdt.setEnabled(false);
+//        passwordEdt.setEnabled(false);
+//        AVImClientManager.getInstance().open(account,new AVIMClientCallback() {
+//            @Override
+//            public void done(AVIMClient avimClient, AVIMException e) {
+//                if(e==null){
+//                    accountEdt.setEnabled(true);
+//                    passwordEdt.setEnabled(true);
+//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                }else{
+//                    Toast.makeText(LoginActivity.this,"登录失败",Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+//    }
 
-        }
-    }
-
-    /**
-     * 判断网络状态
-     * @return
-     */
-    public boolean hasNetWork(){
-
-        ConnectivityManager cm=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(cm.getActiveNetworkInfo().isAvailable()){
-            return true;
-        }
-        return false;
-    }
+//    class LoginAsyncTask extends AsyncTask<String,String,LoginMessageEntity>
+//    {
+//        @Override
+//        protected LoginMessageEntity doInBackground(String... params) {
+//            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[3]);
+//        }
+//
+//        @Override
+//        protected void onPostExecute(LoginMessageEntity entity) {
+//            super.onPostExecute(entity);
+//            if(entity!=null){
+//                int resultCode=entity.getStatus();
+//                String msg=entity.getMsg();
+//                if(resultCode==1){
+//                    //从这里跳转主界面
+//                    startActivity(new Intent(LoginActivity.this,MainActivity.class));
+//                }else if(resultCode==0){
+//                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
+//                }else{
+//                    Toast.makeText(getBaseContext(),msg,Toast.LENGTH_SHORT).show();
+//                }
+//
+//
+//            }else {
+//                Toast.makeText(getBaseContext(),"未知错误",Toast.LENGTH_SHORT).show();
+//            }
+//
+//        }
+//    }
+//
+//    /**
+//     * 判断网络状态
+//     * @return
+//     */
+//    public boolean hasNetWork(){
+//
+//        ConnectivityManager cm=(ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+//        if(cm.getActiveNetworkInfo().isAvailable()){
+//            return true;
+//        }
+//        return false;
+//    }
 }

@@ -1,9 +1,7 @@
 package com.rideread.rideread;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -48,7 +46,7 @@ public class ResetPassword extends RegisterBaseActivity {
         @Override
         protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
             super.onPostExecute(loginMessageEntity);
-            int resultCode=loginMessageEntity.getResultCode();
+            int resultCode=loginMessageEntity.getStatus();
             String msg=loginMessageEntity.getMsg();
             if(resultCode==1){
                 App app=(App)getApplication();

@@ -16,7 +16,6 @@
         android:paddingLeft="45dip"
         android:paddingRight="45dip"
         android:textSize="44px"
-        android:onClick="onNext"
         android:background="@mipmap/round_rectangle">
 
     </Button>

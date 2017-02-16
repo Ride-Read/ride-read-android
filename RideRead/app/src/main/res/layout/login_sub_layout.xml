@@ -58,7 +58,6 @@ android:layout_marginRight="48dip">
         android:paddingLeft="45dip"
         android:paddingRight="45dip"
         android:textSize="44px"
-        android:onClick="onLogin"
         android:background="@mipmap/round_rectangle"
         />
 

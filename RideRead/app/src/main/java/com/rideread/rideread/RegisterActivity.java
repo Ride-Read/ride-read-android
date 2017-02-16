@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.rideread.rideread.bean.LoginMessageEntity;
-import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.OkHttpUtils;
 
 /**
@@ -55,7 +54,7 @@ public class RegisterActivity extends RegisterBaseActivity {
         protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
             super.onPostExecute(loginMessageEntity);
             if(loginMessageEntity!=null){
-                int resultCode=loginMessageEntity.getResultCode();
+                int resultCode=loginMessageEntity.getStatus();
                 String msg=loginMessageEntity.getMsg();
                 if(resultCode==1){
                     startActivity(new Intent(RegisterActivity.this,RegisterPhoneActivity.class));

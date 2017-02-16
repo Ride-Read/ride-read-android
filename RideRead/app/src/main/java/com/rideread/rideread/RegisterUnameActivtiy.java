@@ -186,7 +186,7 @@ public class RegisterUnameActivtiy extends RegisterBaseActivity {
         @Override
         protected void onPostExecute(LoginMessageEntity entity) {
             super.onPostExecute(entity);
-            int resultCode=entity.getResultCode();
+            int resultCode=entity.getStatus();
             String msg=entity.getMsg();
             if(resultCode==1){
                 App app=(App)getApplication();

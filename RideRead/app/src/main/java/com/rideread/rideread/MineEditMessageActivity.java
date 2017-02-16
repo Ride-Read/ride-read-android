@@ -258,7 +258,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         @Override
         protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
             super.onPostExecute(loginMessageEntity);
-            if(loginMessageEntity.getResultCode()==1){
+            if(loginMessageEntity.getStatus()==1){
                 //保存成功
             }else{
                 //保存失败

@@ -6,27 +6,37 @@ package com.rideread.rideread.bean;
 
 public class LoginMessageEntity {
 
-    private int resultCode;
-    private String msg;
+    private int status;
+    private String token;
+    private int uid;
 
-    public LoginMessageEntity(String msg, int resultCode) {
-        this.msg = msg;
-        this.resultCode = resultCode;
+    public LoginMessageEntity(int status, String token, int uid) {
+        this.status = status;
+        this.token = token;
+        this.uid = uid;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getToken() {
+        return token;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setToken(String token) {
+        this.token = token;
     }
 
-    public int getResultCode() {
-        return resultCode;
+    public int getUid() {
+        return uid;
     }
 
-    public void setResultCode(int resultCode) {
-        this.resultCode = resultCode;
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

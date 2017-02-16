@@ -24,10 +24,10 @@
             android:textColor="@color/login_textcolorhint_gray"
             android:textSize="14sp"/>
         <TextView
+            android:id="@+id/register_read_agreement_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/register_contact_text2"
-            android:onClick="readAgreement"
             android:textColor="@color/forgetpwd_text_color"
             android:textSize="14sp"/>
     </LinearLayout>

@@ -29,8 +29,8 @@ public class FindPassword extends RegisterBaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.forgetpwd_findpwd);
         indentfyCodeTv =(TextView)findViewById(R.id.register_tv_sendidentfycode);
-        findPhone=(EditText)findViewById(R.id.register__edt_phone);
-        indentfyCodeEdt =(EditText)findViewById(R.id.register__edt_identfycode);
+        findPhone=(EditText)findViewById(R.id.register_edt_phone);
+        indentfyCodeEdt =(EditText)findViewById(R.id.register_edt_identfycode);
     }
 
 
