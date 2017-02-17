@@ -19,9 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.RequestMobileCodeCallback;
+import com.avos.avoscloud.SaveCallback;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.rideread.rideread.App;
@@ -37,6 +39,7 @@ import com.rideread.rideread.common.PreferenceUtils;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -54,7 +57,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private View phoneNumView, inviteCodeView, setPwdView, setUnameView;
     private String inviteCode;
     private TextView indentfyCodeTv;
-    private String telPhone,password;
+    private String telPhone,password,timeStamp;
     private final int REQUEST_IMAGE=1;
     private final int CROP=0;
     private final String TYPE="image/*";
@@ -255,32 +258,52 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private void onComplete(){
         etUserName=(EditText)setUnameView.findViewById(R.id.register_edt_setusername);
         userName=etUserName.getText().toString().trim();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-        String key = "icon_" + sdf.format(new Date());
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+//        String key = "icon_" + sdf.format(new Date());
         if(userName!=null&&!userName.isEmpty()){
-            //在这里发送用户名和头像给后台
-            App app=null;
-            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
-                @Override
-                public void complete(String key, ResponseInfo info, JSONObject response) {
-                    //res包含hash、key等信息，具体字段取决于上传策略的设置
+//            //在这里发送用户名和头像给后台
+//            App app=null;
+//            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
+//                @Override
+//                public void complete(String key, ResponseInfo info, JSONObject response) {
+//                    //res包含hash、key等信息，具体字段取决于上传策略的设置
+//
+//                    if(info.isOK())
+//                    {
+//                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
+//                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+//                                Api.USERHEAD_LINK+key,Api.SET_USERNAME);
+//                    }
+//                    else{
+//                        Log.e("qiniu", "Upload Fail");
+//                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+//                    }
+//                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
+//                    Log.e("qiniu", key + ",\r\n " + info +","+response);
+//
+//                }
+//
+//            },null);
 
-                    if(info.isOK())
-                    {
-                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
-                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
-                                Api.USERHEAD_LINK+key,Api.SET_USERNAME);
+            try {
+                final AVFile avFile = AVFile.withAbsoluteLocalPath(timeStamp + ".jpg", file.getAbsolutePath());
+                avFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if(e==null){
+                            new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+                                avFile.getUrl(),Api.SET_USERNAME);
+                        }else{
+                            Toast.makeText(getActivity(),"上传失败",Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else{
-                        Log.e("qiniu", "Upload Fail");
-                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                    }
-                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
-                    Log.e("qiniu", key + ",\r\n " + info +","+response);
+                });
 
-                }
+            }catch(FileNotFoundException e){
+                Toast.makeText(getActivity(),"头像路径不可用",Toast.LENGTH_SHORT).show();
+            }
 
-            },null);
+
 
         }else{
             Toast.makeText(getActivity(),"未填写用户名",Toast.LENGTH_SHORT).show();
@@ -325,7 +348,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
         try {
             //以时间戳来命名裁切过的图片
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
             File filePath=new File(FileUtils.root+ "/"+ PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext())+"/userhead/");
             if(filePath.exists()==false){
                 filePath.mkdirs();
