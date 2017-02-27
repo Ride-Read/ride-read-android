@@ -39,8 +39,7 @@ public class SettingActivity extends BaseActivity {
     }
 
     public void onExit(View v){
-        App app=(App)getApplication();
-        app.finishAllBaseActivity();
+
     }
 
     public void onHowUse(View v){

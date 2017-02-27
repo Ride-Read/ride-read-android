@@ -29,7 +29,6 @@ import java.util.LinkedList;
 
 public class App extends Application {
 
-    public static LinkedList<RegisterBaseActivity> queue=new LinkedList<RegisterBaseActivity>();
 
     public static LinkedList<BaseActivity> baseQueue=new LinkedList<BaseActivity>();
     private  UploadManager uploadManager=null;
@@ -70,25 +69,7 @@ public class App extends Application {
         return uploadManager;
     }
 
-    public void finishAll(){
-        Iterator<RegisterBaseActivity> it=queue.iterator();
-        Log.e("app ","size="+queue.size());
-        while (it.hasNext()){
-            RegisterBaseActivity activity=it.next();
-            it.remove();
-            activity.finish();
-        }
-    }
 
-    public void finishAllBaseActivity(){
-        Iterator<BaseActivity> it=baseQueue.iterator();
-        Log.e("app ","size="+queue.size());
-        while (it.hasNext()){
-            BaseActivity activity=it.next();
-            it.remove();
-            activity.finish();
-        }
-    }
 
 
 }

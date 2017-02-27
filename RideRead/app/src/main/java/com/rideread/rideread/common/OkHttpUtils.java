@@ -4,9 +4,12 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.rideread.rideread.bean.LoginMessageEntity;
+import com.rideread.rideread.bean.LoginResponse;
+
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.IOException;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -41,16 +44,16 @@ public class OkHttpUtils {
     /**
      * 用户登录
      * @param account
-     * @param password
+     * @param encodePwd
      * @param url
-     * @return 返回一个消息实体，包括resultCode，msg
+     * @return 返回一个消息实体，
      */
-    public LoginMessageEntity userLogin(String account, String password, String url){
+    public LoginResponse userLogin(String account, String encodePwd, String url){
 
         try {
             JSONObject json=new JSONObject();
-            json.put("account",account);
-            json.put("password",password);
+            json.put("username",account);
+            json.put("password",encodePwd);
             return loginPost(url,json.toString());
 
         }catch (JSONException e){
@@ -148,44 +151,44 @@ public class OkHttpUtils {
      * @param json
      * @return
      */
-    private LoginMessageEntity loginPost(String url,String json){
+    private LoginResponse loginPost(String url,String json){
         try {
             RequestBody requestBody = RequestBody.create(JSON, json);
 
             Request request = new Request.Builder().url(url)
                     .post(requestBody).build();
             Response response = clients.newCall(request).execute();
-            return gson.fromJson(response.body().string(),LoginMessageEntity.class);
+            return gson.fromJson(response.body().string(),LoginResponse.class);
         }catch(IOException e){
             return null;
         }
 
     }
 
-    public Boolean postJson(String target, String json) {
-        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-        RequestBody requestBody = RequestBody.create(JSON, json);
-        //long timestamp = System.currentTimeMillis();
-        //String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
-        Request request = new Request.Builder()
-                .addHeader("X-LC-Id", Api.APP_ID)
-                .addHeader("X-LC-Key", Api.APP_KEY)
-                //.addHeader("ContentType","application/json")
-                .url(target)
-                .post(requestBody)
-                .build();
-        try {
-            Response response = clients.newCall(request).execute();
-            //判断请求是否成功
-            if (response.isSuccessful()) {
-                return true;
-            } else {
-                Log.e("response",response.body().string());
-            }
-        } catch (Exception e) {
-            Log.e("error",e.toString());
-        }
-        return false;
-    }
+//    public Boolean postJson(String target, String json) {
+//        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+//        RequestBody requestBody = RequestBody.create(JSON, json);
+//        //long timestamp = System.currentTimeMillis();
+//        //String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
+//        Request request = new Request.Builder()
+//                .addHeader("X-LC-Id", Api.APP_ID)
+//                .addHeader("X-LC-Key", Api.APP_KEY)
+//                //.addHeader("ContentType","application/json")
+//                .url(target)
+//                .post(requestBody)
+//                .build();
+//        try {
+//            Response response = clients.newCall(request).execute();
+//            //判断请求是否成功
+//            if (response.isSuccessful()) {
+//                return true;
+//            } else {
+//                Log.e("response",response.body().string());
+//            }
+//        } catch (Exception e) {
+//            Log.e("error",e.toString());
+//        }
+//        return false;
+//    }
 
 }

@@ -50,19 +50,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RegisterActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".RegisterPhoneActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".RegisterSetPwdActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".RegisterUnameActivtiy"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".FindPassword"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".ResetPassword"
-            android:screenOrientation="portrait"></activity>
+
         <activity android:name=".UserAgreement"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MineAttentionActivity"

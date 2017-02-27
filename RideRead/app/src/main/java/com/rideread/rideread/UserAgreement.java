@@ -2,6 +2,7 @@ package com.rideread.rideread;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -11,7 +12,7 @@ import com.rideread.rideread.widget.RegisterToolBar;
  * Created by Jackbing on 2017/1/22.
  */
 
-public class UserAgreement extends RegisterBaseActivity {
+public class UserAgreement extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

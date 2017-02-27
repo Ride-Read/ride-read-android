@@ -27,8 +27,11 @@ import com.rideread.rideread.LoginActivity;
 import com.rideread.rideread.MainActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.LoginMessageEntity;
+import com.rideread.rideread.bean.LoginResponse;
+import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
+import com.rideread.rideread.common.MD5Utils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.im.AVImClientManager;
 
@@ -43,6 +46,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     private String tagLogin="loginView",tagFindPwd="findPwdView",tagSetPwd="reSetPwdView";
     private String telPhone;
     private EditText accountEdt,passwordEdt;
+    private String username,encodePwd;
 
     @Nullable
     @Override
@@ -107,35 +111,41 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     private void login() {
         accountEdt=(EditText)loginView.findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)loginView.findViewById(R.id.login_edt_password);
-        String account=accountEdt.getText().toString().trim();
+        username=accountEdt.getText().toString().trim();
         String password=passwordEdt.getText().toString().trim();
-        if(account==null||password==null){
+        if(username==null||password==null){
             Toast.makeText(getActivity(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
         }else if(!hasNetWork()){
             Toast.makeText(getActivity(),"未连接到网络",Toast.LENGTH_SHORT).show();
         }else{
             accountEdt.setEnabled(false);
             passwordEdt.setEnabled(false);
-            new LoginAsyncTask().execute(account,password, Api.USER_LOGIN);
+            encodePwd= MD5Utils.Md5(password);
+            if(encodePwd==null){
+                Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
+                return;
+            }
+            new LoginAsyncTask().execute(username,encodePwd, Api.USER_LOGIN);
         }
 
     }
 
-    class LoginAsyncTask extends AsyncTask<String,String,LoginMessageEntity>
+    //登录异步线程
+    class LoginAsyncTask extends AsyncTask<String,String,LoginResponse>
     {
         @Override
-        protected LoginMessageEntity doInBackground(String... params) {
+        protected LoginResponse doInBackground(String... params) {
             return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[3]);
         }
 
         @Override
-        protected void onPostExecute(LoginMessageEntity entity) {
-            super.onPostExecute(entity);
-            if(entity!=null){
-                int resultCode=entity.getStatus();
+        protected void onPostExecute(LoginResponse resp) {
+            super.onPostExecute(resp);
+            if(resp!=null){
+                int resultCode=resp.getStatus();
                 if(resultCode==0){
                     //连接leacloud im服务器
-                    openClient(entity.getUid()+"");
+                    openClient(resp.getData());
                 }else {
                     Toast.makeText(getActivity(),"用户名或密码错误",Toast.LENGTH_SHORT).show();
                 }
@@ -148,14 +158,16 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     }
 
 
-    private void openClient(String uid){
-        AVImClientManager.getInstance().open(uid,new AVIMClientCallback() {
+    private void openClient(final UserData data){
+        AVImClientManager.getInstance().open(data.getUid()+"",new AVIMClientCallback() {
             @Override
             public void done(AVIMClient avimClient, AVIMException e) {
                 if(e==null){
                     accountEdt.setEnabled(true);
                     passwordEdt.setEnabled(true);
-                    startActivity(new Intent(getActivity(),MainActivity.class));
+                    Intent intent=new Intent(getActivity(),MainActivity.class);
+                    intent.putExtra("data",data);
+                    startActivity(intent);
                 }else{
                     Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();
                 }
