@@ -1,14 +1,13 @@
 package com.rideread.rideread.common;
 
-import android.util.Log;
-
+import com.alibaba.fastjson.JSONException;
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.bean.LoginResponse;
 
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 
 import java.io.IOException;
 import okhttp3.MediaType;
@@ -43,18 +42,27 @@ public class OkHttpUtils {
 
     /**
      * 用户登录
-     * @param account
-     * @param encodePwd
+     * @param username
+     * @param password
      * @param url
      * @return 返回一个消息实体，
      */
-    public LoginResponse userLogin(String account, String encodePwd, String url){
+    public LoginResponse userLogin(String username, String password, String url){
+
 
         try {
+            System.out.println("account="+username+",pwd"+password);
             JSONObject json=new JSONObject();
-            json.put("username",account);
-            json.put("password",encodePwd);
-            return loginPost(url,json.toString());
+            json.put("username","dsdseere");
+            System.out.println("account="+username+",pwd="+password);
+            json.put("password","efsdssf");
+
+            System.out.println("u="+json.getString("username")+",pwd="+json.getString("password"));
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;
+            }
+            return new Gson().fromJson(resp,LoginResponse.class);
 
         }catch (JSONException e){
             return null;
@@ -68,42 +76,53 @@ public class OkHttpUtils {
      * @param url
      * @return
      */
-    public Integer testInviteCode(String inviteCode,String url){
+    public Integer  testInviteCode(String inviteCode,long timeStamp,String url){
 
-//        try{
-//
-//            JSONObject json=new JSONObject();
-//            json.put("invitationcode",inviteCode);
-//            return loginPost(url,json.toString());
-//        }catch (JSONException e){
-//            return null;
-//        }
-        return 1;
+        try{
+
+            JSONObject json=new JSONObject();
+            json.put("code",inviteCode);
+            json.put("sign",timeStamp);
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;//归为未知错误
+            }
+            JSONObject jsonObject=JSONObject.parseObject(resp);
+            Integer status=jsonObject.getInteger("status");
+            return status;
+        }catch (JSONException e){
+            return null;
+        }
 
     }
 
     /**
-     * 发送用户名，手机号码，密码（暂时没加密），头像url给后台
+     *
      * @param userName
      * @param telPhone
      * @param password
      * @param userHeadUrl
      * @param url
+     * @param timeStamp
      * @return
      */
-    public LoginMessageEntity send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url){
-//        try{
-//
-//            JSONObject json=new JSONObject();
-//            json.put("userName",userName);
-//            json.put("userPic",userHeadUrl);
-//            json.put("telphone",telPhone);
-//            json.put("password",password);
-//            return loginPost(url,json.toString());
-//        }catch (JSONException e){
-//            return null;
-//        }
-        return null;
+    public LoginResponse send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url,long timeStamp){
+        try{
+
+            JSONObject json=new JSONObject();
+            json.put("nickname",userName);
+            json.put("face_url",userHeadUrl);
+            json.put("phonenumber",telPhone);
+            json.put("password",MD5Utils.Md5(password));
+            json.put("sign",timeStamp);
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;
+            }
+            return new Gson().fromJson(resp,LoginResponse.class);
+        }catch (JSONException e){
+            return null;
+        }
     }
 
     public LoginMessageEntity resetPassword(String resetPassword,String telphone,String url){
@@ -112,7 +131,7 @@ public class OkHttpUtils {
 //            JSONObject json=new JSONObject();
 //            json.put("resetpwd",resetPassword);
 //            json.put("telphone",telphone);
-//            return loginPost(url,json.toString());
+//            return post(url,json.toString());
 //        }catch (JSONException e){
 //            return null;
 //        }
@@ -151,44 +170,20 @@ public class OkHttpUtils {
      * @param json
      * @return
      */
-    private LoginResponse loginPost(String url,String json){
+    private String post(String url, String json){
         try {
             RequestBody requestBody = RequestBody.create(JSON, json);
 
             Request request = new Request.Builder().url(url)
                     .post(requestBody).build();
             Response response = clients.newCall(request).execute();
-            return gson.fromJson(response.body().string(),LoginResponse.class);
+            System.out.println(response.body().string());
+            return response.body().string();
         }catch(IOException e){
             return null;
         }
 
     }
 
-//    public Boolean postJson(String target, String json) {
-//        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-//        RequestBody requestBody = RequestBody.create(JSON, json);
-//        //long timestamp = System.currentTimeMillis();
-//        //String sign = MD5Util.string2MD5(timestamp + Api.APP_KEY);
-//        Request request = new Request.Builder()
-//                .addHeader("X-LC-Id", Api.APP_ID)
-//                .addHeader("X-LC-Key", Api.APP_KEY)
-//                //.addHeader("ContentType","application/json")
-//                .url(target)
-//                .post(requestBody)
-//                .build();
-//        try {
-//            Response response = clients.newCall(request).execute();
-//            //判断请求是否成功
-//            if (response.isSuccessful()) {
-//                return true;
-//            } else {
-//                Log.e("response",response.body().string());
-//            }
-//        } catch (Exception e) {
-//            Log.e("error",e.toString());
-//        }
-//        return false;
-//    }
 
 }

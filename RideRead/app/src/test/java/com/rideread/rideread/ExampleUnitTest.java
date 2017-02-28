@@ -27,8 +27,7 @@ public class ExampleUnitTest {
     @Test
     public void testLogin(){
 
-
-       LoginResponse resp= OkHttpUtils.getInstance().userLogin("15622705224", MD5Utils.Md5("UYJBHJNJfd"),Api.USER_LOGIN);
+       LoginResponse resp= OkHttpUtils.getInstance().userLogin("15622705224", "343er",Api.USER_LOGIN);
 
         if(resp!=null){
 

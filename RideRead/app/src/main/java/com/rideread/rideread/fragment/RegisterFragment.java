@@ -24,17 +24,24 @@ import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.RequestMobileCodeCallback;
 import com.avos.avoscloud.SaveCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.rideread.rideread.App;
+import com.rideread.rideread.MainActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.UserAgreement;
 import com.rideread.rideread.bean.LoginMessageEntity;
+import com.rideread.rideread.bean.LoginResponse;
+import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
+import com.rideread.rideread.im.AVImClientManager;
 
 import org.json.JSONObject;
 
@@ -102,8 +109,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         switch (v.getId()){
             case R.id.register_btn_next:
                 String tag=(String)v.getTag();
+                Button btnNext=(Button)v;
                 if(tag.equals(tagInvite)){
-                    veifyInviteCode();
+                    veifyInviteCode(btnNext);
                 }else if(tag.equals(tagPhone)){
                     verifyCode();
                 }else if(tag.equals(tagPwd)){
@@ -139,13 +147,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     /**
      * 验证邀请码
      */
-    private void veifyInviteCode() {
+    private void veifyInviteCode(Button btnNext) {
         EditText editText=(EditText)inviteCodeView.findViewById(R.id.register_edt_invitationcode);
         inviteCode=editText.getText().toString().trim();
         if(inviteCode==null){
             Toast.makeText(getActivity(),"未填写邀请码",Toast.LENGTH_SHORT).show();
         }else{
-            new InviteCodeAysncTask().execute(inviteCode, Api.CONFIM_INVITECODE);
+            btnNext.setClickable(false);//避免点击多次
+            new InviteCodeAysncTask().execute(inviteCode,Api.VERIFY_CODE);
         }
     }
 
@@ -156,7 +165,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     class InviteCodeAysncTask extends AsyncTask<String,String,Integer> {
         @Override
         protected Integer doInBackground(String... params) {
-            return OkHttpUtils.getInstance().testInviteCode(params[0],params[1]);
+            Long timeStamp=new Date().getTime();//生成时间戳
+            return OkHttpUtils.getInstance().testInviteCode(params[0],timeStamp,params[1]);
         }
 
         @Override
@@ -166,9 +176,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 changeView(inviteCodeView, phoneNumView);
             }else if(status==1){
                 Toast.makeText(getActivity(),"邀请码不存在",Toast.LENGTH_SHORT).show();
-            }else{
+            }else if(status==2){
                 Toast.makeText(getActivity(),"邀请码已被使用",Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(),"邀请码发送失败",Toast.LENGTH_SHORT).show();
             }
+            ((Button)inviteCodeView.findViewById(R.id.register_btn_next)).setClickable(true);//恢复可点击状态
         }
     }
 
@@ -258,50 +271,51 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private void onComplete(){
         etUserName=(EditText)setUnameView.findViewById(R.id.register_edt_setusername);
         userName=etUserName.getText().toString().trim();
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-//        String key = "icon_" + sdf.format(new Date());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");//图片上传时间戳
+        String key = "icon_" + sdf.format(new Date());
         if(userName!=null&&!userName.isEmpty()){
-//            //在这里发送用户名和头像给后台
-//            App app=null;
-//            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
-//                @Override
-//                public void complete(String key, ResponseInfo info, JSONObject response) {
-//                    //res包含hash、key等信息，具体字段取决于上传策略的设置
-//
-//                    if(info.isOK())
-//                    {
-//                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
-//                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
-//                                Api.USERHEAD_LINK+key,Api.SET_USERNAME);
-//                    }
-//                    else{
-//                        Log.e("qiniu", "Upload Fail");
-//                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-//                    }
-//                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
-//                    Log.e("qiniu", key + ",\r\n " + info +","+response);
-//
-//                }
-//
-//            },null);
+            //在这里发送用户名和头像给后台
+            App app=(App)getActivity().getApplication();
+            //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
+            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
+                @Override
+                public void complete(String key, ResponseInfo info, JSONObject response) {
+                    //res包含hash、key等信息，具体字段取决于上传策略的设置
 
-            try {
-                final AVFile avFile = AVFile.withAbsoluteLocalPath(timeStamp + ".jpg", file.getAbsolutePath());
-                avFile.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(AVException e) {
-                        if(e==null){
-                            new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
-                                avFile.getUrl(),Api.SET_USERNAME);
-                        }else{
-                            Toast.makeText(getActivity(),"上传失败",Toast.LENGTH_SHORT).show();
-                        }
+                    if(info.isOK())
+                    {
+                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
+                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+                                Api.USERHEAD_LINK+key,Api.REGISTER);
                     }
-                });
+                    else{
+                        Log.e("qiniu", "Upload Fail");
+                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                    }
+                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
+                    Log.e("qiniu", key + ",\r\n " + info +","+response);
 
-            }catch(FileNotFoundException e){
-                Toast.makeText(getActivity(),"头像路径不可用",Toast.LENGTH_SHORT).show();
-            }
+                }
+
+            },null);
+
+//            try {
+//                final AVFile avFile = AVFile.withAbsoluteLocalPath(timeStamp + ".jpg", file.getAbsolutePath());
+//                avFile.saveInBackground(new SaveCallback() {
+//                    @Override
+//                    public void done(AVException e) {
+//                        if(e==null){
+//                            new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+//                                avFile.getUrl(),Api.REGISTER);
+//                        }else{
+//                            Toast.makeText(getActivity(),"上传失败",Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//                });
+//
+//            }catch(FileNotFoundException e){
+//                Toast.makeText(getActivity(),"头像路径不可用",Toast.LENGTH_SHORT).show();
+//            }
 
 
 
@@ -390,25 +404,40 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     //发送参数到后台
-    class Send2Background extends AsyncTask<String,Void,LoginMessageEntity>{
+    class Send2Background extends AsyncTask<String,Void,LoginResponse>{
         @Override
-        protected LoginMessageEntity doInBackground(String... params) {
+        protected LoginResponse doInBackground(String... params) {
 
             return OkHttpUtils.getInstance().send2BackGround(params[0],params[1],
-                    params[2], params[3],params[4]);
+                    params[2], params[3],params[4],new Date().getTime());
         }
 
         @Override
-        protected void onPostExecute(LoginMessageEntity entity) {
-            super.onPostExecute(entity);
-            int resultCode=entity.getStatus();
+        protected void onPostExecute(LoginResponse resp) {
+            super.onPostExecute(resp);
+            int resultCode=resp.getStatus();
             if(resultCode==0){
-//                App app=null;
-//                app.finishAll();
-
+//               //连接leacloud im服务器
+                openClient(resp.getData());
             }else{
                 Toast.makeText(getActivity(),"设置失败",Toast.LENGTH_SHORT).show();
             }
+        }
+
+        private void openClient(final UserData data){
+            AVImClientManager.getInstance().open(data.getUid()+"",new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if(e==null){
+                        Intent intent=new Intent(getActivity(),MainActivity.class);
+                        intent.putExtra("data",data);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
     }
 

@@ -35,6 +35,8 @@ import com.rideread.rideread.common.MD5Utils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.im.AVImClientManager;
 
+import org.json.JSONObject;
+
 /**
  * Created by Jackbing on 2017/2/13.
  */
@@ -120,7 +122,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
         }else{
             accountEdt.setEnabled(false);
             passwordEdt.setEnabled(false);
-            encodePwd= MD5Utils.Md5(password);
+            encodePwd= MD5Utils.Md5(password);//加密
             if(encodePwd==null){
                 Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
                 return;
@@ -135,7 +137,8 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     {
         @Override
         protected LoginResponse doInBackground(String... params) {
-            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[3]);
+            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
+
         }
 
         @Override
