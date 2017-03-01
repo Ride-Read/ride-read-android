@@ -137,25 +137,28 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     {
         @Override
         protected LoginResponse doInBackground(String... params) {
-            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
+            //return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
+            return null;
 
         }
 
         @Override
         protected void onPostExecute(LoginResponse resp) {
             super.onPostExecute(resp);
-            if(resp!=null){
-                int resultCode=resp.getStatus();
-                if(resultCode==0){
-                    //连接leacloud im服务器
-                    openClient(resp.getData());
-                }else {
-                    Toast.makeText(getActivity(),"用户名或密码错误",Toast.LENGTH_SHORT).show();
-                }
-
-            }else {
-                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
-            }
+//            if(resp!=null){
+//                int resultCode=resp.getStatus();
+//                if(resultCode==0){
+//                    //连接leacloud im服务器
+//                    openClient(resp.getData());
+//                }else {
+//                    Toast.makeText(getActivity(),"用户名或密码错误",Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }else {
+//                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
+//            }
+            Intent intent=new Intent(getActivity(),MainActivity.class);
+            startActivity(intent);
 
         }
     }

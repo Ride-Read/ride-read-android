@@ -18,5 +18,10 @@
         <item name="android:backgroundDimEnabled">true</item>
     </style>
 
+    <style name="TabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/forgetpwd_text_color</item>
+    </style>
+
 
 </resources>

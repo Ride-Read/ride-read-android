@@ -60,6 +60,9 @@ public class AttentionFragment extends Fragment {
 
     private void initView(View mView) {
         listview=(ListView) mView.findViewById(R.id.timeline_attention_listview);
+
+        View v=LayoutInflater.from(getActivity().getApplicationContext()).inflate(R.layout.timeline_newmsg_headview,null);
+        listview.addHeaderView(v);
         AttentionListAdapter adapter=new AttentionListAdapter(lists,R.layout.timeline_attention_listitem,getContext());
         listview.setAdapter(adapter);
 

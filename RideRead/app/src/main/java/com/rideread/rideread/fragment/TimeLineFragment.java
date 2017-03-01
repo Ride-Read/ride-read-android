@@ -41,9 +41,10 @@ public class TimeLineFragment extends Fragment {
 
     private void initView(View v) {
         final TabLayout tablayout=(TabLayout) v.findViewById(R.id.main_timeline_tablayout);
-        tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(),R.color.login_textcolor_gray));
+        tablayout.setSelectedTabIndicatorColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
         LinearLayout linearLayout=(LinearLayout)tablayout.getChildAt(0);
         linearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+        linearLayout.setDividerPadding(20);
         linearLayout.setDividerDrawable(ContextCompat.getDrawable(getContext(),R.drawable.timleline_tablayout_divider));
         initViewPager(v);
         tablayout.setupWithViewPager(viewPager);

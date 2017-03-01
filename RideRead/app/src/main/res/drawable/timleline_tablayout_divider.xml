@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     >
-    <solid android:color="@color/login_textcolor_gray"></solid>
-    <size android:width="0.5dip"></size>
+    <solid android:color="@color/common_bg_white"></solid>
+    <size android:width="1px"></size>
 
 </shape>

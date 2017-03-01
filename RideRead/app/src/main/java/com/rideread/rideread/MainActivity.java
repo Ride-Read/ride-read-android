@@ -44,8 +44,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initTab() {
-        Tab tab_map = new Tab(MapFragment.class,R.string.main_text_map,R.drawable.selector_icon_home);
-        Tab tab_timeline = new Tab(TimeLineFragment.class,R.string.main_text_timeline,R.drawable.selector_icon_work);
+        Tab tab_map = new Tab(MapFragment.class,R.string.main_text_map,R.drawable.selector_icon_map);
+        Tab tab_timeline = new Tab(TimeLineFragment.class,R.string.main_text_timeline,R.drawable.selector_icon_timeline);
         Tab tab_mine = new Tab(MineFragment.class,R.string.main_text_mine,R.drawable.selector_icon_mine);
 
         mTabs.add(tab_map);

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingTop="21dip"
+    android:paddingBottom="21dip"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal">
+    <TextView
+        android:id="@+id/timeline_newmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="15dip"
+        android:layout_marginBottom="15dip"
+        android:textSize="13sp"
+        android:background="@mipmap/timeline_newmsg_bg"
+        android:paddingTop="9dip"
+        android:paddingBottom="9dip"
+        android:paddingLeft="25dip"
+        android:paddingRight="25dip"
+        android:text="2个消息"/>
+
+</RelativeLayout>

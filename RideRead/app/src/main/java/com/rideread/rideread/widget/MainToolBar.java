@@ -1,8 +1,11 @@
 package com.rideread.rideread.widget;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.TintTypedArray;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -38,7 +41,7 @@ public class MainToolBar extends Toolbar {
         super(context, attrs, defStyleAttr);
         initView();
         setContentInsetsRelative(10, 10);
-
+        setBackgroundColor(ContextCompat.getColor(getContext(),R.color.colorPrimary));
         if (attrs != null) {
             final TintTypedArray a = TintTypedArray.obtainStyledAttributes(getContext(), attrs,
                     R.styleable.MainToolBar, defStyleAttr, 0);
@@ -165,5 +168,8 @@ public class MainToolBar extends Toolbar {
     }
 
 
-
+    @Override
+    public void setBackgroundColor(int color) {
+        super.setBackgroundColor(color);
+    }
 }
