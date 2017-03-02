@@ -5,13 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.Comment;
 
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Jackbing on 2017/2/10.
@@ -54,7 +55,7 @@ public class CommentListAdapter extends BaseAdapter {
             viewHolder=new ViewHolder();
             convertView=inflater.inflate(resId,null);
             viewHolder.content=(TextView)convertView.findViewById(R.id.timeline_detail_commentcontent);
-            viewHolder.head=(ImageView)convertView.findViewById(R.id.timeline_detail_comment_head);
+            viewHolder.head=(CircleImageView)convertView.findViewById(R.id.timeline_detail_comment_head);
             viewHolder.name=(TextView)convertView.findViewById(R.id.timeline_detail_commentname);
             viewHolder.time=(TextView)convertView.findViewById(R.id.timeline_detail_commenttime);
             convertView.setTag(viewHolder);
@@ -70,7 +71,7 @@ public class CommentListAdapter extends BaseAdapter {
     }
 
     class ViewHolder{
-        ImageView head;
+        CircleImageView head;
         TextView name,content,time;
     }
 }

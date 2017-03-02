@@ -21,11 +21,10 @@
 
     </com.rideread.rideread.widget.MainToolBar>
 
-    <ListView
-        android:id="@+id/timeline_detail_commentlist"
+    <fragment
+        android:id="@+id/timline_commentlist"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@android:color/black"
-        android:dividerHeight="0.5dip"/>
+        android:layout_height="wrap_content"
+        android:name="com.rideread.rideread.fragment.CommentListFragment"></fragment>
 
 </LinearLayout>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.SelfTimelineActivity;
@@ -69,9 +70,13 @@ public class AttentionFragment extends Fragment {
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=new Intent(AttentionFragment.this.getActivity(), TimelineDetailsActivity.class);
-                intent.putExtra("timeline",lists.get(position));
-                startActivity(intent);
+                if(position==0){
+                    Toast.makeText(getContext(),"点击了消息提示",Toast.LENGTH_SHORT).show();
+                }else{
+                    Intent intent=new Intent(AttentionFragment.this.getActivity(), TimelineDetailsActivity.class);
+                    intent.putExtra("timeline",(TimeLine)parent.getAdapter().getItem(position));
+                    startActivity(intent);
+                }
 
             }
         });

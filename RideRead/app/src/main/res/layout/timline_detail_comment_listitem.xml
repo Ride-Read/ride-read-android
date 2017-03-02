@@ -3,53 +3,45 @@
     android:orientation="horizontal"
     android:paddingLeft="15dip"
     android:paddingRight="15dip"
-    android:paddingBottom="5dip"
-    android:paddingTop="5dip"
+    android:paddingBottom="12dip"
+    android:paddingTop="10dip"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/timeline_detail_comment_head"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
         android:src="@mipmap/me"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="10dip"
-        android:layout_marginRight="10dip"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.5dip"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
         <TextView
             android:id="@+id/timeline_detail_commentname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
+            android:textSize="12dp"
+            android:textColor="@color/comment_text_color"
             android:text="陈晓村"/>
-            <TextView
+        <TextView
                 android:id="@+id/timeline_detail_commenttime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:textSize="16sp"
-                android:textColor="@android:color/black"
+                android:layout_marginTop="4dip"
+                android:textSize="10dp"
+                android:textColor="@color/forgetpwd_text_color"
                 android:text="18:28"/>
-        </RelativeLayout>
         <TextView
             android:id="@+id/timeline_detail_commentcontent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="14.5dip"
             android:text="拍的真好"
             android:textColor="@android:color/black"
-            android:textSize="18sp"/>
+            android:textSize="13dp"/>
     </LinearLayout>
 
 </LinearLayout>
