@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.rideread.rideread.ChatActivity;
+import com.rideread.rideread.activity.ChatActivity;
 import com.rideread.rideread.common.Constants;
 
 /**

@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 
 import android.support.v4.app.Fragment;
@@ -9,7 +9,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 
-
+import com.rideread.rideread.R;
 import com.rideread.rideread.adapter.FragmentAdapter;
 import com.rideread.rideread.adapter.TabAdapterImp;
 import com.rideread.rideread.fragment.LoginFragment;

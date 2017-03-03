@@ -1,12 +1,8 @@
 package com.rideread.rideread.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +15,8 @@ import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
-import com.amap.api.maps.MapView;
-import com.amap.api.maps.MapsInitializer;
-import com.amap.api.maps.SupportMapFragment;
 import com.amap.api.maps.TextureMapView;
-import com.amap.api.maps.TextureSupportMapFragment;
-import com.rideread.rideread.MainActivity;
+import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
 
 /**

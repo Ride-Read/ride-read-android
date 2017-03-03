@@ -14,12 +14,12 @@ import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
+import com.rideread.rideread.activity.BaseActivity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.db.RideReadDBHelper;
 import com.rideread.rideread.im.MessageHandler;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 /**

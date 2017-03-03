@@ -1,39 +1,23 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
-import android.view.Display;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.jaeger.ninegridimageview.NineGridImageView;
-import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
-import com.rideread.rideread.adapter.CommentListAdapter;
-import com.rideread.rideread.bean.Comment;
-import com.rideread.rideread.bean.ImageInfoObj;
-import com.rideread.rideread.bean.ImageWidgetInfoObj;
+import com.rideread.rideread.R;
 import com.rideread.rideread.bean.TimeLine;
-import com.rideread.rideread.common.ImageShower;
 import com.rideread.rideread.fragment.CommentListFragment;
-import com.rideread.rideread.widget.VideoTextureView;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.rideread.rideread.widget.MoreDialogFragment;
 
 /**
  * Created by Jackbing on 2017/2/10.
  */
 
-public class TimelineDetailsActivity extends BaseActivity {
+public class TimelineDetailsActivity extends BaseActivity implements View.OnClickListener{
 
     private CommentListFragment commentListFragment;
+    private MoreDialogFragment moreDialogFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,10 +31,23 @@ public class TimelineDetailsActivity extends BaseActivity {
                 onBackPressed();
             }
         });
+
+        ImageView more=(ImageView)findViewById(R.id.right_search_icon);
+        more.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(moreDialogFragment==null){
+                    moreDialogFragment=new MoreDialogFragment();
+                }
+                moreDialogFragment.show(getSupportFragmentManager(),"moreDialogFragment");
+            }
+        });
         commentListFragment=(CommentListFragment)getSupportFragmentManager().findFragmentById(R.id.timline_commentlist);
         commentListFragment.setTimeLine(initData());
         //initView(initData());
     }
+
+
 
 //    private void initView(TimeLine timeline) {
 //
@@ -155,5 +152,19 @@ public class TimelineDetailsActivity extends BaseActivity {
 
     private TimeLine initData() {
        return (TimeLine) getIntent().getSerializableExtra("timeline");
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.collection_textview:
+                moreDialogFragment.dismiss();
+                break;
+            case R.id.share_textview:
+                moreDialogFragment.dismiss();
+                break;
+        }
+
+
     }
 }

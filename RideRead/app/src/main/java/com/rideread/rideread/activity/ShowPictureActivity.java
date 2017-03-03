@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,6 +19,7 @@ import com.facebook.rebound.SpringUtil;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
+import com.rideread.rideread.R;
 import com.rideread.rideread.bean.ImageInfoObj;
 import com.rideread.rideread.bean.ImageWidgetInfoObj;
 

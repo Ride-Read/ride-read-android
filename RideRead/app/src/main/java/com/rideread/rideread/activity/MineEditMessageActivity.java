@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.content.Intent;
 import android.graphics.BitmapFactory;
@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.rideread.rideread.R;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.db.DBCopyUtil;

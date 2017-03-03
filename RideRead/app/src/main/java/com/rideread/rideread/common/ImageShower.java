@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
-import com.rideread.rideread.BaseActivity;
+import com.rideread.rideread.activity.BaseActivity;
 import com.rideread.rideread.R;
 
 /**

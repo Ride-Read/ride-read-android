@@ -23,8 +23,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.rideread.rideread.LoginActivity;
-import com.rideread.rideread.MainActivity;
+import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.bean.LoginResponse;
@@ -34,8 +33,6 @@ import com.rideread.rideread.common.ConfirmPassword;
 import com.rideread.rideread.common.MD5Utils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.im.AVImClientManager;
-
-import org.json.JSONObject;
 
 /**
  * Created by Jackbing on 2017/2/13.

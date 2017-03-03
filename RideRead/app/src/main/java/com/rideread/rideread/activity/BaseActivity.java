@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.avos.avoscloud.im.v2.AVIMClient;
+import com.rideread.rideread.App;
 import com.rideread.rideread.event.EmptyEvent;
 
 import org.greenrobot.eventbus.EventBus;

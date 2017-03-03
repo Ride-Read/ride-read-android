@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/common_bg_white"
-    tools:context="com.rideread.rideread.LoginActivity">
+    tools:context="com.rideread.rideread.activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

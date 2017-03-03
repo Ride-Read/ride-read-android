@@ -9,15 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.rideread.rideread.ChatActivity;
-import com.rideread.rideread.MessageListActivity;
-import com.rideread.rideread.MineAttentionActivity;
-import com.rideread.rideread.MineEditMessageActivity;
-import com.rideread.rideread.MineFansActivity;
+import com.rideread.rideread.activity.MessageListActivity;
+import com.rideread.rideread.activity.MineAttentionActivity;
+import com.rideread.rideread.activity.MineEditMessageActivity;
+import com.rideread.rideread.activity.MineFansActivity;
 import com.rideread.rideread.R;
-import com.rideread.rideread.SettingActivity;
+import com.rideread.rideread.activity.SettingActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

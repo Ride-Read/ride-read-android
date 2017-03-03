@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@mipmap/delete_dialog_fragment">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="30dip"
+        android:paddingBottom="22.5dip"
+        android:gravity="center_horizontal"
+        android:text="您确定要删除该评论？"
+        android:textColor="@android:color/black"
+        android:textSize="14dp"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/common_bg_white"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="13dip"
+            android:gravity="center_horizontal"
+            android:paddingBottom="13dip"
+            android:textSize="16dp"
+            android:textColor="@color/forgetpwd_text_color"
+            android:text="取消"
+            />
+        <View
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/common_bg_white"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="13dip"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"
+            android:paddingBottom="13dip"
+            android:textSize="16dp"
+            android:textColor="@color/common_green"
+            android:text="删除"
+            />
+    </LinearLayout>
+
+</LinearLayout>

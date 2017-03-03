@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
+import com.rideread.rideread.R;
 import com.rideread.rideread.adapter.MessageListAdapter;
 import com.rideread.rideread.bean.MessageEntity;
 import com.rideread.rideread.event.ImTypeMessageEvent;

@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.rideread.rideread.R;
 import com.rideread.rideread.adapter.RegionAdapter;
 import com.rideread.rideread.bean.RegionModel;
 import com.rideread.rideread.db.RegionDao;

@@ -1,21 +1,18 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.rideread.rideread.R;
 import com.rideread.rideread.adapter.SelfTimelineListAdapter;
 import com.rideread.rideread.bean.SelfTimeline;
 import com.rideread.rideread.bean.SelfTimelineList;
 import com.rideread.rideread.bean.SelfTimlineDetail;
-import com.rideread.rideread.common.ListViewMeasure;
 
 import java.util.ArrayList;
 import java.util.List;

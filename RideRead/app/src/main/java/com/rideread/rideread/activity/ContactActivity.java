@@ -1,7 +1,9 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+
+import com.rideread.rideread.R;
 
 /**
  * Created by Jackbing on 2017/2/1.

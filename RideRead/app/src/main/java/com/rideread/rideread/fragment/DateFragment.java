@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.util.Log;
 import android.widget.DatePicker;
-import com.rideread.rideread.MineEditMessageActivity;
+import com.rideread.rideread.activity.MineEditMessageActivity;
 import java.util.Calendar;
 import java.util.Locale;
 

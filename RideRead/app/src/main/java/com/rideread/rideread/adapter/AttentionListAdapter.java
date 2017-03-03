@@ -7,17 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.rideread.rideread.R;
-import com.rideread.rideread.SelfTimelineActivity;
+import com.rideread.rideread.activity.SelfTimelineActivity;
 import com.rideread.rideread.bean.TimeLine;
-import com.rideread.rideread.fragment.AttentionFragment;
 import com.rideread.rideread.widget.VideoTextureView;
 
 import java.util.List;

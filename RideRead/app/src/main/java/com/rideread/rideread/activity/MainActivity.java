@@ -1,4 +1,4 @@
-package com.rideread.rideread;
+package com.rideread.rideread.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.rideread.rideread.R;
 import com.rideread.rideread.bean.Tab;
 import com.rideread.rideread.fragment.MapFragment;
 import com.rideread.rideread.fragment.MineFragment;
