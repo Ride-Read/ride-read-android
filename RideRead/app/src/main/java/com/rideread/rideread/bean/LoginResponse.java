@@ -12,10 +12,12 @@ import java.io.Serializable;
 public class LoginResponse implements Serializable{
     private int status;
     private UserData data;
+    private long timestamp;
 
-    public LoginResponse(UserData data, int status) {
+    public LoginResponse(UserData data, int status,long timestamp) {
         this.data = data;
         this.status = status;
+        this.timestamp=timestamp;
     }
 
     public UserData getData() {
@@ -32,5 +34,13 @@ public class LoginResponse implements Serializable{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
     }
 }

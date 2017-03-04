@@ -151,7 +151,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                 String hometown=((EditText)findViewById(R.id.mine_editmsg_et_hometown)).getText().toString().trim();
 
                 new Send2BackGround().execute(Api.EDIT_MESSAGE,fileName,telphone,date
-                ,sex,name,signture,locale,school,job,hometown);
+                    ,sex,name,signture,locale,school,job,hometown);
                 break;
             case R.id.mine_editmsg_iv_head:
                 setHeadImg();

@@ -32,17 +32,21 @@ import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.activity.UserAgreement;
 import com.rideread.rideread.bean.LoginResponse;
+import com.rideread.rideread.bean.QiNiuTokenResp;
 import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
+import com.rideread.rideread.common.Constant;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
+import com.rideread.rideread.common.TimeStamp;
 import com.rideread.rideread.im.AVImClientManager;
 
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -64,10 +68,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private final int REQUEST_IMAGE=1;
     private final int CROP=0;
     private final String TYPE="image/*";
-    private String fileName,userName;//原图的路径+文件名
+    private String fileName,userName,shortFileName;//原图的路径+文件名
     private String TAG="Reg";
     private CircleImageView img;
     private EditText etUserName;
+    private TextView setuserhead_texthint;//也就是头像那两个字在设置完头像后隐藏掉
     private File file=null;
 
 
@@ -80,7 +85,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
         phoneNumView =mView.findViewById(R.id.register_phonenum_include_ly);
         initButton(phoneNumView,R.id.register_btn_next,tagPhone);
-        ((TextView)phoneNumView.findViewById(R.id.register_read_agreement_tv)).setOnClickListener(this);
+        ((TextView)phoneNumView.findViewById(R.id.register_tv_sendidentfycode)).setOnClickListener(this);
 
         setPwdView =mView.findViewById(R.id.register_setpwd_include_ly);
         initButton(setPwdView,R.id.register_btn_next,tagPwd);
@@ -89,6 +94,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         initButton(setUnameView,R.id.register_btn_complete,null);
         img=(CircleImageView)setUnameView.findViewById(R.id.register_civ_userhead);
         img.setOnClickListener(this);
+        setuserhead_texthint=(TextView)setUnameView.findViewById(R.id.setuserhead_texthint);
         return mView;
     }
 
@@ -107,9 +113,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 String tag=(String)v.getTag();
                 Button btnNext=(Button)v;
                 if(tag.equals(tagInvite)){
-                    veifyInviteCode(btnNext);
+                    changeView(inviteCodeView, phoneNumView);
+                    //veifyInviteCode(btnNext);
                 }else if(tag.equals(tagPhone)){
                     verifyCode();
+                    //changeView(phoneNumView,setPwdView);
+
                 }else if(tag.equals(tagPwd)){
                     setPwd();
                 }
@@ -118,6 +127,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 onComplete();
                 break;
             case R.id.register_tv_sendidentfycode:
+                Toast.makeText(getContext(),"发送验证码",Toast.LENGTH_SHORT).show();
                 if(indentfyCodeTv==null){
                     indentfyCodeTv=(TextView)v;
                 }
@@ -161,18 +171,18 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     class InviteCodeAysncTask extends AsyncTask<String,String,Integer> {
         @Override
         protected Integer doInBackground(String... params) {
-            Long timeStamp=new Date().getTime();//生成时间戳
-            return OkHttpUtils.getInstance().testInviteCode(params[0],timeStamp,params[1]);
+
+            return OkHttpUtils.getInstance().testInviteCode(params[0], TimeStamp.getTimeStamp(),params[1]);
         }
 
         @Override
         protected void onPostExecute(Integer status) {
             super.onPostExecute(status);
-            if(status==0){
+            if(status== Constant.SUCCESS){
                 changeView(inviteCodeView, phoneNumView);
-            }else if(status==1){
+            }else if(status==Constant.FAILED){
                 Toast.makeText(getActivity(),"邀请码不存在",Toast.LENGTH_SHORT).show();
-            }else if(status==2){
+            }else if(status==Constant.USED){
                 Toast.makeText(getActivity(),"邀请码已被使用",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(),"邀请码发送失败",Toast.LENGTH_SHORT).show();
@@ -268,32 +278,51 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         etUserName=(EditText)setUnameView.findViewById(R.id.register_edt_setusername);
         userName=etUserName.getText().toString().trim();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");//图片上传时间戳
-        String key = "icon_" + sdf.format(new Date());
+        final String key = "icon_" + sdf.format(new Date());//这个key是保存在七牛云的文件名，把这个key传给后台
         if(userName!=null&&!userName.isEmpty()){
             //在这里发送用户名和头像给后台
-            App app=(App)getActivity().getApplication();
-            //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
-            app.getUploadManager().put(fileName, key, Api.TOKEN, new UpCompletionHandler() {
+            new AsyncTask<String,Void,QiNiuTokenResp>(){
+
                 @Override
-                public void complete(String key, ResponseInfo info, JSONObject response) {
-                    //res包含hash、key等信息，具体字段取决于上传策略的设置
-
-                    if(info.isOK())
-                    {
-                        //如果上传成功则提交头像url和用户名，密码，手机号码给后台
-                        new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
-                                Api.USERHEAD_LINK+key,Api.REGISTER);
-                    }
-                    else{
-                        Log.e("qiniu", "Upload Fail");
-                        //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                    }
-                    Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
-                    Log.e("qiniu", key + ",\r\n " + info +","+response);
-
+                protected QiNiuTokenResp doInBackground(String... params) {
+                    return OkHttpUtils.getInstance().getToken(params[0],Api.TEMP_UID,TimeStamp.getTimeStamp(),params[1],params[2]);
                 }
 
-            },null);
+                @Override
+                protected void onPostExecute(QiNiuTokenResp resp) {
+                    super.onPostExecute(resp);
+                    Log.e("s","七牛tioken="+resp.getQiniu_token());
+                    if(resp!=null){
+                        App app=(App)getActivity().getApplication();
+                        //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
+
+                        //file是截图后头像保存在手机的完整路径，key是上传到七牛云后头像的名称
+                        app.getUploadManager().put(file,key , resp.getQiniu_token(), new UpCompletionHandler() {
+                            @Override
+                            public void complete(String key, ResponseInfo info, JSONObject response) {
+                                //res包含hash、key等信息，具体字段取决于上传策略的设置
+
+                                if(info.isOK())
+                                {
+                                    //如果上传成功则提交头像url和用户名，密码，手机号码给后台
+                                    new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+                                            Api.USERHEAD_LINK+key,Api.REGISTER);
+                                }
+                                else{
+                                    Log.e("qiniu", "Upload Fail");
+                                    //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
+                                }
+                                Log.e("------------>>>>",info.path+","+info.isOK()+",info="+info.toString()+",key:"+key);
+                                Log.e("qiniu", key + ",\r\n " + info +","+response);
+
+                            }
+
+                        },null);
+                    }else{
+                        Toast.makeText(getContext(),"获取七牛token失败",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }.execute(key,Api.TEMP_USER_TOKEN,Api.QINIU_TOKEN);
 
 //            try {
 //                final AVFile avFile = AVFile.withAbsoluteLocalPath(timeStamp + ".jpg", file.getAbsolutePath());
@@ -359,7 +388,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         try {
             //以时间戳来命名裁切过的图片
             timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            File filePath=new File(FileUtils.root+ "/"+ PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext())+"/userhead/");
+            File filePath=new File(FileUtils.root+ PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext())+"/userhead/");
             if(filePath.exists()==false){
                 filePath.mkdirs();
             }
@@ -370,7 +399,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 }
             }
             file=File.createTempFile(timeStamp, ".jpg", filePath);
-        }catch (Exception e){
+        }catch (IOException e){
+            e.printStackTrace();
             return null;
         }
         return file;
@@ -386,6 +416,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     if(data!=null) {
                         List<String> path=data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
                         fileName=path.get(0);//原图的完整路径（包括文件名）
+                        Toast.makeText(getContext(),fileName,Toast.LENGTH_LONG).show();
                         Log.i(TAG,path.get(0));
                         startPhotoZoomSec(Uri.fromFile(new File(path.get(0))));
                     }
@@ -393,6 +424,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 case CROP:
 
                     img.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    if(setuserhead_texthint.getVisibility()==View.VISIBLE){
+                        setuserhead_texthint.setVisibility(View.GONE);
+                    }
                     break;
             }
         }
@@ -405,18 +439,25 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         protected LoginResponse doInBackground(String... params) {
 
             return OkHttpUtils.getInstance().send2BackGround(params[0],params[1],
-                    params[2], params[3],params[4],new Date().getTime());
+                    params[2], params[3],params[4]);
         }
 
         @Override
         protected void onPostExecute(LoginResponse resp) {
             super.onPostExecute(resp);
             int resultCode=resp.getStatus();
-            if(resultCode==0){
+            if(resp!=null){
+                if(resultCode==Constant.SUCCESS){
+                    Intent intent=new Intent(getActivity(),MainActivity.class);
+                    intent.putExtra("data",resp.getData());
+                    startActivity(intent);
 //               //连接leacloud im服务器
-                openClient(resp.getData());
+                    //openClient(resp.getData());
+                }else if(resultCode==Constant.EXITED){
+                    Toast.makeText(getActivity(),"用户已经存在",Toast.LENGTH_SHORT).show();
+                }
             }else{
-                Toast.makeText(getActivity(),"设置失败",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
             }
         }
 

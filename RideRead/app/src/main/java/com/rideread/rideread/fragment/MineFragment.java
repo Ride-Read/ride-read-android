@@ -4,18 +4,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.activity.MessageListActivity;
 import com.rideread.rideread.activity.MineAttentionActivity;
 import com.rideread.rideread.activity.MineEditMessageActivity;
 import com.rideread.rideread.activity.MineFansActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.activity.SettingActivity;
+import com.rideread.rideread.bean.UserData;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,12 +29,16 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MineFragment extends Fragment implements View.OnClickListener{
 
     private View mView;
+    private UserData data;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.mine_fragment_layout,container,false);
+        data=((MainActivity)getActivity()).getUserData();
+        Log.e("data","data is null ="+(data==null));
         initView();
+
         return mView;
     }
 
@@ -43,6 +50,11 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         TextView mineFansNum=(TextView)mView.findViewById(R.id.mine_tv_fans_num);
         ImageView mineSetting=(ImageView)mView.findViewById(R.id.left_setting_icon);
         CircleImageView mineUserHead=(CircleImageView) mView.findViewById(R.id.mine_civ_userhead);
+
+        if(data!=null){
+
+        }
+
 
         mineMessage.setOnClickListener(this);
         mineAttention.setOnClickListener(this);
@@ -57,12 +69,14 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     public void onClick(View v){
         switch (v.getId()){
             case R.id.mine_tv_message:
-                //Toast.makeText(getContext(),"我的消息",Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(getActivity(),MessageListActivity.class));
                 break;
             case R.id.mine_tv_attention_num:
             case R.id.mine_tv_attention:
-                startActivity(new Intent(getActivity(),MineAttentionActivity.class));
+                Intent intent=new Intent(getActivity(),MineAttentionActivity.class);
+                intent.putExtra("uid",data.getUid());
+                intent.putExtra("token",data.getToken());
+                startActivity(intent);
                 break;
             case R.id.mine_tv_fans_num:
             case R.id.mine_tv_fans:
@@ -76,4 +90,19 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                 break;
         }
     }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.e("data","onStart");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.e("data","onResume");
+    }
+
+
 }

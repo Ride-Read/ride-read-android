@@ -30,8 +30,10 @@ import com.rideread.rideread.bean.LoginResponse;
 import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
+import com.rideread.rideread.common.Constant;
 import com.rideread.rideread.common.MD5Utils;
 import com.rideread.rideread.common.OkHttpUtils;
+import com.rideread.rideread.common.SHA1Helper;
 import com.rideread.rideread.im.AVImClientManager;
 
 /**
@@ -119,7 +121,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
         }else{
             accountEdt.setEnabled(false);
             passwordEdt.setEnabled(false);
-            encodePwd= MD5Utils.Md5(password);//加密
+            encodePwd= SHA1Helper.SHA1(password);//加密
             if(encodePwd==null){
                 Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
                 return;
@@ -134,28 +136,41 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     {
         @Override
         protected LoginResponse doInBackground(String... params) {
-            //return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
-            return null;
-
+            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
         }
 
         @Override
         protected void onPostExecute(LoginResponse resp) {
             super.onPostExecute(resp);
-//            if(resp!=null){
-//                int resultCode=resp.getStatus();
-//                if(resultCode==0){
-//                    //连接leacloud im服务器
-//                    openClient(resp.getData());
-//                }else {
-//                    Toast.makeText(getActivity(),"用户名或密码错误",Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }else {
-//                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
-//            }
-            Intent intent=new Intent(getActivity(),MainActivity.class);
-            startActivity(intent);
+            if(resp!=null){
+                int resultCode=resp.getStatus();
+                if(resultCode==Constant.SUCCESS){
+
+                    Intent intent=new Intent(getActivity(),MainActivity.class);
+                    UserData data=resp.getData();
+                    intent.putExtra("data",data);
+                    Log.e("userdata","data="+data.toString());
+                    startActivity(intent);
+                    //连接leacloud im服务器
+                    //openClient(resp.getData());
+                }else if(resultCode== Constant.PASSWORD_ERROR) {
+                    Toast.makeText(getActivity(),"密码错误",Toast.LENGTH_SHORT).show();
+                }else if(resultCode==Constant.NO_EXITS){
+                    Toast.makeText(getActivity(),"用户不存在",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();
+                }
+
+            }else {
+                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
+            }
+            accountEdt.setEnabled(true);
+            passwordEdt.setEnabled(true);
+
+
+//            Intent intent=new Intent(getActivity(),MainActivity.class);
+//            intent.putExtra("data",new UserData());
+//            startActivity(intent);
 
         }
     }

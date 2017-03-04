@@ -26,6 +26,8 @@ public class UserData implements Serializable{
     private String career;
     private String nickname;
 
+    public UserData(){}
+
     public UserData(String birthday, String career, String created_at, String face_url, String follower, int following, String hometown, String location, String nickname, String phonenumber, String school, int sex, String signature, String token, int uid, String updated_at) {
         this.birthday = birthday;
         this.career = career;

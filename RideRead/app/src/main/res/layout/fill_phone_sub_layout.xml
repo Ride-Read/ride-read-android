@@ -38,9 +38,10 @@
             >
             <EditText
                 android:id="@+id/register_edt_identfycode"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
                 android:hint="@string/register_hint_identfycode"
                 android:gravity="center"
                 android:textSize="44px"
@@ -64,11 +65,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/register_text_sendidentfycode"
+
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/forgetpwd_text_color"
                 android:textSize="44px"
+                android:gravity="center"
                 android:clickable="true"
-                android:layout_weight="1"
                 />
         </LinearLayout>
 

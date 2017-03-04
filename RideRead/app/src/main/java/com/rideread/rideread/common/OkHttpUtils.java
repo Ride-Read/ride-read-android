@@ -5,8 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.bean.LoginResponse;
-
-
+import com.rideread.rideread.bean.PersonalInfoFollower;
+import com.rideread.rideread.bean.PersonalInfoFollowing;
+import com.rideread.rideread.bean.QiNiuTokenResp;
 
 
 import java.io.IOException;
@@ -51,13 +52,9 @@ public class OkHttpUtils {
 
 
         try {
-            System.out.println("account="+username+",pwd"+password);
             JSONObject json=new JSONObject();
-            json.put("username","dsdseere");
-            System.out.println("account="+username+",pwd="+password);
-            json.put("password","efsdssf");
-
-            System.out.println("u="+json.getString("username")+",pwd="+json.getString("password"));
+            json.put("username",username);
+            json.put("password",password);
             String resp=post(url,json.toString());
             if(resp==null){
                 return null;
@@ -65,6 +62,7 @@ public class OkHttpUtils {
             return new Gson().fromJson(resp,LoginResponse.class);
 
         }catch (JSONException e){
+            e.printStackTrace();
             return null;
         }
 
@@ -97,24 +95,22 @@ public class OkHttpUtils {
     }
 
     /**
-     *
+     *注册
      * @param userName
      * @param telPhone
      * @param password
      * @param userHeadUrl
      * @param url
-     * @param timeStamp
      * @return
      */
-    public LoginResponse send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url,long timeStamp){
+    public LoginResponse send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url){
         try{
 
             JSONObject json=new JSONObject();
             json.put("nickname",userName);
             json.put("face_url",userHeadUrl);
             json.put("phonenumber",telPhone);
-            json.put("password",MD5Utils.Md5(password));
-            json.put("sign",timeStamp);
+            json.put("password",SHA1Helper.SHA1(password));
             String resp=post(url,json.toString());
             if(resp==null){
                 return null;
@@ -125,6 +121,13 @@ public class OkHttpUtils {
         }
     }
 
+    /**
+     * 重置密码
+     * @param resetPassword
+     * @param telphone
+     * @param url
+     * @return
+     */
     public LoginMessageEntity resetPassword(String resetPassword,String telphone,String url){
 //        try{
 //
@@ -139,7 +142,7 @@ public class OkHttpUtils {
     }
 
     /**
-     *
+     * 更新基本资料
      * @param url
      * @param headPath
      * @param phone
@@ -163,6 +166,59 @@ public class OkHttpUtils {
         return null;
     }
 
+    public PersonalInfoFollowing getFollowing(int  uid, String token, long timeStamp, String url){
+        try{
+
+            JSONObject json=new JSONObject();
+            json.put("uid",uid);
+            json.put("token",token);
+            json.put("sign",timeStamp);
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;
+            }
+            return new Gson().fromJson(resp,PersonalInfoFollowing.class);
+        }catch (JSONException e){
+            return null;
+        }
+    }
+
+    public PersonalInfoFollower getFollower(int  uid, String token, long timeStamp, String url){
+        try{
+
+            JSONObject json=new JSONObject();
+            json.put("uid",uid);
+            json.put("token",token);
+            json.put("sign",timeStamp);
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;
+            }
+            return new Gson().fromJson(resp,PersonalInfoFollower.class);
+        }catch (JSONException e){
+            return null;
+        }
+    }
+
+    public QiNiuTokenResp getToken(String filename, int uid, long timeStamp, String userToken, String url){
+
+        try{
+
+            JSONObject json=new JSONObject();
+            json.put("uid",uid);
+            json.put("token",userToken);
+            json.put("timestamp",timeStamp);
+            json.put("filename",filename);
+            String resp=post(url,json.toString());
+            if(resp==null){
+                return null;
+            }
+            return new Gson().fromJson(resp,QiNiuTokenResp.class);
+        }catch (JSONException e){
+            return null;
+        }
+    }
+
 
     /**
      * 登录注册的post
@@ -171,19 +227,25 @@ public class OkHttpUtils {
      * @return
      */
     private String post(String url, String json){
+        String result=null;
         try {
             RequestBody requestBody = RequestBody.create(JSON, json);
 
             Request request = new Request.Builder().url(url)
                     .post(requestBody).build();
             Response response = clients.newCall(request).execute();
-            System.out.println(response.body().string());
-            return response.body().string();
+
+            result=response.body().string();
+            System.out.println(result);
+            return result;
         }catch(IOException e){
-            return null;
+            e.printStackTrace();
+            return result;
         }
 
     }
+
+
 
 
 }

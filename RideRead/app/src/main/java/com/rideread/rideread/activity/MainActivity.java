@@ -2,6 +2,7 @@ package com.rideread.rideread.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,15 +11,15 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.amap.api.location.AMapLocationClientOption;
-import com.avos.avoscloud.im.v2.AVIMClient;
-import com.avos.avoscloud.im.v2.AVIMException;
-import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.Tab;
+import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.fragment.MapFragment;
 import com.rideread.rideread.fragment.MineFragment;
 import com.rideread.rideread.fragment.TimeLineFragment;
 import com.rideread.rideread.widget.MainFragmentTabHost;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
 
     public AMapLocationClientOption mLocationOption = null;
+    private UserData data;
 
     private LayoutInflater mInflater;
     private MainFragmentTabHost mTabhost;
@@ -84,18 +86,15 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        //Jerry登录
-        AVIMClient jerry = AVIMClient.getInstance("15622705224");
-        jerry.open(new AVIMClientCallback(){
+    protected void onStart() {
+        super.onStart();
+        data=(UserData) getIntent().getSerializableExtra("data");
 
-            @Override
-            public void done(AVIMClient client,AVIMException e){
-                if(e==null){
-
-                }
-            }
-        });
+        //在这里要保存timestamp和token，暂时还没做
     }
+
+    public UserData getUserData(){
+        return data;
+    }
+
 }
