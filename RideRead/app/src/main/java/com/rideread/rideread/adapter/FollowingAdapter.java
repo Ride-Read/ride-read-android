@@ -10,23 +10,22 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.rideread.rideread.R;
-import com.rideread.rideread.bean.Attention;
 import com.rideread.rideread.bean.Follower;
+import com.rideread.rideread.bean.Following;
 
 import java.util.List;
 
 /**
- * Created by Jackbing on 2017/1/31.
+ * Created by Jackbing on 2017/3/7.
  */
 
-public class AttentionAdapter extends BaseAdapter {
-
-    private List<Follower> lists=null;
+public class FollowingAdapter extends BaseAdapter{
+    private List<Following> lists=null;
     private LayoutInflater inflater;
     private int ResId;
     private Context context;
 
-    public AttentionAdapter(Context context,int resId,List<Follower> lists){
+    public FollowingAdapter(Context context,int resId,List<Following> lists){
         inflater=LayoutInflater.from(context);
         this.lists=lists;
         this.ResId=resId;
@@ -51,7 +50,7 @@ public class AttentionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Follower follower=lists.get(position);
+        Following follower=lists.get(position);
         ViewHolder viewHolder=null;
         if(convertView==null){
             convertView=inflater.inflate(ResId,null);

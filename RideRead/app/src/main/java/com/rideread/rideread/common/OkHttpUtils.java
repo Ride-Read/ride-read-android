@@ -106,11 +106,12 @@ public class OkHttpUtils {
     public LoginResponse send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url){
         try{
 
+            System.out.println("password:"+password);
             JSONObject json=new JSONObject();
             json.put("nickname",userName);
             json.put("face_url",userHeadUrl);
             json.put("phonenumber",telPhone);
-            json.put("password",SHA1Helper.SHA1(password));
+            json.put("password",password);
             String resp=post(url,json.toString());
             if(resp==null){
                 return null;

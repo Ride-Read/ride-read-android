@@ -1,5 +1,6 @@
 package com.rideread.rideread.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.Tab;
 import com.rideread.rideread.bean.UserData;
+import com.rideread.rideread.common.PreferenceUtils;
 import com.rideread.rideread.fragment.MapFragment;
 import com.rideread.rideread.fragment.MineFragment;
 import com.rideread.rideread.fragment.TimeLineFragment;
@@ -88,9 +90,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        data=(UserData) getIntent().getSerializableExtra("data");
-
+        Intent intent=getIntent();
+        data=(UserData) intent.getSerializableExtra("data");
+        long timeStamp=intent.getLongExtra("timeStamp",-1);
         //在这里要保存timestamp和token，暂时还没做
+        PreferenceUtils.getInstance().saveMustParams(data.getToken(),timeStamp,data.getUid(),getApplicationContext());
     }
 
     public UserData getUserData(){

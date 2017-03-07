@@ -30,8 +30,7 @@ import com.rideread.rideread.bean.LoginResponse;
 import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
-import com.rideread.rideread.common.Constant;
-import com.rideread.rideread.common.MD5Utils;
+import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.SHA1Helper;
 import com.rideread.rideread.im.AVImClientManager;
@@ -122,10 +121,12 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
             accountEdt.setEnabled(false);
             passwordEdt.setEnabled(false);
             encodePwd= SHA1Helper.SHA1(password);//加密
+            Log.e("password",encodePwd);
             if(encodePwd==null){
                 Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
                 return;
             }
+
             new LoginAsyncTask().execute(username,encodePwd, Api.USER_LOGIN);
         }
 
@@ -144,18 +145,19 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
             super.onPostExecute(resp);
             if(resp!=null){
                 int resultCode=resp.getStatus();
-                if(resultCode==Constant.SUCCESS){
+                if(resultCode== Constants.SUCCESS){
 
                     Intent intent=new Intent(getActivity(),MainActivity.class);
                     UserData data=resp.getData();
                     intent.putExtra("data",data);
+                    intent.putExtra("timestamp",resp.getTimestamp());
                     Log.e("userdata","data="+data.toString());
                     startActivity(intent);
                     //连接leacloud im服务器
                     //openClient(resp.getData());
-                }else if(resultCode== Constant.PASSWORD_ERROR) {
+                }else if(resultCode== Constants.PASSWORD_ERROR) {
                     Toast.makeText(getActivity(),"密码错误",Toast.LENGTH_SHORT).show();
-                }else if(resultCode==Constant.NO_EXITS){
+                }else if(resultCode==Constants.NO_EXITS){
                     Toast.makeText(getActivity(),"用户不存在",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();

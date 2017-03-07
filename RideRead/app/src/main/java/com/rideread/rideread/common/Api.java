@@ -17,9 +17,9 @@ public class Api {
 
     public final static String MY_TIMELINE="";//我的阅圈的接口
 
-    public final static String FOLLOWER="http://121.42.195.113/rideread/users/follower";//获取粉丝列表接口
-    public final static String FOLLOWING="http://121.42.195.113/rideread/users/following";//获取关注列表接口
-
+    public final static String FOLLOWER="http://121.42.195.113:3000/users/follower";//获取粉丝列表接口
+    public final static String FOLLOWING="http://121.42.195.113:3000/users/following";//获取关注列表接口
+    public final static String UPDATE="http://121.42.195.113:3000/users/update";
 
 
     public final static String QINIU_TOKEN="http://121.42.195.113:3000/util/qiniu_token";//获取七牛云存储的token接口

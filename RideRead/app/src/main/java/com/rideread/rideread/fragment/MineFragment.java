@@ -73,10 +73,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                 break;
             case R.id.mine_tv_attention_num:
             case R.id.mine_tv_attention:
-                Intent intent=new Intent(getActivity(),MineAttentionActivity.class);
-                intent.putExtra("uid",data.getUid());
-                intent.putExtra("token",data.getToken());
-                startActivity(intent);
+                startActivity(new Intent(getActivity(),MineAttentionActivity.class));
                 break;
             case R.id.mine_tv_fans_num:
             case R.id.mine_tv_fans:

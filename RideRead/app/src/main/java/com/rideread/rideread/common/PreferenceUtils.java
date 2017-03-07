@@ -3,6 +3,8 @@ package com.rideread.rideread.common;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.rideread.rideread.bean.PostParams;
+
 /**
  * Created by Jackbing on 2017/1/25.
  * 注意某些信息需要加密但是现在暂时还没有
@@ -23,6 +25,34 @@ public class PreferenceUtils {
         return preferenceUtils;
 
     }
+
+    /**
+     *
+     * @param token
+     * @param timeStamp
+     * @param uid
+     * @param context
+     */
+    public void saveMustParams(String token,long timeStamp,int uid,Context context){
+        SharedPreferences sf=context.getSharedPreferences("params",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor=sf.edit();
+        editor.putString("token",token);
+        editor.putLong("timeStamp",timeStamp);
+        editor.putInt("uid",uid);
+        editor.commit();
+    }
+
+    public PostParams getPostParams(Context context){
+        SharedPreferences sf=context.getSharedPreferences("params",Context.MODE_PRIVATE);
+        PostParams pp=new PostParams();
+        pp.setToken(sf.getString("token",null));
+        pp.setUid(sf.getInt("uid",-1));
+        pp.setTimeStmap(sf.getLong("timeStamp",-1));
+        return pp;
+
+    }
+
+
 
 
     /**

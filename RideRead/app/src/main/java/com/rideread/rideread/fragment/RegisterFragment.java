@@ -1,14 +1,20 @@
 package com.rideread.rideread.fragment;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +33,7 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadOptions;
 import com.rideread.rideread.App;
 import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
@@ -36,23 +43,28 @@ import com.rideread.rideread.bean.QiNiuTokenResp;
 import com.rideread.rideread.bean.UserData;
 import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
-import com.rideread.rideread.common.Constant;
+import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
+import com.rideread.rideread.common.SHA1Helper;
 import com.rideread.rideread.common.TimeStamp;
 import com.rideread.rideread.im.AVImClientManager;
+import com.rideread.rideread.imageloader.GildeImageLoader;
+import com.yancy.gallerypick.config.GalleryConfig;
+import com.yancy.gallerypick.config.GalleryPick;
+import com.yancy.gallerypick.inter.IHandlerCallBack;
 
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Jackbing on 2017/2/13.
@@ -64,7 +76,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private View phoneNumView, inviteCodeView, setPwdView, setUnameView;
     private String inviteCode;
     private TextView indentfyCodeTv;
-    private String telPhone,password,timeStamp;
+    private String telPhone,password,encodepwd,timeStamp;
     private final int REQUEST_IMAGE=1;
     private final int CROP=0;
     private final String TYPE="image/*";
@@ -73,7 +85,15 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private CircleImageView img;
     private EditText etUserName;
     private TextView setuserhead_texthint;//也就是头像那两个字在设置完头像后隐藏掉
-    private File file=null;
+    private String  filePath=null;
+
+
+    private IHandlerCallBack iHandlerCallBack;
+    private List<String> path = new ArrayList<>();
+    private Activity mActivity;
+    private Context mContext;
+    private final int PERMISSIONS_REQUEST_READ_CONTACTS = 8;
+    private GalleryConfig galleryConfig;
 
 
     @Nullable
@@ -95,6 +115,10 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         img=(CircleImageView)setUnameView.findViewById(R.id.register_civ_userhead);
         img.setOnClickListener(this);
         setuserhead_texthint=(TextView)setUnameView.findViewById(R.id.setuserhead_texthint);
+
+        mContext=getContext();
+        mActivity=getActivity();
+        initGallery();
         return mView;
     }
 
@@ -117,7 +141,6 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     //veifyInviteCode(btnNext);
                 }else if(tag.equals(tagPhone)){
                     verifyCode();
-                    //changeView(phoneNumView,setPwdView);
 
                 }else if(tag.equals(tagPwd)){
                     setPwd();
@@ -142,6 +165,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
         }
 
+    }
+
+    private void setHeadImg() {
+        galleryConfig.getBuilder().isOpenCamera(false).build();
+        initPermissions();
     }
 
     private void changeView(View hideView,View showView){
@@ -178,11 +206,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(Integer status) {
             super.onPostExecute(status);
-            if(status== Constant.SUCCESS){
+            if(status== Constants.SUCCESS){
                 changeView(inviteCodeView, phoneNumView);
-            }else if(status==Constant.FAILED){
+            }else if(status==Constants.FAILED){
                 Toast.makeText(getActivity(),"邀请码不存在",Toast.LENGTH_SHORT).show();
-            }else if(status==Constant.USED){
+            }else if(status==Constants.USED){
                 Toast.makeText(getActivity(),"邀请码已被使用",Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(getActivity(),"邀请码发送失败",Toast.LENGTH_SHORT).show();
@@ -264,6 +292,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         password=setpwdEdt.getText().toString().trim();
         String repassword=rePwd.getText().toString().trim();
         String result=new ConfirmPassword().confirmPwd(password,repassword);
+        encodepwd= SHA1Helper.SHA1(password);
+        Log.e("register encodepwd",encodepwd);
         if(result.equals("success")){
             changeView(setPwdView,setUnameView);
         }else{
@@ -293,19 +323,21 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     super.onPostExecute(resp);
                     Log.e("s","七牛tioken="+resp.getQiniu_token());
                     if(resp!=null){
+                        UploadOptions uops=new UploadOptions(null,"image/jpeg",false,null,null);
                         App app=(App)getActivity().getApplication();
                         //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
 
                         //file是截图后头像保存在手机的完整路径，key是上传到七牛云后头像的名称
-                        app.getUploadManager().put(file,key , resp.getQiniu_token(), new UpCompletionHandler() {
+                        app.getUploadManager().put(filePath,key , resp.getQiniu_token(), new UpCompletionHandler() {
                             @Override
                             public void complete(String key, ResponseInfo info, JSONObject response) {
                                 //res包含hash、key等信息，具体字段取决于上传策略的设置
 
                                 if(info.isOK())
                                 {
+                                    Log.e("face_url",Api.USERHEAD_LINK+key);
                                     //如果上传成功则提交头像url和用户名，密码，手机号码给后台
-                                    new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
+                                    new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),encodepwd,
                                             Api.USERHEAD_LINK+key,Api.REGISTER);
                                 }
                                 else{
@@ -317,7 +349,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
                             }
 
-                        },null);
+                        },uops);
                     }else{
                         Toast.makeText(getContext(),"获取七牛token失败",Toast.LENGTH_SHORT).show();
                     }
@@ -349,89 +381,33 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         }
 
     }
-    //图片相册选择图片或者拍照
-    private void setHeadImg(){
-
-        Intent intent=new Intent(getActivity(), MultiImageSelectorActivity.class);
-        // 是否显示调用相机拍照
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-
-        // 最大图片选择数量
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
-
-        // 设置模式 (支持 单选/MultiImageSelectorActivity.MODE_SINGLE 或者 多选/MultiImageSelectorActivity.MODE_MULTI)
-        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
-
-        intent.putStringArrayListExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST,null);
-        startActivityForResult(intent, REQUEST_IMAGE);
-    }
-
-    //裁切图片
-    public void startPhotoZoomSec(Uri uri){
-        if(uri!=null){
-            Intent intent=new Intent("com.android.camera.action.CROP");
-            intent.setDataAndType(uri, TYPE);
-            intent.putExtra("crop", "true");//开启剪切
-            intent.putExtra("aspectX", 1);//剪切的宽高比1:1
-            intent.putExtra("aspectY", 1);//剪切的宽高比1:1
-            intent.putExtra("outputX",100);
-            intent.putExtra("outputY",100);
-            intent.putExtra("return-data",true);
-            intent.putExtra("output",Uri.fromFile(createImageFile()));//裁切后的保存路径
-            startActivityForResult(intent,CROP);
-        }
-    }
 
 
-    private File createImageFile(){
-
-        try {
-            //以时间戳来命名裁切过的图片
-            timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            File filePath=new File(FileUtils.root+ PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext())+"/userhead/");
-            if(filePath.exists()==false){
-                filePath.mkdirs();
-            }
-            if(filePath.exists()==true){
-                File[] files=filePath.listFiles();
-                for(File file:files){
-                    file.delete();
-                }
-            }
-            file=File.createTempFile(timeStamp, ".jpg", filePath);
-        }catch (IOException e){
-            e.printStackTrace();
-            return null;
-        }
-        return file;
-
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode== Activity.RESULT_OK){
-            switch (requestCode){
-                case REQUEST_IMAGE:
-                    if(data!=null) {
-                        List<String> path=data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-                        fileName=path.get(0);//原图的完整路径（包括文件名）
-                        Toast.makeText(getContext(),fileName,Toast.LENGTH_LONG).show();
-                        Log.i(TAG,path.get(0));
-                        startPhotoZoomSec(Uri.fromFile(new File(path.get(0))));
-                    }
-                    break;
-                case CROP:
-
-                    img.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
-                    if(setuserhead_texthint.getVisibility()==View.VISIBLE){
-                        setuserhead_texthint.setVisibility(View.GONE);
-                    }
-                    break;
-            }
-        }
-
-    }
+//
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(resultCode== Activity.RESULT_OK){
+//            switch (requestCode){
+//                case REQUEST_IMAGE:
+//                    if(data!=null) {
+//                        List<String> path=data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+//                        fileName=path.get(0);//原图的完整路径（包括文件名）
+//                        Toast.makeText(getContext(),fileName,Toast.LENGTH_LONG).show();
+//                        Log.i(TAG,path.get(0));
+//                    }
+//                    break;
+//                case CROP:
+//
+//                    img.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
+//                    if(setuserhead_texthint.getVisibility()==View.VISIBLE){
+//                        setuserhead_texthint.setVisibility(View.GONE);
+//                    }
+//                    break;
+//            }
+//        }
+//
+//    }
 
     //发送参数到后台
     class Send2Background extends AsyncTask<String,Void,LoginResponse>{
@@ -447,13 +423,14 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             super.onPostExecute(resp);
             int resultCode=resp.getStatus();
             if(resp!=null){
-                if(resultCode==Constant.SUCCESS){
+                if(resultCode==Constants.SUCCESS){
                     Intent intent=new Intent(getActivity(),MainActivity.class);
                     intent.putExtra("data",resp.getData());
+                    intent.putExtra("timestamp",resp.getTimestamp());
                     startActivity(intent);
 //               //连接leacloud im服务器
                     //openClient(resp.getData());
-                }else if(resultCode==Constant.EXITED){
+                }else if(resultCode==Constants.EXITED){
                     Toast.makeText(getActivity(),"用户已经存在",Toast.LENGTH_SHORT).show();
                 }
             }else{
@@ -475,6 +452,99 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 }
             });
 
+        }
+    }
+
+
+    //添加自定义回调
+    private void initGallery() {
+        iHandlerCallBack = new IHandlerCallBack() {
+            @Override
+            public void onStart() {
+                Log.i(TAG, "onStart: 开启");
+            }
+
+            @Override
+            public void onSuccess(List<String> photoList) {
+                Log.i(TAG, "onSuccess: 返回数据");
+//                path.clear();
+//                for (String s : photoList) {
+//                    Log.i(TAG, s);
+//                    path.add(s);
+//                }
+                //因为我们当前是单选模式，所以只取第一张图片
+                //img.setImageURI(Uri.fromFile(new File(photoList.get(0))));
+
+                try {
+                    filePath=photoList.get(0);
+                    img.setImageBitmap(BitmapFactory.decodeFile(filePath));
+                    if(setuserhead_texthint.getVisibility()==View.VISIBLE){
+                        setuserhead_texthint.setVisibility(View.GONE);
+                    }
+                }catch (Exception e){
+                    Toast.makeText(getContext(),"头像获取失败",Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onCancel() {
+                Log.i(TAG, "onCancel: 取消");
+            }
+
+            @Override
+            public void onFinish() {
+                Log.i(TAG, "onFinish: 结束");
+            }
+
+            @Override
+            public void onError() {
+                Log.i(TAG, "onError: 出错");
+            }
+        };
+
+        galleryConfig = new GalleryConfig.Builder()
+                .imageLoader(new GildeImageLoader())    // ImageLoader 加载框架（必填）
+                .iHandlerCallBack(iHandlerCallBack)     // 监听接口（必填）
+                .provider("com.rideread.test.fileprovider")   // provider(必填)
+                .pathList(path)                         // 记录已选的图片
+                .multiSelect(false)                      // 是否多选   默认：false
+                .multiSelect(false, 9)                   // 配置是否多选的同时 配置多选数量   默认：false ， 9
+                .maxSize(9)                             // 配置多选时 的多选数量。    默认：9
+                .crop(true)                             // 快捷开启裁剪功能，仅当单选 或直接开启相机时有效
+                .crop(true, 1, 1, 100, 100)             // 配置裁剪功能的参数，   默认裁剪比例 1:1
+                .isShowCamera(true)                     // 是否现实相机按钮  默认：false
+                .filePath(FileUtils.root+"pic")          // 图片存放路径
+                .build();
+
+    }
+
+    // 授权管理
+    private void initPermissions() {
+        if (ContextCompat.checkSelfPermission(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Log.i(TAG, "需要授权 ");
+            if (ActivityCompat.shouldShowRequestPermissionRationale(mActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                Log.i(TAG, "拒绝过了");
+                Toast.makeText(mContext, "请在 设置-应用管理 中开启此应用的储存授权。", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.i(TAG, "进行授权");
+                ActivityCompat.requestPermissions(mActivity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSIONS_REQUEST_READ_CONTACTS);
+            }
+        } else {
+            Log.i(TAG, "不需要授权 ");
+            GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(getActivity());
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == PERMISSIONS_REQUEST_READ_CONTACTS) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "同意授权");
+                GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(getActivity());
+            } else {
+                Log.i(TAG, "拒绝授权");
+            }
         }
     }
 
