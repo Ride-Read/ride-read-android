@@ -64,6 +64,8 @@ public class OkHttpUtils {
         }catch (JSONException e){
             e.printStackTrace();
             return null;
+        }catch (Exception e){
+            return null;
         }
 
     }
@@ -89,6 +91,8 @@ public class OkHttpUtils {
             Integer status=jsonObject.getInteger("status");
             return status;
         }catch (JSONException e){
+            return null;
+        }catch (Exception e){
             return null;
         }
 
@@ -119,6 +123,8 @@ public class OkHttpUtils {
             return new Gson().fromJson(resp,LoginResponse.class);
         }catch (JSONException e){
             return null;
+        }catch (Exception e){
+            return null;
         }
     }
 
@@ -145,7 +151,7 @@ public class OkHttpUtils {
     /**
      * 更新基本资料
      * @param url
-     * @param headPath
+     * @param
      * @param phone
      * @param birthDate
      * @param sex
@@ -158,13 +164,34 @@ public class OkHttpUtils {
      * @return
      */
 
-    public LoginMessageEntity editMessage(String url,String headPath,String phone
-    ,String birthDate,String sex,String name,String signture,String locale,String school,
-                                          String job,String hometown){
-
-        //如上
-
+    public LoginResponse editMessage(String face_url,String phone
+    ,String birthDate,int sex,String name,String signture,String locale,String school,
+                                          String job,String hometown,long timeStamp,String url,int uid,String token){
+        try{
+        JSONObject json=new JSONObject();
+        json.put("uid",uid);
+        json.put("token",token);
+        json.put("sign",timeStamp);
+        json.put("school",school);
+        json.put("location",locale);
+        json.put("sex",sex);
+        json.put("signature",signture);
+        json.put("phonenumber",phone);
+        json.put("face_url",face_url);
+        json.put("career",job);
+        json.put("nickname",name);
+        json.put("hometown",hometown);
+        json.put("birthday",birthDate);
+        String resp=post(url,json.toString());
+        if(resp==null){
+            return null;
+        }
+        return new Gson().fromJson(resp,LoginResponse.class);
+    }catch (JSONException e){
         return null;
+    }catch (Exception e){
+        return null;
+     }
     }
 
     public PersonalInfoFollowing getFollowing(int  uid, String token, long timeStamp, String url){
@@ -180,6 +207,8 @@ public class OkHttpUtils {
             }
             return new Gson().fromJson(resp,PersonalInfoFollowing.class);
         }catch (JSONException e){
+            return null;
+        }catch (Exception e){
             return null;
         }
     }
@@ -197,6 +226,8 @@ public class OkHttpUtils {
             }
             return new Gson().fromJson(resp,PersonalInfoFollower.class);
         }catch (JSONException e){
+            return null;
+        }catch (Exception e){
             return null;
         }
     }
@@ -216,6 +247,8 @@ public class OkHttpUtils {
             }
             return new Gson().fromJson(resp,QiNiuTokenResp.class);
         }catch (JSONException e){
+            return null;
+        }catch (Exception e){
             return null;
         }
     }
@@ -242,6 +275,8 @@ public class OkHttpUtils {
         }catch(IOException e){
             e.printStackTrace();
             return result;
+        }catch (Exception e){
+            return null;
         }
 
     }

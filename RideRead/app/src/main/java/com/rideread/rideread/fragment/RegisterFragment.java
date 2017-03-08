@@ -137,8 +137,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 String tag=(String)v.getTag();
                 Button btnNext=(Button)v;
                 if(tag.equals(tagInvite)){
-                    changeView(inviteCodeView, phoneNumView);
-                    //veifyInviteCode(btnNext);
+                    //changeView(inviteCodeView, phoneNumView);
+                    veifyInviteCode(btnNext);
                 }else if(tag.equals(tagPhone)){
                     verifyCode();
 

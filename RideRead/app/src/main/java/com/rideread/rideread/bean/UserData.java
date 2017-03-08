@@ -24,11 +24,11 @@ public class UserData implements Serializable{
     private String birthday;
     private int following;
     private String career;
-    private String nickname;
+    private String username;
 
     public UserData(){}
 
-    public UserData(String birthday, String career, String created_at, String face_url, String follower, int following, String hometown, String location, String nickname, String phonenumber, String school, int sex, String signature, String token, int uid, String updated_at) {
+    public UserData(String birthday, String career, String created_at, String face_url, String follower, int following, String hometown, String location, String username, String phonenumber, String school, int sex, String signature, String token, int uid, String updated_at) {
         this.birthday = birthday;
         this.career = career;
         this.created_at = created_at;
@@ -37,7 +37,7 @@ public class UserData implements Serializable{
         this.following = following;
         this.hometown = hometown;
         this.location = location;
-        this.nickname = nickname;
+        this.username = username;
         this.phonenumber = phonenumber;
         this.school = school;
         this.sex = sex;
@@ -119,12 +119,12 @@ public class UserData implements Serializable{
         this.location = location;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPhonenumber() {
@@ -193,7 +193,7 @@ public class UserData implements Serializable{
                 ", created_at='" + created_at + '\'' +
                 ", following=" + following +
                 ", career='" + career + '\'' +
-                ", nickname='" + nickname + '\'' +
+                ", username='" + username + '\'' +
                 '}';
     }
 }

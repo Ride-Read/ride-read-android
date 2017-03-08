@@ -66,11 +66,15 @@ public class MineFansActivity extends BaseActivity {
                 Toast.makeText(MineFansActivity.this,"获取粉丝列表失败",Toast.LENGTH_SHORT).show();
             }else{
                 if(personalInfoFollower.getStatus()== Constants.SUCCESS){
-                    lists.clear();
-                    lists.addAll(personalInfoFollower.getFollower());
-                    adapter.notifyDataSetChanged();
+                    if(personalInfoFollower.getFollower()==null){
+                        Toast.makeText(MineFansActivity.this,"您还没有粉丝",Toast.LENGTH_SHORT).show();
+                    }else{
+                        lists.clear();
+                        lists.addAll(personalInfoFollower.getFollower());
+                        adapter.notifyDataSetChanged();
+                    }
                 }else{
-                    Toast.makeText(MineFansActivity.this,"获取粉丝列表失败",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MineFansActivity.this,"您还没有粉丝",Toast.LENGTH_SHORT).show();
                 }
             }
         }

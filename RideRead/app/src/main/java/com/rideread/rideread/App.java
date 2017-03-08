@@ -66,6 +66,10 @@ public class App extends Application {
     }
 
     public UploadManager getUploadManager(){
+        if(uploadManager==null){
+            Configuration config = new Configuration.Builder().zone(Zone.httpAutoZone).build();
+            uploadManager = new UploadManager(config);
+        }
         return uploadManager;
     }
 

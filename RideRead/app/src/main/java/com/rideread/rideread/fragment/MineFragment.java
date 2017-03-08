@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.activity.MessageListActivity;
 import com.rideread.rideread.activity.MineAttentionActivity;
@@ -43,6 +44,7 @@ public class MineFragment extends Fragment implements View.OnClickListener{
     }
 
     private void initView(){
+        TextView mineRealName=(TextView)mView.findViewById(R.id.real_name);
         TextView mineMessage=(TextView)mView.findViewById(R.id.mine_tv_message);
         TextView mineAttention=(TextView)mView.findViewById(R.id.mine_tv_attention);
         TextView mineFans=(TextView)mView.findViewById(R.id.mine_tv_fans);
@@ -52,7 +54,10 @@ public class MineFragment extends Fragment implements View.OnClickListener{
         CircleImageView mineUserHead=(CircleImageView) mView.findViewById(R.id.mine_civ_userhead);
 
         if(data!=null){
-
+            mineRealName.setText(data.getUsername());
+            Glide.with(this).load(data.getFace_url()).into(mineUserHead);
+            mineAttentionNum.setText(data.getFollowing()+"");
+            mineFansNum.setText(data.getFollower()+"");
         }
 
 
@@ -83,23 +88,13 @@ public class MineFragment extends Fragment implements View.OnClickListener{
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.mine_civ_userhead:
-                startActivity(new Intent(getActivity(),MineEditMessageActivity.class));
+                Intent intent=new Intent(getActivity(),MineEditMessageActivity.class);
+                intent.putExtra("data",data);
+                startActivity(intent);
                 break;
         }
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.e("data","onStart");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.e("data","onResume");
-    }
 
 
 }

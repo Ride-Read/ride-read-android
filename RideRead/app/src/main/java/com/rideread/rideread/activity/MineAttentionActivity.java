@@ -1,6 +1,5 @@
 package com.rideread.rideread.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,9 +7,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.rideread.rideread.R;
-import com.rideread.rideread.adapter.AttentionAdapter;
 import com.rideread.rideread.adapter.FollowingAdapter;
-import com.rideread.rideread.bean.Attention;
 import com.rideread.rideread.bean.Following;
 import com.rideread.rideread.bean.PersonalInfoFollowing;
 import com.rideread.rideread.bean.PostParams;
@@ -72,9 +69,16 @@ public class MineAttentionActivity extends BaseActivity {
                 Toast.makeText(MineAttentionActivity.this,"获取失败",Toast.LENGTH_SHORT).show();
             }else{
                 if(personalInfoFollowing.getStatus()== Constants.SUCCESS){
-
+//                        Toast.makeText(MineAttentionActivity.this,"获取数据成功",Toast.LENGTH_SHORT).show();
+                    if(personalInfoFollowing.getFollowing()!=null){
+                        lists.clear();
+                        lists.addAll(personalInfoFollowing.getFollowing());
+                        adapter.notifyDataSetChanged();
+                    }else{
+                        Toast.makeText(MineAttentionActivity.this,"您没有关注任何人",Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-
+                    Toast.makeText(MineAttentionActivity.this,"您没有关注任何人",Toast.LENGTH_SHORT).show();
                 }
             }
         }
