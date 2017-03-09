@@ -35,6 +35,7 @@
         android:gravity="center"
         android:visibility="visible"
         />
+
     <ImageView
         android:id="@+id/right_search_icon"
         android:layout_width="36dp"
@@ -44,6 +45,19 @@
         android:visibility="gone"
         android:src="@mipmap/icon_search"
         android:paddingRight="10dp"
+        />
+    <TextView
+        android:id="@+id/right_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/right_search_icon"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dip"
+        android:visibility="gone"
+
         />
 
 </RelativeLayout>

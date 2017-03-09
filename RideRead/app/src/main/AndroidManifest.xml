@@ -57,7 +57,8 @@
         <activity android:name=".activity.MineAttentionActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            ></activity>
         <activity android:name=".activity.MineFansActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.SettingActivity"
@@ -65,7 +66,8 @@
         <activity android:name=".activity.AboutRideReadActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.MineEditMessageActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"
+            ></activity>
         <activity android:name=".activity.ContactActivity"
             android:screenOrientation="portrait"></activity>
         <activity android:name=".activity.MineEdtMsgDistrictActivity"

@@ -12,6 +12,8 @@
         <attr name="RightIcon" format="reference"></attr>
         <attr name="leftTitle" format="reference|string"></attr>
         <attr name="isShowLeftTitle" format="boolean"></attr>
+        <attr name="rightTitle" format="reference|string"></attr>
+        <attr name="isShowRightTitle" format="boolean"></attr>
     </declare-styleable>
 
     <declare-styleable name="ScrollTabView">

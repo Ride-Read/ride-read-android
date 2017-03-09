@@ -48,6 +48,8 @@ import com.rideread.rideread.common.PreferenceUtils;
 import com.rideread.rideread.fragment.DateFragment;
 import com.rideread.rideread.fragment.RegisterFragment;
 import com.rideread.rideread.imageloader.GildeImageLoader;
+import com.rideread.rideread.selfinterface.MineEditListener;
+import com.rideread.rideread.widget.MineEditDialogFragmen;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
@@ -67,19 +69,13 @@ import me.nereo.multi_image_selector.MultiImageSelectorActivity;
  * Created by Jackbing on 2017/1/31.
  */
 
-public class MineEditMessageActivity extends BaseActivity implements View.OnClickListener{
+public class MineEditMessageActivity extends BaseActivity implements View.OnClickListener,MineEditListener{
 
-    private final int REQUEST_IMAGE=1;
-    private final int CROP=0;
-    private final String TYPE="image/*";
-    private String fileName;
     private CircleImageView civ;
     private String TAG="MineEditMessageActivity";
 
     public final int REQUEST_DISTRICT=2;
     private TextView edtDistrict,editmsgSex;
-
-    private File file=null;
 
     private UserData data;
     private Activity mActivity;
@@ -91,10 +87,11 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
     private String filePath=null;//头像的绝对路径
     private int selectSex=0;
     private PostParams postParams;
+    private MineEditDialogFragmen mineEditDialogFragmen;
 
 
-    private TextView birthDate;
-    private EditText realname,signtureedt,phonenum,schooledt,jobedt,hometownedt;
+    private TextView birthDate,realname,signtureedt,schooledt;
+    private EditText phonenum,jobedt,hometownedt;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -116,10 +113,10 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         edtDistrict=(TextView)findViewById(R.id.mine_editmsg_et_locale);
         ImageView back=(ImageView)findViewById(R.id.left_setting_icon);
         editmsgSex=(TextView)findViewById(R.id.mine_editmsg_et_sex);
-        realname=(EditText)findViewById(R.id.mine_editmsg_et_name);
+        realname=(TextView)findViewById(R.id.mine_editmsg_et_name);
         phonenum=(EditText)findViewById(R.id.mine_editmsg_et_phone);
-        signtureedt=(EditText)findViewById(R.id.mine_editmsg_et_signture);
-        schooledt=(EditText)findViewById(R.id.mine_editmsg_et_school);
+        signtureedt=(TextView)findViewById(R.id.mine_editmsg_et_signture);
+        schooledt=(TextView)findViewById(R.id.mine_editmsg_et_school);
         jobedt=(EditText)findViewById(R.id.mine_editmsg_et_job);
         hometownedt=(EditText)findViewById(R.id.mine_editmsg_et_hometown);
 
@@ -289,74 +286,16 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
     public void setHeadImg(){
         galleryConfig.getBuilder().isOpenCamera(false).build();
         initPermissions();
-//        Intent intent=new Intent(getBaseContext(), MultiImageSelectorActivity.class);
-//        // 是否显示调用相机拍照
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
-//
-//        // 最大图片选择数量
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_COUNT, 9);
-//
-//        // 设置模式 (支持 单选/MultiImageSelectorActivity.MODE_SINGLE 或者 多选/MultiImageSelectorActivity.MODE_MULTI)
-//        intent.putExtra(MultiImageSelectorActivity.EXTRA_SELECT_MODE, MultiImageSelectorActivity.MODE_SINGLE);
-//
-//        intent.putStringArrayListExtra(MultiImageSelectorActivity.EXTRA_DEFAULT_SELECTED_LIST,null);
-//        startActivityForResult(intent, REQUEST_IMAGE);
     }
 
-//    //裁切图片
-//    public void startPhotoZoomSec(Uri uri){
-//        if(uri!=null){
-//            Intent intent=new Intent("com.android.camera.action.CROP");
-//            intent.setDataAndType(uri, TYPE);
-//            intent.putExtra("crop", "true");//开启剪切
-//            intent.putExtra("aspectX", 1);//剪切的宽高比1:1
-//            intent.putExtra("aspectY", 1);//剪切的宽高比1:1
-//            intent.putExtra("outputX",100);
-//            intent.putExtra("outputY",100);
-//            intent.putExtra("return-data",true);
-//            intent.putExtra("output",Uri.fromFile(createImageFile()));//裁切后的保存路径
-//            startActivityForResult(intent,CROP);
-//        }
-//    }
 
-//    private File createImageFile(){
-//
-//        try {
-//            //以时间戳来命名裁切过的图片
-//            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-//            File filePath=new File(FileUtils.root+ "/"+ PreferenceUtils.getInstance().getTelPhone(getApplicationContext())+"/userhead/");
-//            if(filePath.exists()==false){
-//                filePath.mkdirs();
-//            }
-//            if(filePath.exists()==true){
-//                File[] files=filePath.listFiles();
-//                for(File file:files){
-//                    file.delete();
-//                }
-//            }
-//            file=File.createTempFile(timeStamp, ".jpg", filePath);
-//        }catch (Exception e){
-//            return null;
-//        }
-//        return file;
-//
-//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode==RESULT_OK){
             switch (requestCode){
-//                case REQUEST_IMAGE:
-//                    if(data!=null) {
-//                        List<String> path=data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
-//                        fileName=path.get(0);//原图的完整路径（包括文件名）
-//                        startPhotoZoomSec(Uri.fromFile(new File(path.get(0))));
-//                    }
-//                    break;
-//                case CROP:
-//                    civ.setImageBitmap(BitmapFactory.decodeFile(file.getAbsolutePath()));
-//                    break;
+
                 case REQUEST_DISTRICT:
                     String province = data.getStringExtra(MineEdtMsgDistrictActivity.REGION_PROVINCE);
                     String city = data.getStringExtra(MineEdtMsgDistrictActivity.REGION_CITY);
@@ -409,6 +348,24 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
 
 
         }
+    }
+
+    //编辑昵称和学校，个性签名回调的接口
+    @Override
+    public void getResult(String tag, String content) {
+
+        if(tag.equals("name")){
+            realname.setText(content);
+        }else if(tag.equals("school")){
+            schooledt.setText(content);
+        }else{
+            signtureedt.setText(content);
+        }
+
+        if(mineEditDialogFragmen!=null){
+            mineEditDialogFragmen.dismiss();
+        }
+
     }
 
 
@@ -526,5 +483,37 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                 Log.i(TAG, "拒绝授权");
             }
         }
+    }
+
+    //设置昵称
+    public void onEdit(View v){
+
+        switch (v.getId()){
+            case R.id.name_tablerow:
+                showEditDialog("name","真实姓名","建议使用真实姓名");
+                break;
+            case R.id.school_tablerow:
+                //编辑学校
+                showEditDialog("school","毕业/在读学校","填写学校全称");
+                break;
+            case R.id.signture_tablerow:
+                //编辑签名
+                showEditDialog("signature","个性签名","填写个性签名");
+                break;
+        }
+    }
+
+
+    private void showEditDialog(String tag,String title,String hint){
+        //编辑昵称
+        if(mineEditDialogFragmen==null){
+            mineEditDialogFragmen=new MineEditDialogFragmen();
+        }
+        Bundle bundle= new Bundle();
+        bundle.putString("tag",tag);
+        bundle.putString("title",title);
+        bundle.putString("hint",hint);
+        mineEditDialogFragmen.setArguments(bundle);
+        mineEditDialogFragmen.show(getSupportFragmentManager(),"mineEditDialogFragmen");
     }
 }

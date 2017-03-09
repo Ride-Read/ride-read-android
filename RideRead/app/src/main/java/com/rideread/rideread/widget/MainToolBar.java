@@ -26,7 +26,7 @@ import com.rideread.rideread.R;
 public class MainToolBar extends Toolbar {
     private View mView;
     private LayoutInflater inflater;
-    private TextView mTtitle,leftTitle;
+    private TextView mTtitle,leftTitle,rightTitle;
     private ImageView rightSearchIcon,leftSettingIcon;
 
     public MainToolBar(Context context) {
@@ -49,8 +49,10 @@ public class MainToolBar extends Toolbar {
             boolean isShowSearchIcon = a.getBoolean(R.styleable.MainToolBar_isShowRightIcon, false);
             boolean isShowSettingIcon=a.getBoolean(R.styleable.MainToolBar_isShowLeftIcon,false);
             boolean isShowLeftTitle=a.getBoolean(R.styleable.MainToolBar_isShowLeftTitle,false);
+            boolean isShowRightTitle=a.getBoolean(R.styleable.MainToolBar_isShowRightTitle,false);
             int lefticonResId=a.getResourceId(R.styleable.MainToolBar_LeftIcon,R.mipmap.icon_setting);
             int righticonResId=a.getResourceId(R.styleable.MainToolBar_RightIcon,R.mipmap.icon_search);
+
 
             leftSettingIcon.setImageResource(lefticonResId);
             rightSearchIcon.setImageResource(righticonResId);
@@ -77,6 +79,15 @@ public class MainToolBar extends Toolbar {
                 }
             }else{
                 hideLeftTitle();
+            }
+            if(isShowRightTitle){
+                showRightTitle();
+                final CharSequence title = a.getText(R.styleable.MainToolBar_rightTitle);
+                if(!TextUtils.isEmpty(title)){
+                    setRightTitle(title);
+                }
+            }else{
+                hideRightTitle();
             }
 
             a.recycle();
@@ -122,6 +133,18 @@ public class MainToolBar extends Toolbar {
         }
     }
 
+    private void hideRightTitle(){
+        if(rightTitle!=null){
+            rightTitle.setVisibility(View.GONE);
+        }
+    }
+
+    private void showRightTitle(){
+        if(rightTitle!=null){
+            rightTitle.setVisibility(View.VISIBLE);
+        }
+    }
+
     /**
      * 加载自定义的toolbar布局
      */
@@ -134,6 +157,7 @@ public class MainToolBar extends Toolbar {
             rightSearchIcon = (ImageView) mView.findViewById(R.id.right_search_icon);
             leftSettingIcon=(ImageView)mView.findViewById(R.id.left_setting_icon);
             leftTitle=(TextView) mView.findViewById(R.id.left_title);
+            rightTitle=(TextView)mView.findViewById(R.id.right_title);
 
             LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.CENTER_HORIZONTAL);
 
@@ -165,6 +189,15 @@ public class MainToolBar extends Toolbar {
             if(leftTitle!=null){
                 leftTitle.setText(leftTitles);
             }
+    }
+
+    public void setRightTitle(@StringRes int resId){
+        setRightTitle(getContext().getText(resId));
+    }
+    public void setRightTitle(CharSequence rightTitles){
+        if(rightTitle!=null){
+            rightTitle.setText(rightTitles);
+        }
     }
 
 

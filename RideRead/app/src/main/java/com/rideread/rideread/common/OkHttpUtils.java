@@ -19,6 +19,7 @@ import okhttp3.Response;
 
 /**
  * Created by Jackbing on 2017/1/22.
+ *
  */
 
 public class OkHttpUtils {
