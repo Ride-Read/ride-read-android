@@ -24,4 +24,10 @@
     </style>
 
 
+    <style name="popup_anim_style">
+        <item name="android:windowEnterAnimation">@anim/popup_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_fade_out</item>
+    </style>
+
+
 </resources>

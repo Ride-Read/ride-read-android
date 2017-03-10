@@ -1,9 +1,18 @@
 package com.rideread.rideread.activity;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.bean.TimeLine;
@@ -162,9 +171,67 @@ public class TimelineDetailsActivity extends BaseActivity implements View.OnClic
                 break;
             case R.id.share_textview:
                 moreDialogFragment.dismiss();
+                PopupWindow popwindow=showSharePopWindow();
+                if(popwindow!=null&&!popwindow.isShowing()){
+                    popwindow.showAtLocation(v, Gravity.BOTTOM,0,0);
+                    //setWindowBackground(this,0.5f);
+                }
                 break;
         }
 
 
+    }
+
+    private PopupWindow showSharePopWindow() {
+
+
+        Log.e("pop","showpop");
+        try{
+            View v=getLayoutInflater().inflate(R.layout.share_layout, null);
+            final PopupWindow popup=new PopupWindow(v, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            ColorDrawable cd = new ColorDrawable(Color.WHITE);
+
+            popup.setBackgroundDrawable(cd);
+            popup.setAnimationStyle(R.style.popup_anim_style);
+
+            popup.setOutsideTouchable(true);
+            popup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    //setWindowBackground(TimelineDetailsActivity.this,1.0f);
+                }
+            });
+            popup.setFocusable(true);
+            v.findViewById(R.id.pop_cancel).setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    popup.dismiss();
+                }
+
+            });
+            v.findViewById(R.id.pop_collect).setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View v) {
+                    popup.dismiss();
+                    Toast.makeText(TimelineDetailsActivity.this,"点击了收藏",Toast.LENGTH_SHORT).show();
+                }
+
+            });
+            return popup;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    public void setWindowBackground(Activity activity,float alpha){
+        WindowManager.LayoutParams lp=activity.getWindow().getAttributes();
+        lp.alpha=alpha;
+        activity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+        activity.getWindow().setAttributes(lp);
     }
 }

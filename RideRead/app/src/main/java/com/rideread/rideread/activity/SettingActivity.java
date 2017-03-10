@@ -1,6 +1,7 @@
 package com.rideread.rideread.activity;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -30,7 +31,6 @@ public class SettingActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-
     }
 
 
