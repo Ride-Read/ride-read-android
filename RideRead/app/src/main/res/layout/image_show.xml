@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black">
+    <RelativeLayout
+        android:id="@+id/size_layout"
+        android:layout_width="match_parent"
+        android:layout_height="37.5dip"
+        android:background="@android:color/black"
+        >
+        <TextView
+            android:id="@+id/fengexian"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@android:color/white"
+            android:text="/"/>
+        <TextView
+            android:id="@+id/current_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_toLeftOf="@id/fengexian"
+            android:layout_centerInParent="true"
+            android:textSize="13dp"
+            />
+        <TextView
+            android:id="@+id/total_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:layout_toRightOf="@id/fengexian"
+            android:layout_centerInParent="true"
+            android:textSize="13dp"
+            />
+    </RelativeLayout>
+    <com.rideread.rideread.widget.ImageViewPager
+        android:id="@+id/imageviewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/size_layout"></com.rideread.rideread.widget.ImageViewPager>
+
+</RelativeLayout>

@@ -79,7 +79,6 @@ dependencies {
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.qiniu:qiniu-android-sdk:7.3.3'
     compile 'com.android.support:support-v4:25.0.1'
-    compile 'com.github.lovetuzitong:MultiImageSelector:1.2'
     compile 'com.leaking.slideswitch:slideswitch:1.0.0'
     compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:v1.9.8'
     compile 'com.android.support:design:25.0.1'
@@ -102,6 +101,5 @@ dependencies {
     compile 'org.greenrobot:greendao-generator:3.2.0'
     compile 'com.github.YancyYe:GalleryPick:1.1.8'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-
-
+    compile 'com.github.chrisbanes.photoview:library:1.2.4'
 }

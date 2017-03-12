@@ -82,15 +82,11 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".common.ImageShower"
             android:screenOrientation="portrait"></activity>
+        <activity android:name=".activity.ImageShowActivity"
+            android:screenOrientation="portrait"></activity>
 
 
         <service android:name="com.amap.api.location.APSService"></service>
-
-        //选择图片的activity
-        <activity
-            android:configChanges="orientation|screenSize"
-            android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"></activity>
-
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -46,7 +46,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     private String tagLogin="loginView",tagFindPwd="findPwdView",tagSetPwd="reSetPwdView";
     private String telPhone;
     private EditText accountEdt,passwordEdt;
-    private String username,encodePwd;
+    private String username,encodePwd,password;
 
     @Nullable
     @Override
@@ -112,7 +112,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
         accountEdt=(EditText)loginView.findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)loginView.findViewById(R.id.login_edt_password);
         username=accountEdt.getText().toString().trim();
-        String password=passwordEdt.getText().toString().trim();
+        password=passwordEdt.getText().toString().trim();
         if(username==null||password==null){
             Toast.makeText(getActivity(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
         }else if(!hasNetWork()){
@@ -120,14 +120,13 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
         }else{
             accountEdt.setEnabled(false);
             passwordEdt.setEnabled(false);
-            encodePwd= SHA1Helper.SHA1(password);//加密
-            Log.e("password",encodePwd);
-            if(encodePwd==null){
-                Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
-                return;
-            }
 
-            new LoginAsyncTask().execute(username,encodePwd, Api.USER_LOGIN);
+//            if(encodePwd==null){
+//                Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+
+            new LoginAsyncTask().execute(username,password, Api.USER_LOGIN);
         }
 
     }

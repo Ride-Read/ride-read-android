@@ -63,7 +63,6 @@ import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 /**
  * Created by Jackbing on 2017/1/31.

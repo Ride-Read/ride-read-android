@@ -16,9 +16,11 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.jaeger.ninegridimageview.NineGridImageView;
 import com.jaeger.ninegridimageview.NineGridImageViewAdapter;
 import com.rideread.rideread.R;
+import com.rideread.rideread.activity.ImageShowActivity;
 import com.rideread.rideread.adapter.CommentListAdapter;
 import com.rideread.rideread.bean.Comment;
 import com.rideread.rideread.bean.TimeLine;
@@ -102,50 +104,44 @@ public class CommentListFragment extends Fragment {
             text.setVisibility(View.GONE);
         }
 
-        NineGridImageViewAdapter<Integer> adapter=new NineGridImageViewAdapter<Integer>() {
+        NineGridImageViewAdapter<String> adapter=new NineGridImageViewAdapter<String>() {
             @Override
-            protected void onDisplayImage(Context context, ImageView imageView, Integer resId) {
-                imageView.setImageResource(resId);
+            protected void onDisplayImage(Context context, ImageView imageView, String imageurl) {
+                Glide.with(CommentListFragment.this).load(imageurl).fitCenter().into(imageView);
             }
 
             @Override
-            protected void onItemImageClick(Context context, ImageView imageView, int index, List<Integer> list) {
+            protected void onItemImageClick(Context context, ImageView imageView, int index, List<String> list) {
 
-                Intent intent=new Intent(getActivity(), ImageShower.class);
-                intent.putExtra("content","图像url");
+                Intent intent=new Intent(getActivity(), ImageShowActivity.class);
+                ArrayList<String> arrayList=new ArrayList<String>();
+                arrayList.addAll(list);
+                intent.putStringArrayListExtra("imgurls",arrayList);
+                intent.putExtra("index",index);
                 startActivity(intent);
 
             }
         };
 
+        List<String> images=new ArrayList<String>();//这里模拟传入图片链接列表
+        images.add("http://img4.duitang.com/uploads/item/201407/27/20140727091026_GmVRQ.jpeg");
+        images.add("http://img.anzow.com/picture/2015719/2015071916305142.jpg");
+        images.add("http://image.tianjimedia.com/uploadImages/2012/244/RXDM27FT4601.jpg");
+        images.add("http://img1.gamedog.cn/2013/07/30/44-130I00ZU50-50.jpg");
+        images.add("http://www.33lc.com/article/UploadPic/2012-9/20129417163151547.jpg");
+        images.add("http://bizhi.cnanzhi.com/upload/bizhi/2014/1210/14181737602209.jpg");
+        images.add("http://image.tianjimedia.com/uploadImages/2012/244/P53844A81OPA.jpg");
+        images.add("http://img02.tooopen.com/images/20150527/tooopen_sy_126598151923.jpg");
+        images.add("http://k.zol-img.com.cn/sjbbs/7161/a7160286_s.jpg");
         if(timeline.isHasImg()==true){
             gridView.setAdapter(adapter);
-            gridView.setImagesData(timeline.getImgs());
+            gridView.setImagesData(images);
             gridView.setVisibility(View.VISIBLE);
         }else{
             gridView.setVisibility(View.GONE);
         }
 
 
-//        if(timeline.isHasVideo()==true){
-//
-//            videoTextureView.setVisibility(View.VISIBLE);
-//            iv_play.setVisibility(View.VISIBLE);
-//            videoTextureView.setIvTip(iv_play);
-//            videoTextureView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(!videoTextureView.getPlayStatus())
-//                        videoTextureView.startMediaPlayer();
-//                    else{
-//                        videoTextureView.stopMediaPlayer();
-//                    }
-//                }
-//            });
-//        }else{
-//            videoTextureView.setVisibility(View.GONE);
-//            iv_play.setVisibility(View.GONE);
-//        }
 
         author.setText(timeline.getAuthor());
         pushTime.setText(timeline.getPushTime());

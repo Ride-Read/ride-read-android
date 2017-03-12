@@ -137,8 +137,8 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 String tag=(String)v.getTag();
                 Button btnNext=(Button)v;
                 if(tag.equals(tagInvite)){
-                    //changeView(inviteCodeView, phoneNumView);
-                    veifyInviteCode(btnNext);
+                    changeView(inviteCodeView, phoneNumView);
+                    //veifyInviteCode(btnNext);
                 }else if(tag.equals(tagPhone)){
                     verifyCode();
 
@@ -292,8 +292,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         password=setpwdEdt.getText().toString().trim();
         String repassword=rePwd.getText().toString().trim();
         String result=new ConfirmPassword().confirmPwd(password,repassword);
-        encodepwd= SHA1Helper.SHA1(password);
-        Log.e("register encodepwd",encodepwd);
+
         if(result.equals("success")){
             changeView(setPwdView,setUnameView);
         }else{
@@ -308,7 +307,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
         etUserName=(EditText)setUnameView.findViewById(R.id.register_edt_setusername);
         userName=etUserName.getText().toString().trim();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");//图片上传时间戳
-        final String key = "icon_" + sdf.format(new Date());//这个key是保存在七牛云的文件名，把这个key传给后台
+        final String key = "icon_" + sdf.format(new Date())+".jpg";//这个key是保存在七牛云的文件名，把这个key传给后台
         if(userName!=null&&!userName.isEmpty()){
             //在这里发送用户名和头像给后台
             new AsyncTask<String,Void,QiNiuTokenResp>(){
@@ -337,7 +336,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                                 {
                                     Log.e("face_url",Api.USERHEAD_LINK+key);
                                     //如果上传成功则提交头像url和用户名，密码，手机号码给后台
-                                    new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),encodepwd,
+                                    new Send2Background().execute(userName,PreferenceUtils.getInstance().getTelPhone(getActivity().getApplicationContext()),password,
                                             Api.USERHEAD_LINK+key,Api.REGISTER);
                                 }
                                 else{

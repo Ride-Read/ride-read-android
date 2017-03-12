@@ -1,5 +1,7 @@
 package com.rideread.rideread.common;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
@@ -53,9 +55,13 @@ public class OkHttpUtils {
 
 
         try {
+            Log.e("原密码：",password);
             JSONObject json=new JSONObject();
+            String encodePwd= SHA1Helper.SHA1(password);//加密
             json.put("username",username);
-            json.put("password",password);
+            json.put("password",encodePwd);
+            Log.e("username:",username);
+            Log.e("加密后的密码：",encodePwd);
             String resp=post(url,json.toString());
             if(resp==null){
                 return null;
@@ -111,7 +117,6 @@ public class OkHttpUtils {
     public LoginResponse send2BackGround(String userName,String telPhone,String password,String userHeadUrl,String url){
         try{
 
-            System.out.println("password:"+password);
             JSONObject json=new JSONObject();
             json.put("nickname",userName);
             json.put("face_url",userHeadUrl);
