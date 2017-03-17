@@ -53,6 +53,9 @@
     <string name="register_text_head">头像</string>
     <string name="register_contact_text1">注册即视为同意</string>
     <string name="register_contact_text2">骑阅用户协议</string>
-
+    <string name="label_text">标签</string>
+    <string name="label_text_hint">创建自己的标签</string>
+    <string name="label_cancel_text">取消</string>
+    <string name="label_confirm_text">确定</string>
 
 </resources>

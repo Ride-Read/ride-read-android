@@ -45,6 +45,7 @@ import com.rideread.rideread.db.DBCopyUtil;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
+import com.rideread.rideread.fragment.BiaoQianFragment;
 import com.rideread.rideread.fragment.DateFragment;
 import com.rideread.rideread.fragment.RegisterFragment;
 import com.rideread.rideread.imageloader.GildeImageLoader;
@@ -366,6 +367,13 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         }
 
     }
+
+
+    public void onBiaoQian(View v){
+        BiaoQianFragment labelFragment=new BiaoQianFragment();
+        labelFragment.show(getSupportFragmentManager(),"labelFragment");
+
+     }
 
 
     class Send2BackGround extends AsyncTask<String,Void,LoginResponse>{

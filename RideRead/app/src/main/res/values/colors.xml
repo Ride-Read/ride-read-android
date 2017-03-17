@@ -28,4 +28,8 @@
     <color name="common_green">#52cace</color>
 
 
+    <color name="label_hint_color">#9a9a9a9a</color>
+    <color name="lable_cancel_color">#a0a0a0a0</color>
+
+
 </resources>

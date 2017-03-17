@@ -30,4 +30,10 @@
     </style>
 
 
+    <style name="checkedbox_theme" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checked_box</item>
+    </style>
+        
+
+
 </resources>

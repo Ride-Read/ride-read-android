@@ -180,7 +180,9 @@
             <TableRow
                 android:minHeight="55dip"
                 android:gravity="center_vertical"
-                android:layout_marginRight="15dip">
+                android:layout_marginRight="15dip"
+                android:onClick="onBiaoQian"
+                android:descendantFocusability="blocksDescendants">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
