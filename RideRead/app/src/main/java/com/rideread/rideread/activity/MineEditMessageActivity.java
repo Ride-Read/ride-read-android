@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -108,7 +109,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
 
     private void initView() {
         birthDate=(TextView)findViewById(R.id.mine_editmsg_tv_birthdate);
-        ImageView save=(ImageView)findViewById(R.id.right_search_icon);
+        TextView save=(TextView) findViewById(R.id.right_title);
         civ=(CircleImageView)findViewById(R.id.mine_editmsg_iv_head);
         edtDistrict=(TextView)findViewById(R.id.mine_editmsg_et_locale);
         ImageView back=(ImageView)findViewById(R.id.left_setting_icon);
@@ -123,6 +124,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
         setData(data);
         save.setOnClickListener(this);
         civ.setOnClickListener(this);
+        ((LinearLayout)findViewById(R.id.mine_change_headimg)).setOnClickListener(this);
         back.setOnClickListener(this);
     }
 
@@ -191,7 +193,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.right_search_icon:
+            case R.id.right_title:
                 String name=realname.getText().toString().trim();
                 String sex=editmsgSex.getText().toString().trim();
                 if(TextUtils.isEmpty(sex)){
@@ -212,6 +214,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                 UpdateMessage(date,hometown,school,locale,job,name,telphone,postParams.getToken(),signture);
                 break;
             case R.id.mine_editmsg_iv_head:
+            case R.id.mine_change_headimg:
                 setHeadImg();
                 break;
             case R.id.left_setting_icon:
@@ -225,8 +228,8 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
 
     public void UpdateMessage(final String birthday, final String hometown, final String school, final String location
     , final String career,final  String nickname, final String phonenum, final String token, final String signture){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");//图片上传时间戳
-        final String key = "icon_" + sdf.format(new Date())+".jpg";//这个key是保存在七牛云的文件名，把这个key传给后台
+
+        final String key = "face.jpg";//这个key是保存在七牛云的文件名，把这个key传给后台
 
             //在这里发送用户名和头像给后台
             new AsyncTask<String,Void,QiNiuTokenResp>(){
@@ -241,7 +244,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
                     super.onPostExecute(resp);
                     Log.e("s","七牛tioken="+resp.getQiniu_token());
                     if(resp!=null){
-                        UploadOptions uops=new UploadOptions(null,"image/jpeg",false,null,null);
+
                         App app=(App)MineEditMessageActivity.this.getApplication();
                         //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
 
@@ -273,7 +276,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
 
                                 }
 
-                            },uops);
+                            },null);
                         }
                     }else{
                         Toast.makeText(MineEditMessageActivity.this,"获取七牛token失败",Toast.LENGTH_SHORT).show();
@@ -383,7 +386,7 @@ public class MineEditMessageActivity extends BaseActivity implements View.OnClic
 
             return OkHttpUtils.getInstance().editMessage(params[0],params[1],
                     params[2],selectSex,params[3],params[4],params[5],
-                    params[6],params[7],params[8],TimeStamp.getTimeStamp(),params[9],postParams.getUid(),params[10]);
+                    params[6],params[7],params[8],TimeStamp.getTimeStamp(),params[9],postParams.getUid(),params[10],data.getLongitude(),data.getLatitude(),null);
         }
 
         @Override

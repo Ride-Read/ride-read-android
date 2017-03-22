@@ -1,6 +1,7 @@
 package com.rideread.rideread.bean;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by Jackbing on 2017/2/27.
@@ -14,7 +15,7 @@ public class UserData implements Serializable{
     private String school;
     private String phonenumber;
     private String updated_at;
-    private String follower;
+    private int follower;
     private String token;
     private String hometown;
     private String face_url;
@@ -25,10 +26,14 @@ public class UserData implements Serializable{
     private int following;
     private String career;
     private String username;
+    private List<String> tags;
+    private double longitude;
+    private double latitude;
 
     public UserData(){}
 
-    public UserData(String birthday, String career, String created_at, String face_url, String follower, int following, String hometown, String location, String username, String phonenumber, String school, int sex, String signature, String token, int uid, String updated_at) {
+    public UserData(String birthday, String career, String created_at, String face_url, int follower, int following, String hometown, String location, String username, String phonenumber, String school, int sex, String signature, String token, int uid, String updated_at
+    ,List<String> tags,double longitude,double latitude) {
         this.birthday = birthday;
         this.career = career;
         this.created_at = created_at;
@@ -45,6 +50,33 @@ public class UserData implements Serializable{
         this.token = token;
         this.uid = uid;
         this.updated_at = updated_at;
+        this.tags=tags;
+        this.longitude=longitude;
+        this.latitude=latitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
     }
 
     public String getUpdated_at() {
@@ -87,11 +119,11 @@ public class UserData implements Serializable{
         this.face_url = face_url;
     }
 
-    public String getFollower() {
+    public int getFollower() {
         return follower;
     }
 
-    public void setFollower(String follower) {
+    public void setFollower(int follower) {
         this.follower = follower;
     }
 
@@ -184,7 +216,7 @@ public class UserData implements Serializable{
                 ", school='" + school + '\'' +
                 ", phonenumber='" + phonenumber + '\'' +
                 ", updated_at='" + updated_at + '\'' +
-                ", follower='" + follower + '\'' +
+                ", follower=" + follower +
                 ", token='" + token + '\'' +
                 ", hometown='" + hometown + '\'' +
                 ", face_url='" + face_url + '\'' +
@@ -194,6 +226,9 @@ public class UserData implements Serializable{
                 ", following=" + following +
                 ", career='" + career + '\'' +
                 ", username='" + username + '\'' +
+                ", tags=" + tags +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
                 '}';
     }
 }

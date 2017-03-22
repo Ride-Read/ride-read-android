@@ -13,6 +13,8 @@ import com.rideread.rideread.bean.QiNiuTokenResp;
 
 
 import java.io.IOException;
+import java.util.List;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -51,7 +53,7 @@ public class OkHttpUtils {
      * @param url
      * @return 返回一个消息实体，
      */
-    public LoginResponse userLogin(String username, String password, String url){
+    public LoginResponse userLogin(String username, String password, String url,double longtitude,double latitude){
 
 
         try {
@@ -60,6 +62,8 @@ public class OkHttpUtils {
             String encodePwd= SHA1Helper.SHA1(password);//加密
             json.put("username",username);
             json.put("password",encodePwd);
+            json.put("latitude",latitude);
+            json.put("longitude",longtitude);
             Log.e("username:",username);
             Log.e("加密后的密码：",encodePwd);
             String resp=post(url,json.toString());
@@ -172,7 +176,7 @@ public class OkHttpUtils {
 
     public LoginResponse editMessage(String face_url,String phone
     ,String birthDate,int sex,String name,String signture,String locale,String school,
-                                          String job,String hometown,long timeStamp,String url,int uid,String token){
+                                          String job,String hometown,long timeStamp,String url,int uid,String token,double longtitude,double latitude,List<String > tags){
         try{
         JSONObject json=new JSONObject();
         json.put("uid",uid);
@@ -188,14 +192,19 @@ public class OkHttpUtils {
         json.put("nickname",name);
         json.put("hometown",hometown);
         json.put("birthday",birthDate);
+        json.put("tags",tags);
+        json.put("longtitude",longtitude);
+        json.put("latitude",latitude);
         String resp=post(url,json.toString());
         if(resp==null){
             return null;
         }
         return new Gson().fromJson(resp,LoginResponse.class);
     }catch (JSONException e){
+            e.printStackTrace();
         return null;
     }catch (Exception e){
+            e.printStackTrace();
         return null;
      }
     }

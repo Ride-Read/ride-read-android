@@ -17,6 +17,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
 import com.avos.avoscloud.AVOSCloud;
@@ -39,7 +43,7 @@ import com.rideread.rideread.im.AVImClientManager;
  * Created by Jackbing on 2017/2/13.
  */
 
-public class LoginFragment  extends Fragment implements View.OnClickListener{
+public class LoginFragment  extends Fragment implements View.OnClickListener,AMapLocationListener{
 
     private View loginView,findPwdView,reSetPwdView;
     private TextView indentfyCodeTv;
@@ -47,6 +51,13 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     private String telPhone;
     private EditText accountEdt,passwordEdt;
     private String username,encodePwd,password;
+    private double longtitude;
+    private double laititude;
+    //声明AMapLocationClient类对象
+    public AMapLocationClient mLocationClient = null;
+//    //声明定位回调监听器
+//    public AMapLocationListener mLocationListener = new AMapLocationListener();
+
 
     @Nullable
     @Override
@@ -109,6 +120,35 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     }
 
     private void login() {
+
+        //初始化定位
+        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
+        //设置定位回调监听
+        mLocationClient.setLocationListener(this);
+        //声明AMapLocationClientOption对象
+        AMapLocationClientOption mLocationOption = mLocationOption = new AMapLocationClientOption();;
+        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        mLocationOption.setOnceLocation(true);
+        mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setNeedAddress(false);
+        mLocationOption.setWifiActiveScan(false);
+        mLocationOption.setHttpTimeOut(9000);//定位超时9秒
+        mLocationOption.setLocationCacheEnable(false);
+        //给定位客户端对象设置定位参数
+        mLocationClient.setLocationOption(mLocationOption);
+        //启动定位
+        mLocationClient.startLocation();
+    }
+
+    @Override
+    public void onLocationChanged(AMapLocation aMapLocation) {
+
+        if(aMapLocation.getErrorCode()==0){
+            longtitude=aMapLocation.getLongitude();
+            laititude=aMapLocation.getLatitude();
+        }else{
+            Toast.makeText(getContext(),"定位失败!",Toast.LENGTH_SHORT).show();
+        }
         accountEdt=(EditText)loginView.findViewById(R.id.login_edt_account);
         passwordEdt=(EditText)loginView.findViewById(R.id.login_edt_password);
         username=accountEdt.getText().toString().trim();
@@ -128,7 +168,6 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
 
             new LoginAsyncTask().execute(username,password, Api.USER_LOGIN);
         }
-
     }
 
     //登录异步线程
@@ -136,7 +175,7 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
     {
         @Override
         protected LoginResponse doInBackground(String... params) {
-            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2]);
+            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2],longtitude,laititude);
         }
 
         @Override
@@ -325,4 +364,12 @@ public class LoginFragment  extends Fragment implements View.OnClickListener{
         }
         return false;
     }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        if(mLocationClient!=null){
+            mLocationClient.onDestroy();
+        }
+}
 }

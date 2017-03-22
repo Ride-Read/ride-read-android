@@ -306,8 +306,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     private void onComplete(){
         etUserName=(EditText)setUnameView.findViewById(R.id.register_edt_setusername);
         userName=etUserName.getText().toString().trim();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");//图片上传时间戳
-        final String key = "icon_" + sdf.format(new Date())+".jpg";//这个key是保存在七牛云的文件名，把这个key传给后台
+        final String key = "face.jpg";//这个key是保存在七牛云的文件名，把这个key传给后台
         if(userName!=null&&!userName.isEmpty()){
             //在这里发送用户名和头像给后台
             new AsyncTask<String,Void,QiNiuTokenResp>(){
@@ -322,7 +321,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                     super.onPostExecute(resp);
                     Log.e("s","七牛tioken="+resp.getQiniu_token());
                     if(resp!=null){
-                        UploadOptions uops=new UploadOptions(null,"image/jpeg",false,null,null);
+
                         App app=(App)getActivity().getApplication();
                         //这里的TOKEN是要事先从服务器获取，目前用测试的Token来替换
 
@@ -348,7 +347,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
 
                             }
 
-                        },uops);
+                        },null);
                     }else{
                         Toast.makeText(getContext(),"获取七牛token失败",Toast.LENGTH_SHORT).show();
                     }

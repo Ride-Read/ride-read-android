@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity {
         Intent intent=getIntent();
         data=(UserData) intent.getSerializableExtra("data");
         long timeStamp=intent.getLongExtra("timeStamp",-1);
-        //在这里要保存timestamp和token，暂时还没做
+
         PreferenceUtils.getInstance().saveMustParams(data.getToken(),timeStamp,data.getUid(),getApplicationContext());
     }
 
