@@ -1,6 +1,7 @@
 package com.rideread.rideread;
 
 import android.app.Application;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 
 import com.avos.avoscloud.AVOSCloud;
@@ -50,7 +51,7 @@ public class App extends Application {
 
     @Override
     public void onCreate() {
-
+        MultiDex.install(this);
         // 请用你的AppId，AppKey。并在管理台启用手机号码短信验证
         AVOSCloud.initialize(this, Api.APP_ID,
                 Api.APP_KEY);
