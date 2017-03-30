@@ -1,0 +1,60 @@
+<resources>
+    <string name="app_name">骑阅</string>
+    <!-- 命名规范:模块名_类型(hint或text)_功能 -->
+    <string name="login_hint_account">手机/邮箱/用户名</string>
+    <string name="login_hint_pwd">输入密码</string>
+    <string name="login_text_forgetpwd">忘记密码?</string>
+    <string name="login_text_register">注册</string>
+    <string name="login_text_login">登录</string>
+    <string name="login_text_ortherway">第三方账号登录</string>
+    <string name="register_text_ivitecode">填写邀请码</string>
+    <string name="register_text_next">下一步</string>
+    <string name="register_hint_fillphone">输入手机号码</string>
+    <string name="register_hint_identfycode">输入验证码</string>
+    <string name="register_text_sendidentfycode">发送验证码</string>
+    <string name="register_text_setpwd">设置密码</string>
+    <string name="register_hint_inputpwd">6~16个字符</string>
+    <string name="register_hint_reinputpwd">确认密码</string>
+    <string name="register_hint_setuname">6~20个字符</string>
+    <string name="register_text_setuname">设置用户名</string>
+    <string name="register_text_notify1">确定</string>
+    <string name="register_text_notify2">骑阅名</string>
+    <string name="register_text_notify3">，保存后无法修改</string>
+    <string name="register_text_complete">完成</string>
+    <string name="forgetpwd_text_complete">确定</string>
+    <string name="forgetpwd_text_resetpwd">重置密码</string>
+    <string name="useragreement_text_read">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus
+        accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
+        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+        ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus
+        mollis orci, sed rhoncus sapien nunc eget.</string>
+
+    <string name="main_text_map">阅图</string>
+    <string name="main_text_timeline">阅圈</string>
+    <string name="main_text_mine">我的</string>
+
+    <string name="mine_settingcontact_text_email">邮箱：156456456454151@qq.com</string>
+    <string-array name="timeline_tab_title">
+        <item>附近</item>
+        <item>关注</item>
+    </string-array>
+    <string-array name="scrollview_tab_title">
+        <item>登录</item>
+        <item>注册</item>
+    </string-array>
+
+    <string name="unspport_message_type">不支持的消息类型</string>
+
+    <string name="timeline_details_text">详情</string>
+    <string name="register_invitecode_texthint">邀请人的骑阅号</string>
+    <string name="register_text_head">头像</string>
+    <string name="register_contact_text1">注册即视为同意</string>
+    <string name="register_contact_text2">骑阅用户协议</string>
+    <string name="label_text">标签</string>
+    <string name="label_text_hint">创建自己的标签</string>
+    <string name="label_cancel_text">取消</string>
+    <string name="label_confirm_text">确定</string>
+    <string name="knew">知道了</string>
+
+</resources>

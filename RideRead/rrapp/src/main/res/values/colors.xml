@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="abc_ic_ab_back_mtrl_am_alpha">@drawable/abc_ic_ab_back_material</drawable>
+    <color name="colorPrimary">@color/green_common</color>
+    <color name="colorPrimaryDark">@color/green_common</color>
+    <color name="colorAccent">#FF4081</color>
+
+
+    <!--命名规范：颜色名称_模块_用途_状态（可有可无）,或者是共用的颜色 common_颜色名称-->
+    <color name="black_common">#000000</color>
+
+    <color name="gray_text">#808080</color>
+    <color name="gray_hint">#c1c0c0</color>
+
+
+
+    <color name="blue_btn_normal">#1E90FF</color>
+    <color name="blue_btn_pressed">#4169E1</color>
+
+    <color name="gray_main_top_line">#999999</color>
+    <color name="gray_forget_pwd_text">#555555</color>
+    <color name="gray_comment_text">#333333</color>
+    <color name="blue_gallery">#52cace</color>
+
+
+
+    <color name="gray_btn_bg">#E5E5E5</color>
+    <color name="white_common_bg">#EEEEEE</color>
+    <color name="green_common">#52CACE</color>
+
+
+    <color name="gray_label_hint">#9A9A9A9A</color>
+    <color name="gray_label_cancel">#A0A0A0A0</color>
+
+</resources>

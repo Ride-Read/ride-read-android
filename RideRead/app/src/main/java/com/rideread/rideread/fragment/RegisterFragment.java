@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -33,10 +32,9 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
-import com.qiniu.android.storage.UploadOptions;
 import com.rideread.rideread.App;
-import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
+import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.activity.UserAgreement;
 import com.rideread.rideread.bean.LoginResponse;
 import com.rideread.rideread.bean.QiNiuTokenResp;
@@ -47,7 +45,6 @@ import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.common.FileUtils;
 import com.rideread.rideread.common.OkHttpUtils;
 import com.rideread.rideread.common.PreferenceUtils;
-import com.rideread.rideread.common.SHA1Helper;
 import com.rideread.rideread.common.TimeStamp;
 import com.rideread.rideread.im.AVImClientManager;
 import com.rideread.rideread.imageloader.GildeImageLoader;
@@ -57,11 +54,7 @@ import com.yancy.gallerypick.inter.IHandlerCallBack;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -319,7 +312,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
                 @Override
                 protected void onPostExecute(QiNiuTokenResp resp) {
                     super.onPostExecute(resp);
-                    Log.e("s","七牛tioken="+resp.getQiniu_token());
+//                    Log.e("s","七牛tioken="+resp.getQiniu_token());
                     if(resp!=null){
 
                         App app=(App)getActivity().getApplication();
