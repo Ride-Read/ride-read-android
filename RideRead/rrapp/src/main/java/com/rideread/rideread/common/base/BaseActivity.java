@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.dialog.ProgressDialogFragment;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.ButterKnife;
 
 
@@ -29,6 +31,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         boolean onBackPress();
     }
 
+    public abstract int getLayoutRes();
+
+    public abstract void initView();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +43,18 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
     }
 
-    public abstract int getLayoutRes();
 
-    public abstract void initView();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        EventBus.getDefault().register(this);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
 
     /**
      * 用于显示progress的dialog

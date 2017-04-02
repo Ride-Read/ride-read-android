@@ -1,4 +1,4 @@
-package com.rideread.rideread.moudule.main;
+package com.rideread.rideread.module.main;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

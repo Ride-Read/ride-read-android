@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="100dip"
+    >
+
+    <TextView
+        android:id="@+id/tv_third_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login_text_ortherway"
+        android:textColor="@color/gray_hint"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintRight_toLeftOf="@id/tv_third_account"
+        app:layout_constraintBottom_toBottomOf="@id/tv_third_account"
+        app:layout_constraintTop_toTopOf="@id/tv_third_account"
+        android:background="@color/gray_hint"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dip"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="40dp"
+        app:layout_constraintLeft_toRightOf="@id/tv_third_account"
+        app:layout_constraintBottom_toBottomOf="@id/tv_third_account"
+        app:layout_constraintTop_toTopOf="@id/tv_third_account"
+        android:background="@color/gray_hint"/>
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@id/tv_third_account"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="22dip"
+        android:layout_marginLeft="75dip"
+        android:layout_marginRight="75dip"
+        android:layout_marginTop="22dip"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:src="@drawable/ic_platform_wechat"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:src="@drawable/ic_platform_qq"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1"
+            android:src="@drawable/ic_platform_weibo"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

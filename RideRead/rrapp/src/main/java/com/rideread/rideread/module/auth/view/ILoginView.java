@@ -1,4 +1,4 @@
-package com.rideread.rideread.moudule.auth.view;
+package com.rideread.rideread.module.auth.view;
 
 
 import com.rideread.rideread.common.base.IMVPView;

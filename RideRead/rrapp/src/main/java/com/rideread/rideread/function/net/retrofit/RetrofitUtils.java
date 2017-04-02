@@ -36,7 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitUtils {
     private final static int TIMEOUT_SECONDS = 10;
     private static Retrofit retrofit;
-    private static final String BaseUrl = "http://121.42.195.113/";
+    private static final String BaseUrl = "http://121.42.195.113/rideread/";
 
 
     public static Retrofit getInstance() {

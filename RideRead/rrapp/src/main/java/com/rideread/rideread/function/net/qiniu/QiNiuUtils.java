@@ -8,7 +8,7 @@ import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 import com.qiniu.android.storage.UploadOptions;
-import com.rideread.rideread.data.Action;
+import com.rideread.rideread.function.Action;
 
 import java.util.concurrent.Callable;
 

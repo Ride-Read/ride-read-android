@@ -1,7 +1,8 @@
 package com.rideread.rideread.function.net.retrofit;
 
-import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.data.Logger;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +28,7 @@ public abstract class JsonCallback<T> implements Callback<T> {
 
         int code = response.raw().code();
         if (code == 200) {
-            onSuccessFilter((JSONArray) response.body());//成功返回
+            onSuccessFilter((JSONObject) response.body());//成功返回
         } else if (code == 204) {
             onNoData(ERR_MSG.NO_DATA);
         } else if (code == 400) {
@@ -46,30 +47,27 @@ public abstract class JsonCallback<T> implements Callback<T> {
      *
      * @param model
      */
-    protected void onSuccessFilter(JSONArray model) {
-        String message = null;
+    protected void onSuccessFilter(JSONObject model) {
+        String msg = null;
         try {
-//            JSONObject obj = model.getJSONObject(1);
-//            int resultCode = obj.getInteger("resultcode");
-//            message = obj.getString("msg");
-//            message = EncryptUtils.base64Decode2Str(message);//进行解码
-//            if (RESULT_CODE_OK == resultCode) {
-//                String content = obj.getString("content");
-//                if (null != content) {
-//                    content = EncryptUtils.base64Decode2Str(content);
-//                    Logger.e("callback",content);
-//                }
-//
-//                onSuccess(content);
-//            } else {
-//                Logger.e("callback",message);
-//                onErrorStatus(resultCode, message);
-//            }
+            int status = model.getInteger("status");
+            msg = model.getString("msg");
+            if (RESULT_CODE_OK == status) {
+                String content = ("content");
+                if (null != content) {
+                    Logger.e("callback", content);
+                }
+
+                onSuccess(model.toJSONString());
+                //            } else {
+                //                Logger.e("callback",message);
+                //                onErrorStatus(resultCode, message);
+            }
         } catch (Exception e) {
-            if (null != message)
-                //错误提示
-                //                EventBus.getDefault().post(new ShowSnackbar(RuijiaApp.getAppContext().getString(R.string.error_client)));
-                e.printStackTrace();
+            //            if (null != message)
+            //错误提示
+            //                EventBus.getDefault().post(new ShowSnackbar(RuijiaApp.getAppContext().getString(R.string.error_client)));
+            e.printStackTrace();
         }
     }
 
@@ -122,7 +120,7 @@ public abstract class JsonCallback<T> implements Callback<T> {
      */
     protected void onAfter() {
         if (showProgress) {
-//            EventBus.getDefault().post(new HideProgressEvent());
+            //            EventBus.getDefault().post(new HideProgressEvent());
         }
     }
 

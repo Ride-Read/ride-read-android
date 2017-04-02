@@ -1,10 +1,9 @@
-package com.rideread.rideread.moudule.auth.view;
+package com.rideread.rideread.module.auth.view;
 
 import android.widget.TextView;
 
-import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseMVPActivity;
-import com.rideread.rideread.moudule.auth.presenter.LoginPresenterImpl;
+import com.rideread.rideread.module.auth.presenter.LoginPresenterImpl;
 
 import butterknife.BindView;
 
@@ -12,13 +11,13 @@ import butterknife.BindView;
  * Created by SkyXiao on 2017/3/30.
  */
 
-public class LoginActivity extends BaseMVPActivity<LoginPresenterImpl> implements ILoginView {
+public class LoginActivity extends BaseMVPActivity<LoginPresenterImpl> implements com.rideread.rideread.module.auth.view.ILoginView {
     @BindView(R.id.text) TextView mText;
 
 
     @Override
     public int getLayoutRes() {
-        return R.layout.activity_main;
+        return R.layout.activity_login;
     }
 
     @Override

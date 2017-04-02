@@ -1,9 +1,16 @@
 package com.rideread.rideread.function.net.retrofit;
 
 
+import android.support.annotation.NonNull;
+
 import com.rideread.rideread.common.util.DateUtils;
+import com.rideread.rideread.common.util.NetworkUtils;
+import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.data.result.QiniuToken;
 
 import java.nio.charset.Charset;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit2.Call;
 
@@ -33,16 +40,34 @@ public class ApiUtils {
     }
 
 
-
-    /**
-     * Retrofit无法监听到onStart，需要自己定义
-     * 开始请求, 无网络连接显示一个ShowSnackbar，否则显示loading
-     */
-    private static void onStart() {
-        //此处检查网络情况、设置进度条显示(使用Eventbus)
-//        EventBus.getDefault().post(new ShowLoading());
+    private static boolean onStart() {
+        return onStart(true);
     }
 
+    private static boolean onStart(final boolean showProgress) {
+        //此处检查网络情况、设置进度条显示(使用Eventbus)
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.show("");
+            return false;
+        }
+        if (showProgress) {
+//            EventBus.getDefault().post(new ShowProgressEvent());
+        }
+        return true;
+    }
+    private static Map<String, String> getParams(Map<String, String> paramsMap, String timeStamp, String code) {
+        paramsMap.put("timestamp", timeStamp);
+        paramsMap.put("uid", code);
+        paramsMap.put("token", code);
+        return paramsMap;
+    }
+    public static void getQiNiuToken(@NonNull final String filename, @NonNull final BaseCallback<BaseModel<QiniuToken>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("filename", filename);
+
+        setCurrentCall(getApiStore().getQiNiuToken(params), callBack);
+    }
 
 
     private static void setCurrentCall(Call call) {

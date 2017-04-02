@@ -31,14 +31,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".moudule.auth.view.LoginActivity">
+        <activity android:name=".module.auth.view.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".moudule.main.MainActivity"/>
+        <activity android:name=".module.main.MainActivity"/>
 
         <service android:name="com.amap.api.location.APSService"></service>
     </application>

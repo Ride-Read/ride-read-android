@@ -1,6 +1,7 @@
 package com.rideread.rideread.function.net.retrofit;
 
 import com.google.gson.JsonObject;
+import com.rideread.rideread.data.result.QiniuToken;
 
 import java.util.Map;
 
@@ -50,7 +51,10 @@ public interface ApiStore {
 //            @Query("phone_type") String phone_type,
 //            @Query("apply_time") String apply_time, @Query("code") String code);
     @POST("account/login")
-    Call<BaseModel<JsonObject>> loginTest(@QueryMap Map<String, String> params);
+    Call<BaseModel<JsonObject>> login(@QueryMap Map<String, String> params);
+
+    @POST("util/qiniu_koken")
+    Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);
 
 
 //    @FormUrlEncoded

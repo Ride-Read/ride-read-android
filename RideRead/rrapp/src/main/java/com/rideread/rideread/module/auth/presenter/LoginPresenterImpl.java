@@ -1,4 +1,4 @@
-package com.rideread.rideread.moudule.auth.presenter;
+package com.rideread.rideread.module.auth.presenter;
 
 
 import com.rideread.rideread.common.base.BasePresenter;
