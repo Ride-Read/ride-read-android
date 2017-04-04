@@ -6,8 +6,6 @@ import android.support.multidex.MultiDex;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
 import com.avos.avoscloud.im.v2.AVIMTypedMessage;
-import com.elvishew.xlog.LogLevel;
-import com.elvishew.xlog.XLog;
 import com.rideread.rideread.BuildConfig;
 import com.rideread.rideread.common.util.AppUtils;
 import com.rideread.rideread.common.util.Utils;
@@ -24,7 +22,7 @@ public class RRApp extends Application {
         MultiDex.install(this);
         Utils.init(this);//其他工具类初始化（缓存、hwak）
 
-        XLog.init(BuildConfig.DEBUG ? LogLevel.ALL : LogLevel.NONE);
+//        XLog.init(BuildConfig.DEBUG ? LogLevel.ALL : LogLevel.NONE);
 
         // 请用你的AppId，AppKey。并在管理台启用手机号码短信验证
         AVOSCloud.initialize(this, AppUtils.APP_ID, AppUtils.APP_KEY);

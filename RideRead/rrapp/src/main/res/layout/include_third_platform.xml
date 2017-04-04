@@ -11,7 +11,7 @@
         android:id="@+id/tv_third_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/login_text_ortherway"
+        android:text="@string/login_by_third_platform"
         android:textColor="@color/gray_hint"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"

@@ -11,10 +11,15 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.dialog.ProgressDialogFragment;
+import com.rideread.rideread.common.event.HideLoadingEvent;
+import com.rideread.rideread.common.event.ShowLoadingEvent;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.ButterKnife;
+
+import static org.greenrobot.eventbus.ThreadMode.MAIN;
 
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -159,5 +164,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
+    @Subscribe(threadMode = MAIN)
+    public void onLoading(final ShowLoadingEvent event) {
+    }
+
+    @Subscribe(threadMode = MAIN)
+    public void onLoadCancel(final HideLoadingEvent event) {
+    }
 
 }

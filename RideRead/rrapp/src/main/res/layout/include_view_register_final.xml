@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_common_bg"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+              android:paddingLeft="40dp"
+              android:paddingRight="40dp"
+              android:paddingTop="40dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/img_avatar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/bg_circle"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/avatar"
+            android:textColor="@color/white_common_bg"
+            android:textSize="44px"/>
+    </FrameLayout>
+
+
+    <View
+        style="@style/edt_line_style"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/edt_password"
+        style="@style/edt_common_style"
+        android:hint="@string/password_limit"
+        android:maxLength="20"/>
+
+    <View
+        style="@style/edt_line_style"/>
+
+    <TextView
+        android:id="@+id/tv_id_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:text="@string/confirm_user_id"
+        android:textColor="@color/gray_text"
+        android:textSize="12sp"/>
+
+    <Button
+        android:id="@+id/btn_complete"
+        style="@style/btn_auth_style"
+        android:layout_marginTop="32dp"
+        android:text="@string/complete"/>
+
+
+</LinearLayout>

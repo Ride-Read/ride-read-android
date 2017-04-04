@@ -1,14 +1,11 @@
 package com.rideread.rideread.function.net.retrofit;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.rideread.rideread.BuildConfig;
-import com.rideread.rideread.common.util.Utils;
+import com.rideread.rideread.common.util.NetworkUtils;
+import com.rideread.rideread.common.util.UserUtils;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -94,8 +91,13 @@ public class RetrofitUtils {
                 Request originalRequest = chain.request();
                 Request request;
                 HttpUrl modifiedUrl = originalRequest.url().newBuilder()
-                        // Provide your custom parameter here
-                        .addQueryParameter("platform", "android").addQueryParameter("version", "1.0.0").build();
+                        .addQueryParameter("", Integer.toString(UserUtils.getUid())).addQueryParameter("token", UserUtils.getToken()).build();;
+                if (0!= UserUtils.getUid()){
+                     modifiedUrl = originalRequest.url().newBuilder()
+                            // Provide your custom parameter here
+                            .addQueryParameter("uid", Integer.toString(UserUtils.getUid())).addQueryParameter("token", UserUtils.getToken()).build();
+                }
+
                 request = originalRequest.newBuilder().url(modifiedUrl).build();
                 return chain.proceed(request);
             }
@@ -127,11 +129,11 @@ public class RetrofitUtils {
     private static Interceptor addCacheInterceptor() {
         Interceptor cacheInterceptor = chain -> {
             Request request = chain.request();
-            if (!isNetworkAvailable()) {
+            if (!NetworkUtils.isConnected()) {
                 request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
             }
             Response response = chain.proceed(request);
-            if (isNetworkAvailable()) {
+            if (NetworkUtils.isConnected()) {
                 int maxAge = 0;
                 // 有网络时 设置缓存超时时间0个小时
                 response.newBuilder().header("Cache-Control", "public, max-age=" + maxAge).removeHeader("Retrofit")// 清除头信息，因为服务器如果不支持，会返回一些干扰信息，不清除下面无法生效
@@ -146,21 +148,6 @@ public class RetrofitUtils {
         return cacheInterceptor;
     }
 
-
-    /**
-     * 判断网络
-     */
-    public static boolean isNetworkAvailable() {
-        Context context = Utils.getAppContext();
-        // 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
-        ConnectivityManager conn = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (conn == null) {
-            return false;
-        } else {
-            final NetworkInfo network = conn.getActiveNetworkInfo();
-            return network != null && network.isConnected();
-        }
-    }
 
     public static Gson getGson() {
         Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();

@@ -1,39 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/include_login_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white_common_bg"
               android:gravity="center_horizontal"
               android:orientation="vertical"
-              android:paddingLeft="40dp"
-              android:paddingRight="40dp"
+              android:paddingLeft="60dp"
+              android:paddingRight="60dp"
               android:paddingTop="40dp">
 
     <EditText
-        android:id="@+id/edt_account"
+        android:id="@+id/edt_login_account"
         style="@style/edt_common_style"
+        android:inputType="number"
         android:hint="@string/phone_account"
-        android:maxLength="20"
-        android:minEms="3"/>
+        android:maxLength="20"/>
 
     <View
         style="@style/edt_line_style"/>
 
     <EditText
-        android:id="@+id/edt_password"
+        android:id="@+id/edt_login_pwd"
         style="@style/edt_common_style"
-        android:layout_marginTop="8dp"
         android:hint="@string/please_fill_pwd"
         android:inputType="textPassword"
-        android:maxLength="16"
-        />
+        android:maxLength="16"/>
 
     <View
         style="@style/edt_line_style"/>
 
 
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_login_next"
         style="@style/btn_auth_style"
         android:text="@string/next"/>
 

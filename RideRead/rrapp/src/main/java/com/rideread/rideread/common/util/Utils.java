@@ -33,6 +33,7 @@ public class Utils {
         Storage.init(context);
         CurCache.init();
         ScreenUtils.init(context);
+        AMapLocationUtils.init();
 //        PackageUtils.init(context);
     }
 

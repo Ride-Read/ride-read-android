@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:id="@+id/include_set_pwd_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white_common_bg"
@@ -13,7 +12,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/set_password"
+        android:text="@string/please_fill_invite_code"
         android:textColor="@color/gray_text"
         android:textSize="16sp"/>
 
@@ -22,31 +21,18 @@
         android:layout_marginTop="8dp"/>
 
     <EditText
-        android:id="@+id/edt_password"
+        android:id="@+id/edt_invite_id"
         style="@style/edt_common_style"
-        android:hint="@string/password_limit"
-        android:inputType="textPassword"
+        android:hint="@string/invite_user_id"
         android:maxLength="20"/>
-
-    <View
-        style="@style/edt_line_style"/>
-
-    <EditText
-        android:id="@+id/edt_password_confirm"
-        style="@style/edt_common_style"
-        android:hint="@string/password_confirm"
-        android:inputType="textPassword"
-        android:maxLength="16"
-        />
 
     <View
         style="@style/edt_line_style"/>
 
 
     <Button
-        android:id="@+id/btn_pwd_next"
+        android:id="@+id/btn_next"
         style="@style/btn_auth_style"
         android:text="@string/complete"/>
-
 
 </LinearLayout>

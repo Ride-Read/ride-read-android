@@ -1,8 +1,15 @@
 package com.rideread.rideread.function.net.retrofit;
 
+import android.text.TextUtils;
 import android.util.Log;
 
+import com.rideread.rideread.R;
+import com.rideread.rideread.common.event.HideLoadingEvent;
 import com.rideread.rideread.common.util.NetworkUtils;
+import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.Utils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.net.SocketTimeoutException;
 
@@ -20,7 +27,7 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-
+        onAfter();
         int code = response.raw().code();
         if (code == 200) {
             onSuccessFilter(response.body());//成功返回
@@ -34,7 +41,7 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
             onFail(ERR_MSG.ERROR_NO_RESULT);
         }
 
-        onAfter();
+
     }
 
     /**
@@ -53,8 +60,8 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
             }
         } catch (Exception e) {
             if (null != model.getData())
-//                EventBus.getDefault().post(new ShowSnackbar(Utils.getAppContext().getString(R.string.error_client)));
-            e.printStackTrace();
+                //                EventBus.getDefault().post(new ShowSnackbar(Utils.getAppContext().getString(R.string.error_client)));
+                e.printStackTrace();
         }
 
     }
@@ -67,16 +74,9 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
     protected abstract void onSuccess(T model) throws Exception;
 
     protected void onErrorStatus(int status, String message) {
-        switch (status) {
-            case 501:
-//                onFail(Utils.getAppContext().getString(R.string.error_network_fail));
-                break;
-            default:
-//                if (TextUtils.isEmpty(message))
-//                    onFail(Utils.getAppContext().getString(R.string.error_server_fail));
-//                else
-                    onFail(message);
-        }
+        if (TextUtils.isEmpty(message))
+            onFail(Utils.getAppContext().getString(R.string.server_error_fail));
+        else onFail(message);
     }
 
     @Override
@@ -84,11 +84,11 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
         t.printStackTrace();
         if (!NetworkUtils.isConnected()) {
             //网络不通直接阻断
-//            onFail(Utils.getAppContext().getString(R.string.error_network_fail));
+            //            onFail(Utils.getAppContext().getString(R.string.error_network_fail));
         } else if (t instanceof SocketTimeoutException) {
-//            onFail(Utils.getAppContext().getString(R.string.error_network_timeout));
+            //            onFail(Utils.getAppContext().getString(R.string.error_network_timeout));
         } else {
-//            onFail(Utils.getAppContext().getString(R.string.error_server_fail));
+            //            onFail(Utils.getAppContext().getString(R.string.error_server_fail));
             Log.e("https", "onFailure:" + t.getMessage());
         }
 
@@ -101,7 +101,7 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
      * 请求完的回调，可以在里面停止刷新控件，可以不实现
      */
     protected void onAfter() {
-//        EventBus.getDefault().post(new HideLoading());
+        EventBus.getDefault().post(new HideLoadingEvent());
     }
 
     /**
@@ -114,7 +114,8 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
      * 请求失败的回调，可以不实现
      */
     protected void onFail(String msg) {
-//        EventBus.getDefault().post(new ShowSnackbar(msg));
+        ToastUtils.show(msg);
+        //        EventBus.getDefault().post(new ShowSnackbar(msg));
     }
 
 

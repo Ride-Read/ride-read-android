@@ -63,7 +63,7 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
 
     private void sendNotification(AVIMTypedMessage message, AVIMConversation conversation) {
         String notificationContent = message instanceof AVIMTextMessage ?
-                ((AVIMTextMessage)message).getText() : context.getString(R.string.unspport_message_type);
+                ((AVIMTextMessage)message).getText() : context.getString(R.string.nonsupport_message_type);
 
         Intent intent = new Intent(context, NotificationBroadcastReceiver.class);
         intent.putExtra(Constants.CONVERSATION_ID, conversation.getConversationId());

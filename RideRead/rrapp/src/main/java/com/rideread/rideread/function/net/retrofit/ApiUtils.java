@@ -3,10 +3,16 @@ package com.rideread.rideread.function.net.retrofit;
 
 import android.support.annotation.NonNull;
 
+import com.rideread.rideread.common.event.ShowLoadingEvent;
+import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.DateUtils;
+import com.rideread.rideread.common.util.EncryptUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.data.result.QiniuToken;
+import com.rideread.rideread.data.result.UserInfo;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.nio.charset.Charset;
 import java.util.HashMap;
@@ -47,26 +53,39 @@ public class ApiUtils {
     private static boolean onStart(final boolean showProgress) {
         //此处检查网络情况、设置进度条显示(使用Eventbus)
         if (!NetworkUtils.isConnected()) {
-            ToastUtils.show("");
+            ToastUtils.show("无网络连接，请稍后重试");
             return false;
         }
         if (showProgress) {
-//            EventBus.getDefault().post(new ShowProgressEvent());
+            EventBus.getDefault().post(new ShowLoadingEvent());
         }
         return true;
     }
+
     private static Map<String, String> getParams(Map<String, String> paramsMap, String timeStamp, String code) {
         paramsMap.put("timestamp", timeStamp);
         paramsMap.put("uid", code);
         paramsMap.put("token", code);
         return paramsMap;
     }
+
     public static void getQiNiuToken(@NonNull final String filename, @NonNull final BaseCallback<BaseModel<QiniuToken>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("filename", filename);
 
         setCurrentCall(getApiStore().getQiNiuToken(params), callBack);
+    }
+
+    public static void login(@NonNull final String account, @NonNull final String password, @NonNull final BaseCallback<BaseModel<UserInfo>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
+        params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
+        params.put("phonenumber", account);
+        params.put("password", EncryptUtils.encryptSHA1ToString(password));
+
+        setCurrentCall(getApiStore().login(params), callBack);
     }
 
 

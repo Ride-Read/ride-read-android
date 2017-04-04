@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/nav_map"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-    >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
 
     <include
-        android:id="@+id/include_layout"
+
         layout="@layout/include_view_login"
         />
 
     <include
-        android:id="@+id/include_forget_pwd"
-        layout="@layout/include_view_forget_pwd"
+
+        layout="@layout/include_view_code"
         android:visibility="gone"/>
 
     <include
-        android:id="@+id/include_set_pwd"
         layout="@layout/include_view_set_pwd"
         android:visibility="gone"/>
 
 
-</RelativeLayout>
+</FrameLayout>

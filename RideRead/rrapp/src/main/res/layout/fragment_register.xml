@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/include_invite"
+        layout="@layout/include_view_invite"
+        />
+
+    <include
+        android:id="@+id/include_code"
+        layout="@layout/include_view_code"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/include_set_pwd"
+        layout="@layout/include_view_set_pwd"
+        android:visibility="gone"/>
+
+    <include
+        android:id="@+id/include_final"
+        layout="@layout/include_view_register_final"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>

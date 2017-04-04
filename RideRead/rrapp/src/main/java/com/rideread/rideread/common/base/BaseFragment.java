@@ -1,5 +1,6 @@
 package com.rideread.rideread.common.base;
 
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,10 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.elvishew.xlog.XLog;
-
 import butterknife.ButterKnife;
-
 
 public abstract class BaseFragment extends Fragment {
 
@@ -40,15 +38,11 @@ public abstract class BaseFragment extends Fragment {
     //    }
     public abstract int getLayoutRes();
 
-    /**
-     * 用于多线程操作
-     */
-    //    protected ITripAppExecutorService executor = new JoyrunExecutorService(Executors.newSingleThreadExecutor());
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        XLog.d(TAG);
-//        Object clazz = this.getClass();
+        //        XLog.d(TAG);
+        //        Object clazz = this.getClass();
         //        mPageName = Analytics.page.get(clazz);
         if (TextUtils.isEmpty(mPageName)) {
             mPageName = this.getClass().getName();
@@ -57,11 +51,10 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        XLog.d(TAG);
+        //        XLog.d(TAG);
 
         if (mRootView == null) {
-            mRootView = inflater.inflate(getLayoutRes(), null);
+            mRootView = inflater.inflate(getLayoutRes(), container, false);
         }
         ButterKnife.bind(this, mRootView);
         initView();
@@ -87,7 +80,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onResume() {
-        XLog.d(TAG);
+        //        XLog.d(TAG);
         super.onResume();
         //        MobclickAgent.onPageStart(mPageName);
     }
@@ -101,7 +94,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onPause() {
-        XLog.d(TAG);
+        //        XLog.d(TAG);
         super.onPause();
         //        MobclickAgent.onPageEnd(mPageName);
     }
@@ -119,7 +112,7 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        XLog.d(TAG);
+        //        XLog.d(TAG);
         super.onDestroyView();
     }
 

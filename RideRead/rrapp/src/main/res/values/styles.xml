@@ -10,20 +10,21 @@
 
     <style name="edt_common_style">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_height">48dp</item>
         <item name="android:background">@color/white_common_bg</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/gray_text</item>
         <item name="android:textColorHint">@color/gray_hint</item>
         <item name="android:textCursorDrawable">@drawable/edit_cursor</item>
-        <item name="android:textSize">44px</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="btn_auth_style">
         <item name="android:layout_width">120dp</item>
         <item name="android:layout_height">40dp</item>
-        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:layout_marginTop">72dp</item>
         <item name="android:background">@drawable/btn_blue_green_round_sel</item>
         <item name="android:textColor">@android:color/white</item>
         <item name="android:textSize">44px</item>
@@ -32,7 +33,7 @@
     <style name="edt_line_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
-        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginTop">4dp</item>
         <item name="android:background">@color/gray_hint</item>
     </style>
 

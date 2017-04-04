@@ -6,7 +6,7 @@
     <string name="forget_password">忘记密码?</string>
     <string name="register">注册</string>
     <string name="login">登录</string>
-    <string name="login_by_other_platform">第三方账号登录</string>
+    <string name="login_by_third_platform">第三方账号登录</string>
     <string name="please_fill_invite_code">填写邀请码</string>
     <string name="next">下一步</string>
     <string name="please_fill_phone_number">输入手机号</string>
@@ -18,7 +18,7 @@
     <string name="nick_limit">6~20个字符</string>
     <string name="set_nick">设置用户名</string>
     <string name="ride_read_name">骑阅名</string>
-    <string name="save_and_not_modify">，保存后无法修改</string>
+    <string name="save_and_not_modify">保存后无法修改</string>
     <string name="complete">完成</string>
     <string name="reset_pwd">重置密码</string>
     <string name="user_agreement_text_read">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -32,7 +32,7 @@
     <string name="main_text_circle">阅圈</string>
     <string name="main_text_mine">我的</string>
 
-    <string name="mine_settingcontact_text_email">邮箱：156456456454151@qq.com</string>
+    <string name="mine_setting_contact_text_email">邮箱：156456456454151@qq.com</string>
     <string-array name="circle_tab_title">
         <item>附近</item>
         <item>关注</item>
@@ -42,17 +42,19 @@
         <item>注册</item>
     </string-array>
 
-    <string name="unsopport_message_type">不支持的消息类型</string>
+    <string name="nonsupport_message_type">不支持的消息类型</string>
 
     <string name="details">详情</string>
-    <string name="invite_user_code">邀请人的骑阅号</string>
+    <string name="invite_user_id">邀请人的骑阅号</string>
     <string name="avatar">头像</string>
     <string name="register_as_agree">注册即视为同意</string>
-    <string name="user_protical">骑阅用户协议</string>
+    <string name="user_protocol">骑阅用户协议</string>
     <string name="label">标签</string>
     <string name="create_my_tag">创建自己的标签</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="knew">知道了</string>
+    <string name="confirm_user_id">确定 骑阅号，保存后无法修改</string>
+    <string name="server_error_fail">服务器异常，请稍后重试</string>
 
 </resources>
