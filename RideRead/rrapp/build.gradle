@@ -25,6 +25,7 @@ android {
         }
     }
 
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -108,8 +109,6 @@ dependencies {
     compile('com.tencent.mars:mars-core:1.1.4') {
         exclude group: 'javax.validation', module: 'validation-api'
     }
-    //Xlog
-    compile 'com.elvishew:xlog:1.1.0'
     compile 'com.android.support:multidex:1.0.1'
 
     //Rx
@@ -119,4 +118,6 @@ dependencies {
     compile 'io.reactivex:rxjava:1.2.5'
 
     compile 'de.hdodenhof:circleimageview:2.1.0'
+
+    compile 'com.github.YancyYe:GalleryPick:1.2.1'
 }

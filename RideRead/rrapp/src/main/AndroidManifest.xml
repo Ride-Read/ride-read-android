@@ -39,13 +39,24 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".module.main.MainActivity"/>
+        <activity
+            android:name=".module.main.MainActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name="com.amap.api.location.APSService"></service>
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="7413513402aea054b560456afb6a00bb"/>
 
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.rideread.rideread.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

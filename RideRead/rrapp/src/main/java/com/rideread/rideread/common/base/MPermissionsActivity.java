@@ -11,7 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
-import com.elvishew.xlog.XLog;
+
+import com.rideread.rideread.data.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +50,7 @@ public abstract class MPermissionsActivity extends BaseActivity {
         }
 
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) !=
-                    PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;
             }
         }
@@ -66,9 +66,7 @@ public abstract class MPermissionsActivity extends BaseActivity {
     private List<String> getDeniedPermissions(String[] permissions) {
         List<String> needRequestPermissionList = new ArrayList<>();
         for (String permission : permissions) {
-            if (ContextCompat.checkSelfPermission(this, permission) !=
-                    PackageManager.PERMISSION_GRANTED ||
-                    ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED || ActivityCompat.shouldShowRequestPermissionRationale(this, permission)) {
                 needRequestPermissionList.add(permission);
             }
         }
@@ -115,20 +113,16 @@ public abstract class MPermissionsActivity extends BaseActivity {
      * 显示提示对话框
      */
     private void showTipsDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("提示信息")
-                .setMessage("当前应用缺少必要权限，该功能暂时无法使用。如若需要，请单击【确定】按钮前往设置中心进行权限授权。")
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                })
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        startAppSettings();
-                    }
-                }).show();
+        new AlertDialog.Builder(this).setTitle("提示信息").setMessage("当前应用缺少必要权限，该功能暂时无法使用。如若需要，请单击【确定】按钮前往设置中心进行权限授权。").setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startAppSettings();
+            }
+        }).show();
     }
 
     /**
@@ -146,7 +140,7 @@ public abstract class MPermissionsActivity extends BaseActivity {
      * @param requestCode
      */
     public void permissionSuccess(int requestCode) {
-        XLog.d("获取权限成功=" + requestCode);
+        Logger.d("permission", "获取权限成功=" + requestCode);
 
     }
 
@@ -156,6 +150,6 @@ public abstract class MPermissionsActivity extends BaseActivity {
      * @param requestCode
      */
     public void permissionFail(int requestCode) {
-        XLog.d("获取权限失败=" + requestCode);
+        Logger.d("permission", "获取权限失败=" + requestCode);
     }
 }

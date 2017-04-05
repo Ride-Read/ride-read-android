@@ -18,13 +18,14 @@
     <color name="blue_btn_pressed">#4169E1</color>
 
     <color name="gray_main_top_line">#999999</color>
-    <color name="gray_forget_pwd_text">#555555</color>
+    <color name="gray_text_55">#555555</color>
     <color name="gray_comment_text">#333333</color>
     <color name="blue_gallery">#52cace</color>
 
 
 
     <color name="gray_btn_bg">#E5E5E5</color>
+    <color name="white">#FFFFFF</color>
     <color name="white_common_bg">#EEEEEE</color>
     <color name="green_common">#52CACE</color>
 

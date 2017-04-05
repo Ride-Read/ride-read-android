@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/include_invite_id_view"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="@color/white_common_bg"
               android:gravity="center_horizontal"
               android:orientation="vertical"
-              android:paddingLeft="40dp"
-              android:paddingRight="40dp"
+              android:paddingLeft="60dp"
+              android:paddingRight="60dp"
               android:paddingTop="40dp">
 
     <TextView
@@ -31,8 +32,8 @@
 
 
     <Button
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_invite_next"
         style="@style/btn_auth_style"
-        android:text="@string/complete"/>
+        android:text="@string/next"/>
 
 </LinearLayout>

@@ -8,7 +8,7 @@ import android.util.SparseArray;
 import java.util.concurrent.Callable;
 
 /**
- * 负责缓存数据
+ * 负责缓存数据，登出||应用退出后清空
  */
 public final class CurCache {
     private static final SparseArray<Object> CUR_CACHE = new SparseArray<>();

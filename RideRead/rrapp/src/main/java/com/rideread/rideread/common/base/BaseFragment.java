@@ -80,7 +80,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onResume() {
-        //        XLog.d(TAG);
         super.onResume();
         //        MobclickAgent.onPageStart(mPageName);
     }
@@ -94,7 +93,6 @@ public abstract class BaseFragment extends Fragment {
 
     @Override
     public void onPause() {
-        //        XLog.d(TAG);
         super.onPause();
         //        MobclickAgent.onPageEnd(mPageName);
     }

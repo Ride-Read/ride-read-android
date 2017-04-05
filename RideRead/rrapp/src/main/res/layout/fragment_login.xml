@@ -5,12 +5,9 @@
 
 
     <include
-
-        layout="@layout/include_view_login"
-        />
+        layout="@layout/include_view_login"/>
 
     <include
-
         layout="@layout/include_view_code"
         android:visibility="gone"/>
 

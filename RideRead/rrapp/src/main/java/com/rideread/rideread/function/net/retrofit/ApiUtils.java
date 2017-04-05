@@ -88,6 +88,17 @@ public class ApiUtils {
         setCurrentCall(getApiStore().login(params), callBack);
     }
 
+    public static void register(@NonNull final String account, @NonNull final String password, @NonNull final BaseCallback<BaseModel<UserInfo>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
+        params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
+        params.put("phonenumber", account);
+        params.put("password", EncryptUtils.encryptSHA1ToString(password));
+
+        setCurrentCall(getApiStore().verify(params), callBack);
+    }
+
 
     private static void setCurrentCall(Call call) {
         sCurrentCall = call;

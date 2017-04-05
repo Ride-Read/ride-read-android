@@ -14,6 +14,7 @@ import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
+import com.rideread.rideread.module.main.MainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,7 +36,6 @@ public class LoginFragment extends BaseFragment {
     @BindView(R.id.edt_password_confirm) EditText mEdtPasswordConfirm;
 
 
-
     private String mLoginAccount;
     private String mLoginPwd;
     private String mPhoneNumber;
@@ -54,24 +54,39 @@ public class LoginFragment extends BaseFragment {
     public void initView() {
     }
 
+    private void showSetPwdView() {
+        mIncludeLoginView.setVisibility(View.GONE);
+        mIncludeSetPwdView.setVisibility(View.VISIBLE);
+        mIncludeCodeView.setVisibility(View.GONE);
+    }
 
-    @OnClick({R.id.btn_login_next, R.id.btn_code_next, R.id.btn_pwd_next,R.id.tv_forget_pwd})
+    private void showForgetPwdView() {
+        mIncludeLoginView.setVisibility(View.GONE);
+        mIncludeSetPwdView.setVisibility(View.GONE);
+        mIncludeCodeView.setVisibility(View.VISIBLE);
+        mTvAgreeProtocol.setVisibility(View.GONE);
+    }
+
+    @OnClick({R.id.btn_login_next, R.id.btn_code_next, R.id.btn_pwd_next, R.id.tv_forget_pwd, R.id.tv_send_code})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login_next:
                 login();
                 break;
             case R.id.btn_code_next:
+                verifyCode();
                 break;
             case R.id.btn_pwd_next:
+                setPwdAndLogin();
+                break;
+            case R.id.tv_send_code:
+                getVerifyCode();
                 break;
             case R.id.tv_forget_pwd:
-                forgetPwd();
+                showForgetPwdView();
                 break;
         }
     }
-
-    private void forgetPwd() {}
 
     private void login() {
         String account = mEdtLoginAccount.getText().toString().trim();
@@ -88,10 +103,28 @@ public class LoginFragment extends BaseFragment {
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
                 Logger.d("http", model.toString());
+                getBaseActivity().gotoActivity(MainActivity.class, true);
             }
         });
 
     }
+
+    public void getVerifyCode() {
+
+    }
+
+    private void verifyCode() {
+        if (true) {
+            showSetPwdView();
+        }
+    }
+
+
+    private void setPwdAndLogin() {
+        getBaseActivity().gotoActivity(MainActivity.class, true);
+    }
+
+
     //
     //    @Override
     //    public void onClick(View v) {
