@@ -1,16 +1,23 @@
 package com.rideread.rideread.module.auth.view;
 
+import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.common.util.KeyboardUtils;
+import com.rideread.rideread.common.util.RegexUtils;
 import com.rideread.rideread.common.util.ToastUtils;
-import com.rideread.rideread.data.Logger;
+import com.rideread.rideread.common.util.UserUtils;
+import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.UserInfo;
+import com.rideread.rideread.data.result.VCode;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
@@ -19,29 +26,25 @@ import com.rideread.rideread.module.main.MainActivity;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-/**
- * Created by Jackbing on 2017/2/13.
- */
 
-public class LoginFragment extends BaseFragment {
-    @BindView(R.id.edt_login_account) EditText mEdtLoginAccount;
-    @BindView(R.id.edt_login_pwd) EditText mEdtLoginPwd;
+public class LoginFragment extends BaseFragment implements TextView.OnEditorActionListener {
+
     @BindView(R.id.include_login_view) LinearLayout mIncludeLoginView;
     @BindView(R.id.include_code_view) LinearLayout mIncludeCodeView;
     @BindView(R.id.include_set_pwd_view) LinearLayout mIncludeSetPwdView;
+    @BindView(R.id.edt_login_account) EditText mEdtLoginAccount;
+    @BindView(R.id.edt_login_pwd) EditText mEdtLoginPwd;
     @BindView(R.id.edt_phone) EditText mEdtPhone;
     @BindView(R.id.edt_code) EditText mEdtCode;
+    @BindView(R.id.tv_send_code) TextView mTvSendCode;
     @BindView(R.id.tv_agree_protocol) TextView mTvAgreeProtocol;
     @BindView(R.id.edt_password) EditText mEdtPassword;
     @BindView(R.id.edt_password_confirm) EditText mEdtPasswordConfirm;
 
+    private CountDownTimer mDownTimer;
+    private String mRandCode;
 
-    private String mLoginAccount;
-    private String mLoginPwd;
-    private String mPhoneNumber;
-    private String mVcode;
-    private String mPwd;
-    private String mPwdConfirm;
+    private String mPhone;
     private double longtitude;//latitude": 23.136552
     private double laititude;//"longitude": 113.314086
 
@@ -52,7 +55,61 @@ public class LoginFragment extends BaseFragment {
 
     @Override
     public void initView() {
+        String latestPhone = UserUtils.getPhone();
+        if (!TextUtils.isEmpty(latestPhone)) {
+            mEdtLoginAccount.setText(latestPhone);
+            mEdtLoginAccount.setSelection(latestPhone.length());
+        }
+
+        mEdtLoginAccount.setOnEditorActionListener(this);
+        mEdtLoginPwd.setOnEditorActionListener(this);
+        mEdtCode.setOnEditorActionListener(this);
+        mEdtPassword.setOnEditorActionListener(this);
+        mEdtPasswordConfirm.setOnEditorActionListener(this);
+
+        mDownTimer = new CountDownTimer(60 * 1000, 1000) {
+            @Override
+            public void onTick(long l) {
+                mTvSendCode.setClickable(false);
+                mTvSendCode.setText((l / 1000) + "s后重新发送");
+            }
+
+            @Override
+            public void onFinish() {
+                mTvSendCode.setClickable(true);
+                mTvSendCode.setText(R.string.resend);
+            }
+        };
     }
+
+    @Override
+    public boolean onEditorAction(final TextView v, int actionId, KeyEvent event) {
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+                /*隐藏软键盘*/
+            switch (v.getId()) {
+                case R.id.edt_login_account:
+                    mEdtLoginPwd.requestFocus();
+                    break;
+                case R.id.edt_login_pwd:
+                    KeyboardUtils.hideSoftInput(getActivity());
+                    login();//输入密码后可直接回车登录
+                    break;
+                case R.id.edt_code:
+                    verifyCode();
+                    break;
+                case R.id.edt_password:
+                    mEdtPasswordConfirm.requestFocus();
+                    break;
+                case R.id.edt_password_confirm:
+                    KeyboardUtils.hideSoftInput(getActivity());
+                    setPwdAndLogin();
+                    break;
+            }
+            return true;
+        }
+        return false;
+    }
+
 
     private void showSetPwdView() {
         mIncludeLoginView.setVisibility(View.GONE);
@@ -65,6 +122,10 @@ public class LoginFragment extends BaseFragment {
         mIncludeSetPwdView.setVisibility(View.GONE);
         mIncludeCodeView.setVisibility(View.VISIBLE);
         mTvAgreeProtocol.setVisibility(View.GONE);
+        if (!TextUtils.isEmpty(mPhone)) {
+            mEdtPhone.setText(mPhone);
+            mEdtPhone.setSelection(mPhone.length());
+        }
     }
 
     @OnClick({R.id.btn_login_next, R.id.btn_code_next, R.id.btn_pwd_next, R.id.tv_forget_pwd, R.id.tv_send_code})
@@ -89,71 +150,79 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void login() {
-        String account = mEdtLoginAccount.getText().toString().trim();
+        mPhone = mEdtLoginAccount.getText().toString().trim();
         String pwd = mEdtLoginPwd.getText().toString().trim();
-        if (TextUtils.isEmpty(account)) {
-            ToastUtils.show("手机号/骑阅号不能为空");
+        if (TextUtils.isEmpty(mPhone)) {
+            ToastUtils.show(R.string.phone_rrid_cannot_null);
             return;
         }
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtils.show("密码不能为空");
+            ToastUtils.show(R.string.pwd_cannot_null);
             return;
         }
-        ApiUtils.login(account, pwd, new BaseCallback<BaseModel<UserInfo>>() {
+        doLogin(mPhone, pwd);
+
+    }
+
+    private void doLogin(String phone, String pwd) {
+        ApiUtils.login(phone, pwd, new BaseCallback<BaseModel<UserInfo>>() {
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
-                Logger.d("http", model.toString());
+                UserInfo userInfo = model.getData();
+                UserUtils.login(userInfo.getUid(), userInfo.getToken(), userInfo.getPhonenumber());
                 getBaseActivity().gotoActivity(MainActivity.class, true);
             }
         });
-
     }
 
-    public void getVerifyCode() {
 
+    public void getVerifyCode() {
+        mPhone = mEdtPhone.getText().toString().trim();
+        if (!RegexUtils.isMobileSimple(mPhone)) {
+            ToastUtils.show(R.string.please_fill_correct_phone_number);
+            return;
+        }
+        ApiUtils.getVCode(mPhone, new BaseCallback<BaseModel<VCode>>() {
+            @Override
+            protected void onSuccess(BaseModel<VCode> model) throws Exception {
+                mDownTimer.start();
+                mRandCode = model.getData().getRandCode();
+                ToastUtils.show("验证码已发送，请等待接收");
+                mEdtCode.requestFocus();
+            }
+        });
     }
 
     private void verifyCode() {
-        if (true) {
+        String vCode = mEdtCode.getText().toString();
+        if (!TextUtils.isEmpty(mRandCode) && !TextUtils.isEmpty(vCode) && mRandCode.equals(vCode)) {
             showSetPwdView();
+        } else {
+            ToastUtils.show("验证失败，请输入正确的验证码");
         }
     }
 
 
     private void setPwdAndLogin() {
-        getBaseActivity().gotoActivity(MainActivity.class, true);
+
+        final String pwdPre = mEdtPassword.getText().toString();
+        String pwdConfirm = mEdtPasswordConfirm.getText().toString();
+        //TODO  验证6-16位
+        if (!pwdPre.equals(pwdConfirm)) {
+            ToastUtils.show("密码不一致，请确认密码一致");
+            return;
+        }
+
+        ApiUtils.resetPwd(mPhone, pwdPre, new BaseCallback<BaseModel<DefJsonResult>>() {
+            @Override
+            protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                ToastUtils.show("密码修改成功");
+                doLogin(mPhone, pwdPre);
+            }
+        });
     }
 
 
-    //
-    //    @Override
-    //    public void onClick(View v) {
-    //        switch (v.getId()){
-    //            case R.id.register_btn_next:
-    //                String tag=(String)v.getTag();
-    //                if(tag.equals(tagFindPwd)){
-    //                    gotoFindPwd();
-    //                }else if(tag.equals(tagSetPwd)){
-    //                    onComplete();
-    //                }
-    //                break;
-    //            case R.id.login_tv_forgetpwd:
-    //                changeView(loginView,findPwdView);
-    //                break;
-    //            case R.id.login_btn:
-    //                login();
-    //                break;
-    //            case R.id.register_tv_sendidentfycode:
-    //                if(indentfyCodeTv==null){
-    //                    indentfyCodeTv=(TextView)v;
-    //                }
-    //                onSendIdentCode();
-    //                break;
-    //
-    //
-    //        }
-    //
-    //    }
     //
     //    @Override
     //    public void onLocationChanged(AMapLocation aMapLocation) {
@@ -182,186 +251,6 @@ public class LoginFragment extends BaseFragment {
     //        }
     //    }
     //
-    //    //登录异步线程
-    //    class LoginAsyncTask extends AsyncTask<String,String,LoginResponse>
-    //    {
-    //        @Override
-    //        protected LoginResponse doInBackground(String... params) {
-    //            return  OkHttpUtils.getInstance().userLogin(params[0],params[1],params[2],longtitude,laititude);
-    //        }
     //
-    //        @Override
-    //        protected void onPostExecute(LoginResponse resp) {
-    //            super.onPostExecute(resp);
-    //            if(resp!=null){
-    //                int resultCode=resp.getStatus();
-    //                if(resultCode== Constants.SUCCESS){
-    //
-    //                    Intent intent=new Intent(getActivity(),MainActivity.class);
-    //                    UserData data=resp.getData();
-    //                    intent.putExtra("data",data);
-    //                    intent.putExtra("timestamp",resp.getTimestamp());
-    //                    Log.e("userdata","data="+data.toString());
-    //                    startActivity(intent);
-    //                    //连接leacloud im服务器
-    //                    //openClient(resp.getData());
-    //                }else if(resultCode== Constants.PASSWORD_ERROR) {
-    //                    Toast.makeText(getActivity(),"密码错误",Toast.LENGTH_SHORT).show();
-    //                }else if(resultCode==Constants.NO_EXITS){
-    //                    Toast.makeText(getActivity(),"用户不存在",Toast.LENGTH_SHORT).show();
-    //                }else{
-    //                    Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();
-    //                }
-    //
-    //            }else {
-    //                Toast.makeText(getActivity(),"未知错误",Toast.LENGTH_SHORT).show();
-    //            }
-    //            accountEdt.setEnabled(true);
-    //            passwordEdt.setEnabled(true);
-    //
-    //
-    ////            Intent intent=new Intent(getActivity(),MainActivity.class);
-    ////            intent.putExtra("data",new UserData());
-    ////            startActivity(intent);
-    //
-    //        }
-    //    }
-    //
-    //
-    //    private void openClient(final UserData data){
-    //        AVImClientManager.getInstance().open(data.getUid()+"",new AVIMClientCallback() {
-    //            @Override
-    //            public void done(AVIMClient avimClient, AVIMException e) {
-    //                if(e==null){
-    //                    accountEdt.setEnabled(true);
-    //                    passwordEdt.setEnabled(true);
-    //                    Intent intent=new Intent(getActivity(),MainActivity.class);
-    //                    intent.putExtra("data",data);
-    //                    startActivity(intent);
-    //                }else{
-    //                    Toast.makeText(getActivity(),"登录失败",Toast.LENGTH_SHORT).show();
-    //                }
-    //            }
-    //        });
-    //
-    //    }
-    //
-    //    //跳转到找回密码
-    //    private void gotoFindPwd(){
-    //        EditText indentfyCodeEdt=(EditText)findPwdView.findViewById(R.id.register_edt_identfycode);
-    //        String code = indentfyCodeEdt.getText().toString().trim();
-    //        Log.e("----->>>>",code+","+telPhone);
-    //        //startActivity(new Intent(FindPassword.this,RegisterSetPwdActivity.class));//下面的注释已经完成手机注册功能
-    //        if(!code.isEmpty()){
-    //            AVOSCloud.verifySMSCodeInBackground(code, telPhone,
-    //                    new AVMobilePhoneVerifyCallback() {
-    //                        @Override
-    //                        public void done(AVException e) {
-    //                            if (e == null) {
-    ////                                Intent intent=new Intent(FindPassword.this,ResetPassword.class);
-    ////                                intent.putExtra("telPhone",telPhone);
-    ////                                startActivity(intent);
-    //                                changeView(findPwdView,reSetPwdView);
-    //                            } else {
-    //                                Log.e("----->>>>",e.getMessage());
-    //                                e.printStackTrace();
-    //                                Toast.makeText(getActivity(),"验证码不匹配",Toast.LENGTH_SHORT).show();
-    //                            }
-    //                        }
-    //                    });
-    //        }else{
-    //            Toast.makeText(getActivity(),"未填写验证码",Toast.LENGTH_SHORT).show();
-    //        }
-    //    }
-    //
-    //    //发送验证码
-    //    private void onSendIdentCode() {
-    //
-    //        EditText findPhone=(EditText)findPwdView.findViewById(R.id.register_edt_phone);
-    //        telPhone=findPhone.getText().toString().trim();
-    //        if(telPhone!=null&&(!telPhone.isEmpty())){
-    //            new SendCodeTask().execute(telPhone);
-    //        }else{
-    //            Toast.makeText(getActivity(),"未填手机号码",Toast.LENGTH_SHORT).show();
-    //        }
-    //    }
-    //
-    //    /**
-    //     * 发送短信验证码
-    //     * params : mobilePhoneNumber
-    //     */
-    //    private class SendCodeTask extends AsyncTask<String, Void, Boolean> {
-    //        @Override
-    //        protected Boolean doInBackground(String... params) {
-    //            try{
-    //
-    //               AVOSCloud.requestSMSCode(params[0], "骑阅", "找回密码", 1);//有效时间1分钟
-    //                return true;
-    //            }catch (AVException e){
-    //                e.printStackTrace();
-    //                Log.e("-------.........",e.getMessage());
-    //                return false;
-    //            }
-    //        }
-    //
-    //        @Override
-    //        protected void onPostExecute(Boolean result) {
-    //            super.onPostExecute(result);
-    //            if (result) {
-    //                new CountDownTimer(60000,1000){
-    //
-    //                    @Override
-    //                    public void onTick(long millisUntilFinished) {
-    //
-    //                        indentfyCodeTv.setText(millisUntilFinished/1000+"s后重新发送");
-    //                        indentfyCodeTv.setClickable(false);
-    //                    }
-    //
-    //                    @Override
-    //                    public void onFinish() {
-    //                        indentfyCodeTv.setText("发送验证码");
-    //                        indentfyCodeTv.setClickable(true);
-    //                    }
-    //                }.start();
-    //            } else Toast.makeText(getActivity(), "验证码发送失败",Toast.LENGTH_SHORT).show();
-    //        }
-    //    }
-    //
-    //
-    //    //完成重置密码
-    //    private void onComplete(){
-    //        EditText setpwdEdt=(EditText)reSetPwdView.findViewById(R.id.register_edt_setpwd);
-    //        EditText rePwd=(EditText)reSetPwdView.findViewById(R.id.register_edt_repwd);
-    //        String password=setpwdEdt.getText().toString().trim();
-    //        String repassword=rePwd.getText().toString().trim();
-    //        String result=new ConfirmPassword().confirmPwd(password,repassword);//验证密码是否符合规则
-    //        if(result.equals("success")){
-    //            new resetPwdAsyntask().execute(password,telPhone, Api.RESET_PWD);
-    //        }else{
-    //            Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
-    //        }
-    //
-    //    }
-    //
-    //    /**
-    //     * 重置密码
-    //     */
-    //    class resetPwdAsyntask extends AsyncTask<String,Void,LoginMessageEntity>{
-    //        @Override
-    //        protected LoginMessageEntity doInBackground(String... params) {
-    //            return OkHttpUtils.getInstance().resetPassword(params[0],params[1],params[2]);
-    //        }
-    //
-    //        @Override
-    //        protected void onPostExecute(LoginMessageEntity loginMessageEntity) {
-    //            super.onPostExecute(loginMessageEntity);
-    //            int resultCode=loginMessageEntity.getStatus();
-    //            if(resultCode==0){
-    //               changeView(reSetPwdView,loginView);
-    //            }else{
-    //                Toast.makeText(getActivity().getApplicationContext(),"重置密码失败",Toast.LENGTH_SHORT).show();
-    //            }
-    //        }
-    //    }
-    //
+
 }

@@ -8,10 +8,17 @@ import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
+import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.common.widget.MainFragmentTabHost;
 import com.rideread.rideread.data.been.Tab;
+import com.rideread.rideread.function.net.im.AVImClientManager;
+import com.rideread.rideread.module.auth.view.LoginActivity;
 import com.rideread.rideread.module.circle.view.CircleFragment;
 import com.rideread.rideread.module.map.view.MapFragment;
 import com.rideread.rideread.module.profile.view.ProfileFragment;
@@ -22,6 +29,8 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
+    public final static String INVITED_RIDE_READ_ID="invited_ride_read_id";
+
     @BindView(R.id.tab_content) FrameLayout mTabContent;
     @BindView(android.R.id.tabhost) MainFragmentTabHost mTabHost;
 
@@ -37,6 +46,13 @@ public class MainActivity extends BaseActivity {
         initTab();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (0 == UserUtils.getUid()) {
+            gotoActivity(LoginActivity.class, true);
+        }
+    }
 
     private void initTab() {
         Tab tab_map = new Tab(MapFragment.class, R.string.main_text_map, R.drawable.tab_map_sel);
@@ -70,6 +86,20 @@ public class MainActivity extends BaseActivity {
         text.setText(tab.getTitle());
 
         return view;
+    }
+
+    private void openClient() {
+        AVImClientManager.getInstance().open(UserUtils.getUid() + "", new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null) {
+
+                } else {
+                    ToastUtils.show("注册异常，消息开启失败");
+                }
+            }
+        });
+
     }
 
 

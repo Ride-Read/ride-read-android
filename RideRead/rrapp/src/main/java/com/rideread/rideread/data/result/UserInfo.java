@@ -9,7 +9,6 @@ import java.util.List;
 
 public class UserInfo extends UserBaseInfo {
 
-    private int uid;
     private int sex;//0-未知，1-男，2-女
     private String school;
     private String phonenumber;
@@ -22,17 +21,14 @@ public class UserInfo extends UserBaseInfo {
     private String birthday;
     private int following;
     private String career;
+    private String signature;
+
     private List<String> tags;
     private double longitude;
     private double latitude;
 
-    public int getUid() {
-        return uid;
-    }
+    private String rideReadId;
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
 
     public int getSex() {
         return sex;
@@ -153,4 +149,45 @@ public class UserInfo extends UserBaseInfo {
     public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
+
+    public String getRideReadId() {
+        return rideReadId;
+    }
+
+    public void setRideReadId(String rideReadId) {
+        this.rideReadId = rideReadId;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
 }
+//"data": {
+//        "uid": 6,
+//        "username": "启幕票4444",
+//        "password": "8611872123a6b667c9729e936b7358858f695cde",
+//        "sex": null,
+//        "school": null,
+//        "phonenumber": "13203356720",
+//        "updated_at": 1491398541000,
+//        "follower": null,
+//        "token": "385ae8849d36ec82bde4884323e8e1627e59e1d3",
+//        "hometown": null,
+//        "face_url": "localhost:8080/rideread/users/registe",
+//        "signature": null,
+//        "location": null,
+//        "created_at": 1491394654000,
+//        "birthday": null,
+//        "following": null,
+//        "career": null,
+//        "tagString": null,
+//        "tags": null,
+//        "longitude": 113.314086,
+//        "latitude": 23.136552,
+//        "is_followed": null,
+//        "rideReadId": "qimupiao3"
+//        }

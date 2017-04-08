@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
 
-    <com.amap.api.maps.TextureMapView
-        android:id="@+id/map_view"
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@color/green_common"
+        android:gravity="center"
+        android:text="@string/profile"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_def_size"/>
 
 
-</RelativeLayout>
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"></android.support.constraint.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_setting"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_platform_wechat"
+        android:text="设置"/>
+</LinearLayout>

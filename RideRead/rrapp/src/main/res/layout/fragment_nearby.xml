@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srl_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_moment_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#C8C7CC"
+            android:dividerHeight="0dp"
+            android:overScrollMode="never"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</FrameLayout>

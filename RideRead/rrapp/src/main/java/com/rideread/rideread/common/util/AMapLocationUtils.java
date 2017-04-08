@@ -7,10 +7,8 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.rideread.rideread.data.CurCache;
+import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.Storage;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by SkyXiao on 2017/4/4.
@@ -42,14 +40,13 @@ public class AMapLocationUtils {
         mLocationClient.setLocationListener(mAMapLocationListener);
         //声明AMapLocationClientOption对象
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
-        ;
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
         mLocationOption.setOnceLocation(true);
         mLocationOption.setOnceLocationLatest(true);
-        mLocationOption.setNeedAddress(false);
+        mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
-        mLocationOption.setHttpTimeOut(5000);////设置定位间隔,单位毫秒,默认为5000ms
+        mLocationOption.setHttpTimeOut(10000);////设置定位间隔,单位毫秒,默认为5000ms
         mLocationOption.setLocationCacheEnable(false);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
@@ -70,11 +67,15 @@ public class AMapLocationUtils {
                     aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                     mLatitude = aMapLocation.getLatitude();//获取纬度
                     mLongitude = aMapLocation.getLongitude();//获取经度
-                    //TODO 保存到SDCard
+                    setLatitude(mLatitude);
+                    setLongitude(mLongitude);
                     aMapLocation.getAccuracy();//获取精度信息
-                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = new Date(aMapLocation.getTime());
-                    df.format(date);//定位时间
+                    mLastAddressFirst=aMapLocation.getProvince();
+                    mLastAddressSecond=aMapLocation.getCity();
+//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//                    Date date = new Date(aMapLocation.getTime());
+//                    df.format(date);//定位时间
+                    Logger.e("Loc", mLatitude+"-"+mLongitude+"-"+mLastAddressFirst);
                 } else {
                     //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                     Log.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
@@ -90,6 +91,18 @@ public class AMapLocationUtils {
 
     public static String getmLastAddressSecond() {
         return mLastAddressSecond;
+    }
+
+    public static void setLatitude(double latitude) {
+        if (0 == latitude) return;
+        Storage.put(LATEST_LATITUDE, latitude);
+        CurCache.put(LATEST_LATITUDE, latitude);
+    }
+
+    public static void setLongitude(double longitude) {
+        if (0 == longitude) return;
+        Storage.put(LATEST_LONGITUDE, longitude);
+        CurCache.put(LATEST_LONGITUDE, longitude);
     }
 
     public static double getLatitude() {

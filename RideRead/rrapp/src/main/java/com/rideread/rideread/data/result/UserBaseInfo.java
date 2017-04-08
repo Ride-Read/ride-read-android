@@ -8,18 +8,10 @@ import java.io.Serializable;
  */
 
 public class UserBaseInfo implements Serializable {
-    private int tid;
+    private int uid;
     private String faceUrl;
-    private String signature;
     private String nickname;
 
-    public int getTid() {
-        return tid;
-    }
-
-    public void setTid(int tid) {
-        this.tid = tid;
-    }
 
     public String getFaceUrl() {
         return faceUrl;
@@ -29,19 +21,19 @@ public class UserBaseInfo implements Serializable {
         this.faceUrl = faceUrl;
     }
 
-    public String getSignature() {
-        return signature;
-    }
-
-    public void setSignature(String signature) {
-        this.signature = signature;
-    }
-
     public String getNickname() {
         return nickname;
     }
 
     public void setNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 }
