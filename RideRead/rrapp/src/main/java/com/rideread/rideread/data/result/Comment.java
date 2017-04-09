@@ -8,12 +8,14 @@ import java.io.Serializable;
 
 public class Comment implements Serializable {
     private int uid;
+    private int mid;
     private String msg;
-    private String reply_nickname;
-    private int reply_uid;
-    private int comment_id;
+    private String replyUsername;
+    private int replyUid;
+    private int commentId;
     private long createdAt;
-    private String nickname;
+    private long updatedAt;
+    private String username;
     private String faceUrl;
 
     public int getUid() {
@@ -24,6 +26,14 @@ public class Comment implements Serializable {
         this.uid = uid;
     }
 
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
+
     public String getMsg() {
         return msg;
     }
@@ -32,28 +42,28 @@ public class Comment implements Serializable {
         this.msg = msg;
     }
 
-    public String getReply_nickname() {
-        return reply_nickname;
+    public String getReplyUsername() {
+        return replyUsername;
     }
 
-    public void setReply_nickname(String reply_nickname) {
-        this.reply_nickname = reply_nickname;
+    public void setReplyUsername(String replyUsername) {
+        this.replyUsername = replyUsername;
     }
 
-    public int getReply_uid() {
-        return reply_uid;
+    public int getReplyUid() {
+        return replyUid;
     }
 
-    public void setReply_uid(int reply_uid) {
-        this.reply_uid = reply_uid;
+    public void setReplyUid(int replyUid) {
+        this.replyUid = replyUid;
     }
 
-    public int getComment_id() {
-        return comment_id;
+    public int getCommentId() {
+        return commentId;
     }
 
-    public void setComment_id(int comment_id) {
-        this.comment_id = comment_id;
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
     }
 
     public long getCreatedAt() {
@@ -64,12 +74,20 @@ public class Comment implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public String getNickname() {
-        return nickname;
+    public long getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFaceUrl() {

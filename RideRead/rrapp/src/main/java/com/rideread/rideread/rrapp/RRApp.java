@@ -1,6 +1,5 @@
 package com.rideread.rideread.rrapp;
 
-import android.app.Application;
 import android.support.multidex.MultiDex;
 
 import com.avos.avoscloud.AVOSCloud;
@@ -15,7 +14,7 @@ import com.rideread.rideread.function.net.im.MessageHandler;
  * Created by SkyXiao on 2017/3/30.
  */
 
-public class RRApp extends Application {
+public class RRApp extends FrescoApp {
     @Override
     public void onCreate() {
         super.onCreate();

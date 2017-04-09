@@ -11,13 +11,17 @@ import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSON;
 import com.rideread.rideread.R;
+import com.rideread.rideread.common.adapter.MomentsAdapter;
 import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.data.Logger;
-import com.rideread.rideread.data.result.ListResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,15 +29,18 @@ import butterknife.ButterKnife;
 
 public class MomentsFragment extends BaseFragment {
     public static String MOMENTS_TYPE = "moments_type";
-    public static int MOMENTS_TYPE_NEARBY = 0;
-    public static int MOMENTS_TYPE_ATTENTION = 1;
+    public static int MOMENTS_TYPE_NEARBY = 1;
+    public static int MOMENTS_TYPE_ATTENTION = 0;
     private int mMomentsType;
+    private List<Moment> mMoments;
+    private MomentsAdapter mMomentsAdapter;
 
 
     @BindView(R.id.rv_moment_list) RecyclerView mRvMomentList;
     @BindView(R.id.srl_refresh) SwipeRefreshLayout mSrlRefresh;
     private int mPages = 0;
     private LinearLayoutManager mLayoutManager;
+    private boolean isLoadingMore;
 
     @Override
     public int getLayoutRes() {
@@ -43,14 +50,16 @@ public class MomentsFragment extends BaseFragment {
     @Override
     public void initView() {
         mMomentsType = getArguments().getInt(MOMENTS_TYPE);
-
-        mSrlRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                mPages=0;
-                loadMoments();
-            }
+        mMoments = new ArrayList<>();
+        mSrlRefresh.setOnRefreshListener(() -> {
+            mPages = 0;
+            loadMoments();
         });
+        mRvMomentList.setHasFixedSize(true);
+        mMomentsAdapter = new MomentsAdapter(mMoments);
+        mRvMomentList.setAdapter(mMomentsAdapter);
+        mLayoutManager = new LinearLayoutManager(getBaseActivity());
+        mRvMomentList.setLayoutManager(mLayoutManager);
         mRvMomentList.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -60,33 +69,47 @@ public class MomentsFragment extends BaseFragment {
                 }
             }
 
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                int lastVisibleItem = ((LinearLayoutManager) mLayoutManager).findLastVisibleItemPosition();
-//                int totalItemCount = mLayoutManager.getItemCount();
-//                //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
-//                // dy>0 表示向下滑动
-//                if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
-//                    if (isLoadingMore) {
-//                        Log.d(TAG, "ignore manually update!");
-//                    } else {
-//                        loadPage();//这里多线程也要手动控制isLoadingMore
-//                        isLoadingMore = false;
-//                    }
-//                }
-//            }
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                int totalItemCount = mLayoutManager.getItemCount();
+                //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
+                // dy>0 表示向下滑动
+                if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
+                    if (isLoadingMore) {
+                        Logger.d(TAG, "ignore manually update!");
+                    } else {
+                        loadMoments();//这里多线程也要手动控制isLoadingMore
+                        isLoadingMore = false;
+                    }
+                }
+            }
         });
+
+
         loadMoments();
     }
 
 
     private void loadMoments() {
-        ApiUtils.loadMoments(mPages, 1, new BaseCallback<BaseModel<ListResult<Moment>>>() {
+        isLoadingMore = true;
+        mSrlRefresh.setRefreshing(true);
+        ApiUtils.loadMoments(mPages, mMomentsType, new BaseCallback<BaseModel<List<Moment>>>() {
             @Override
-            protected void onSuccess(BaseModel<ListResult<Moment>> model) throws Exception {
+            protected void onSuccess(BaseModel<List<Moment>> model) throws Exception {
                 Logger.e("http", JSON.toJSONString(model));
-                mPages++;
+
+                List<Moment> tMoments = model.getData();
+                if (!ListUtils.isEmpty(tMoments)) {
+                    if (0 == mPages) mMoments.clear();
+
+                    mMoments.addAll(tMoments);
+                    mMomentsAdapter.notifyDataSetChanged();
+
+                    mPages++;
+                }
+
             }
 
             @Override

@@ -275,7 +275,7 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
                 UserInfo userInfo = model.getData();
                 if (null != userInfo) {
-                    UserUtils.login(userInfo.getUid(), userInfo.getToken(), userInfo.getPhonenumber());
+                    UserUtils.login(userInfo);
                     Bundle bundle = new Bundle();
                     bundle.putString(MainActivity.INVITED_RIDE_READ_ID, mInvitedId);
                     getBaseActivity().gotoActivity(MainActivity.class, bundle, true);

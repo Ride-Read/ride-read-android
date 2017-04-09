@@ -23,7 +23,7 @@ public class SplashActivity extends MPermissionsActivity {
 
     @Override
     public void initView() {
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         //TODO 后期需要请求广告页面，再替换但前页面显示
         if (0 != UserUtils.getUid()) {
             mHandler = new WeakHandler();

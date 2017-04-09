@@ -38,10 +38,12 @@ public class Moment {
     private long createdAt;
     private long updatedAt;
     private MomentUser user;
+
     private double latitude;
     private double longitude;
     private int distance;
     private String distanceString;
+
     private List<String> pictures;
     private List<Comment> comment;
     private List<ThumbsUpUser> thumbsUp;

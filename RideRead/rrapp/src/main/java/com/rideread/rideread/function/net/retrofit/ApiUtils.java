@@ -11,7 +11,6 @@ import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.data.result.DefJsonResult;
-import com.rideread.rideread.data.result.ListResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
 import com.rideread.rideread.data.result.UserInfo;
@@ -253,7 +252,7 @@ public class ApiUtils {
         setCurrentCall(getApiStore().showThumbsUp(getParams(params)), callBack);
     }
 
-    public static void loadMoments(final int pages, final int type, @NonNull final BaseCallback<BaseModel<ListResult<Moment>>> callBack) {
+    public static void loadMoments(final int pages, final int type, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("pages", Integer.toString(pages));

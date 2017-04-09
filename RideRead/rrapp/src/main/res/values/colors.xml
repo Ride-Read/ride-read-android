@@ -21,16 +21,21 @@
     <color name="gray_text_55">#555555</color>
     <color name="gray_comment_text">#333333</color>
     <color name="blue_gallery">#52cace</color>
+    <color name="white_bg">#F2F2F2</color>
 
 
 
     <color name="gray_btn_bg">#E5E5E5</color>
     <color name="white">#FFFFFF</color>
     <color name="white_common_bg">#EEEEEE</color>
-    <color name="green_common">#52CACE</color>
+    <color name="green_common">#58c9c0</color>
+    <color name="green_common_tran_70p">#B252CACE</color>
 
 
     <color name="gray_label_hint">#9A9A9A9A</color>
     <color name="gray_label_cancel">#A0A0A0A0</color>
+    <color name="blue_tran_loc">#7F29B6F6</color>
+
+    <color name="gallery_blue">@color/green_common</color>
 
 </resources>

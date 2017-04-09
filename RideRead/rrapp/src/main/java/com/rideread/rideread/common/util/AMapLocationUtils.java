@@ -6,6 +6,7 @@ import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.LocationSource;
 import com.rideread.rideread.data.CurCache;
 import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.Storage;
@@ -32,6 +33,8 @@ public class AMapLocationUtils {
 
     private static AMapLocationClient mLocationClient;
 
+    private static LocationSource.OnLocationChangedListener mOnLocationChangedListener;
+
 
     public static void init() {
         //初始化定位
@@ -42,11 +45,11 @@ public class AMapLocationUtils {
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(true);
-        mLocationOption.setOnceLocationLatest(true);
+        mLocationOption.setOnceLocation(false);
+        mLocationOption.setOnceLocationLatest(false);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
-        mLocationOption.setHttpTimeOut(10000);////设置定位间隔,单位毫秒,默认为5000ms
+        mLocationOption.setInterval(10 * 1000);////设置定位间隔,单位毫秒,默认为5000ms
         mLocationOption.setLocationCacheEnable(false);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
@@ -67,15 +70,20 @@ public class AMapLocationUtils {
                     aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                     mLatitude = aMapLocation.getLatitude();//获取纬度
                     mLongitude = aMapLocation.getLongitude();//获取经度
-                    setLatitude(mLatitude);
-                    setLongitude(mLongitude);
+                    if (mLatitude != getLatitude()) {
+                        setLatitude(mLatitude);
+                        setLongitude(mLongitude);
+                    }
                     aMapLocation.getAccuracy();//获取精度信息
-                    mLastAddressFirst=aMapLocation.getProvince();
-                    mLastAddressSecond=aMapLocation.getCity();
-//                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//                    Date date = new Date(aMapLocation.getTime());
-//                    df.format(date);//定位时间
-                    Logger.e("Loc", mLatitude+"-"+mLongitude+"-"+mLastAddressFirst);
+                    mLastAddressFirst = aMapLocation.getProvince();
+                    mLastAddressSecond = aMapLocation.getCity();
+                    //                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    //                    Date date = new Date(aMapLocation.getTime());
+                    //                    df.format(date);//定位时间
+                    Logger.e("Loc", mLatitude + "-" + mLongitude + "-" + mLastAddressFirst);
+                    if (null != mOnLocationChangedListener) {
+                        mOnLocationChangedListener.onLocationChanged(aMapLocation);
+                    }
                 } else {
                     //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
                     Log.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" + aMapLocation.getErrorInfo());
@@ -111,5 +119,29 @@ public class AMapLocationUtils {
 
     public static double getLongitude() {
         return CurCache.get(LATEST_LONGITUDE, Storage.get(LATEST_LONGITUDE, 113.314086D));
+    }
+
+    public static AMapLocationClient getLocationClient() {
+        return mLocationClient;
+    }
+
+    public static void setmLocationClient(AMapLocationClient mLocationClient) {
+        AMapLocationUtils.mLocationClient = mLocationClient;
+    }
+
+    public static AMapLocationListener getmAMapLocationListener() {
+        return mAMapLocationListener;
+    }
+
+    public static void setAMapLocationListener(AMapLocationListener mAMapLocationListener) {
+        AMapLocationUtils.mAMapLocationListener = mAMapLocationListener;
+    }
+
+    public static LocationSource.OnLocationChangedListener getOnLocationChangedListener() {
+        return mOnLocationChangedListener;
+    }
+
+    public static void setOnLocationChangedListener(LocationSource.OnLocationChangedListener onLocationChangedListener) {
+        mOnLocationChangedListener = onLocationChangedListener;
     }
 }

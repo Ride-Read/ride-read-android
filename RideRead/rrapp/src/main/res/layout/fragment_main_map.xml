@@ -39,7 +39,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/btn_blue_green_round_sel"
+        android:background="@drawable/btn_blue_green_tran_round_sel"
         android:text="签到"
         android:textColor="@color/white_common_bg"/>
 

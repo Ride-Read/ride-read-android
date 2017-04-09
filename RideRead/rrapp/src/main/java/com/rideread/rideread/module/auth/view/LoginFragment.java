@@ -169,8 +169,10 @@ public class LoginFragment extends BaseFragment implements TextView.OnEditorActi
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
                 UserInfo userInfo = model.getData();
-                UserUtils.login(userInfo.getUid(), userInfo.getToken(), userInfo.getPhonenumber());
-                getBaseActivity().gotoActivity(MainActivity.class, true);
+                if (null != userInfo) {
+                    UserUtils.login(userInfo);
+                    getBaseActivity().gotoActivity(MainActivity.class, true);
+                }
             }
         });
     }

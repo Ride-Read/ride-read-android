@@ -17,7 +17,7 @@ import java.io.File;
 /**
  *
  */
-public class FrecoApp extends Application {
+public class FrescoApp extends Application {
     public static final String FRESCO_PATH = AppUtils.getMyCacheDir("fresco");
     private static final int MAX_HEAP_SIZE = (int) Runtime.getRuntime().maxMemory();//分配的可用内存
     public static final int MAX_MEMORY_CACHE_SIZE = MAX_HEAP_SIZE / 4;//使用的缓存数量

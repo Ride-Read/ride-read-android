@@ -42,7 +42,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        getSupportActionBar().hide();
+//        getSupportActionBar().hide();
         initTab();
     }
 

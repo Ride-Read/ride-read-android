@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class UserBaseInfo implements Serializable {
     private int uid;
     private String faceUrl;
-    private String nickname;
+    private String username;
 
 
     public String getFaceUrl() {
@@ -21,12 +21,12 @@ public class UserBaseInfo implements Serializable {
         this.faceUrl = faceUrl;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public int getUid() {

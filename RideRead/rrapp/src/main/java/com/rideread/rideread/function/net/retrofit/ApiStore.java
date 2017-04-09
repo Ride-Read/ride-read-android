@@ -1,12 +1,12 @@
 package com.rideread.rideread.function.net.retrofit;
 
 import com.rideread.rideread.data.result.DefJsonResult;
-import com.rideread.rideread.data.result.ListResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
 import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.data.result.VCode;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -97,7 +97,7 @@ public interface ApiStore {
     Call<BaseModel<DefJsonResult>> showThumbsUp(@QueryMap Map<String, String> params);
 
     @POST("moments/show_moment")
-    Call<BaseModel<ListResult<Moment>>> showMoment(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<Moment>>> showMoment(@QueryMap Map<String, String> params);
 
     @POST("util/qiniu_token")
     Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);

@@ -53,30 +53,31 @@
         app:layout_constraintTop_toBottomOf="@id/tv_third_account">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="28dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_platform_wechat"/>
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_login_weixin"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_platform_qq"/>
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_login_qq"/>
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dip"
-            android:layout_marginRight="5dip"
+            android:layout_marginLeft="28dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_platform_weibo"/>
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_login_weibo"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
