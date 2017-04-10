@@ -1,6 +1,7 @@
 package com.rideread.rideread.module.profile.view;
 
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,28 +55,41 @@ public class ProfileFragment extends BaseFragment {
     }
 
 
-    @OnClick({R.id.btn_personality_map, R.id.tv_msg, R.id.tv_attention, R.id.tv_fans, R.id.btn_post_date, R.id.btn_my_circle, R.id.btn_my_collect, R.id.btn_invite_friend, R.id.btn_setting})
+    @OnClick({R.id.img_avatar, R.id.btn_personality_map, R.id.tv_msg, R.id.tv_attention, R.id.tv_fans, R.id.btn_post_date, R.id.btn_my_circle, R.id.btn_my_collect, R.id.btn_invite_friend, R.id.btn_setting})
     public void onViewClicked(View view) {
+        Class<? extends Activity> targetActivity = null;
         switch (view.getId()) {
+            case R.id.img_avatar:
+                targetActivity = UserInfoActivity.class;
+                break;
             case R.id.btn_personality_map:
+                targetActivity = PersonalityMapActivity.class;
                 break;
             case R.id.tv_msg:
+                targetActivity = MsgActivity.class;
                 break;
             case R.id.tv_attention:
+                targetActivity = AttentionActivity.class;
                 break;
             case R.id.tv_fans:
+                targetActivity = FansActivity.class;
                 break;
             case R.id.btn_post_date:
+                targetActivity = PostDateActivity.class;
                 break;
             case R.id.btn_my_circle:
+                targetActivity = MyCircleActivity.class;
                 break;
             case R.id.btn_my_collect:
+                targetActivity = CollectActivity.class;
                 break;
             case R.id.btn_invite_friend:
+                targetActivity = InviteActivity.class;
                 break;
             case R.id.btn_setting:
-                getBaseActivity().gotoActivity(SettingActivity.class);
+                targetActivity = SettingActivity.class;
                 break;
         }
+        if (null != targetActivity) getBaseActivity().gotoActivity(targetActivity);
     }
 }

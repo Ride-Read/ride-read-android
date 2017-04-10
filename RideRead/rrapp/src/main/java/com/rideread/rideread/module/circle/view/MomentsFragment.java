@@ -36,31 +36,31 @@ public class MomentsFragment extends BaseFragment {
     private MomentsAdapter mMomentsAdapter;
 
 
-    @BindView(R.id.rv_moment_list) RecyclerView mRvMomentList;
-    @BindView(R.id.srl_refresh) SwipeRefreshLayout mSrlRefresh;
+    @BindView(R.id.recycle_view) RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
     private int mPages = 0;
     private LinearLayoutManager mLayoutManager;
     private boolean isLoadingMore;
 
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_nearby;
+        return R.layout.common_recycle_view;
     }
 
     @Override
     public void initView() {
         mMomentsType = getArguments().getInt(MOMENTS_TYPE);
         mMoments = new ArrayList<>();
-        mSrlRefresh.setOnRefreshListener(() -> {
+        mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mPages = 0;
             loadMoments();
         });
-        mRvMomentList.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(true);
         mMomentsAdapter = new MomentsAdapter(mMoments);
-        mRvMomentList.setAdapter(mMomentsAdapter);
+        mRecyclerView.setAdapter(mMomentsAdapter);
         mLayoutManager = new LinearLayoutManager(getBaseActivity());
-        mRvMomentList.setLayoutManager(mLayoutManager);
-        mRvMomentList.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
 
@@ -76,12 +76,13 @@ public class MomentsFragment extends BaseFragment {
                 int totalItemCount = mLayoutManager.getItemCount();
                 //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
                 // dy>0 表示向下滑动
-                if (lastVisibleItem >= totalItemCount - 4 && dy > 0) {
+                if (lastVisibleItem >= totalItemCount - 2 && dy > 0) {
                     if (isLoadingMore) {
+                        isLoadingMore = false;
                         Logger.d(TAG, "ignore manually update!");
                     } else {
                         loadMoments();//这里多线程也要手动控制isLoadingMore
-                        isLoadingMore = false;
+                        isLoadingMore = true;
                     }
                 }
             }
@@ -94,7 +95,7 @@ public class MomentsFragment extends BaseFragment {
 
     private void loadMoments() {
         isLoadingMore = true;
-        mSrlRefresh.setRefreshing(true);
+        mSwipeRefreshLayout.setRefreshing(true);
         ApiUtils.loadMoments(mPages, mMomentsType, new BaseCallback<BaseModel<List<Moment>>>() {
             @Override
             protected void onSuccess(BaseModel<List<Moment>> model) throws Exception {
@@ -115,7 +116,7 @@ public class MomentsFragment extends BaseFragment {
             @Override
             protected void onAfter() {
                 super.onAfter();
-                mSrlRefresh.setRefreshing(false);
+                mSwipeRefreshLayout.setRefreshing(false);
             }
         });
     }

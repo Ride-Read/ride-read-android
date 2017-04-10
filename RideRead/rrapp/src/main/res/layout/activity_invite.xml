@@ -1,13 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
+    <include
+        layout="@layout/include_toolbar_green"
+        />
 
-    <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:text="退出账号"/>
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_share_weixin_friend"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="8dp"
+        android:text="分享给微信朋友"/>
+
+    <TextView
+        android:id="@+id/tv_share_weixin_circle"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="0.5dp"
+        android:text="分享到朋友圈"/>
+
+    <TextView
+        android:id="@+id/tv_share_qq"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="0.5dp"
+        android:text="分享到QQ"/>
+
+    <TextView
+        android:id="@+id/tv_share_contact"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="0.5dp"
+        android:text="分享到通讯录好友"/>
+
+    <TextView
+        android:id="@+id/tv_share_weibo"
+        style="@style/common_icon_item_style"
+        android:layout_marginTop="0.5dp"
+        android:text="分享到新浪微博"/>
+
+</LinearLayout>

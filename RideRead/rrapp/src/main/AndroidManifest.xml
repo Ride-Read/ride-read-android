@@ -48,6 +48,33 @@
             android:name=".module.main.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".module.profile.view.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.PersonalityMapActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.MsgActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.AttentionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.FansActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.PostDateActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.MyCircleActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.CollectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.InviteActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".module.profile.view.SettingActivity"
             android:screenOrientation="portrait"/>
 
@@ -76,7 +103,7 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>
                 <action android:name="android.intent.action.USER_PRESENT"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
     </application>
