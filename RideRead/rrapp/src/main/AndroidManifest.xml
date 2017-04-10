@@ -32,7 +32,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.auth.view.LoginActivity">
+        <activity
+            android:name=".module.auth.view.SplashActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -40,13 +42,50 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".module.auth.view.LoginActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".module.main.MainActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.UserInfoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.PersonalityMapActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.MsgActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.AttentionActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.FansActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.PostDateActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.MyCircleActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.CollectActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.InviteActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.SettingActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name="com.amap.api.location.APSService"></service>
+        <!--<meta-data-->
+        <!--android:name="com.amap.api.v2.apikey"-->
+        <!--android:value="7413513402aea054b560456afb6a00bb"/> -->
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="7413513402aea054b560456afb6a00bb"/>
+            android:value="39d52ac6ee246b5cadaed64dde0f9758"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -55,8 +94,18 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/filepaths" />
+                android:resource="@xml/filepaths"/>
         </provider>
+
+
+        <service android:name="com.avos.avoscloud.PushService"/>
+        <receiver android:name="com.avos.avoscloud.AVBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

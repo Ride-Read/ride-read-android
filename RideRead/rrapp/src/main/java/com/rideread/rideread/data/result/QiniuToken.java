@@ -7,13 +7,13 @@ import java.io.Serializable;
  */
 
 public class QiniuToken implements Serializable {
-    private String qiuniuToken;
+    private String upToken;
 
-    public String getQiuniuToken() {
-        return qiuniuToken;
+    public String getUpToken() {
+        return upToken;
     }
 
-    public void setQiuniuToken(String qiuniuToken) {
-        this.qiuniuToken = qiuniuToken;
+    public void setUpToken(String upToken) {
+        this.upToken = upToken;
     }
 }

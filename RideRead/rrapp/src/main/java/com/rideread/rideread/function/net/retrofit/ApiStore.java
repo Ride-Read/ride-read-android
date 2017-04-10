@@ -1,8 +1,12 @@
 package com.rideread.rideread.function.net.retrofit;
 
+import com.rideread.rideread.data.result.DefJsonResult;
+import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
 import com.rideread.rideread.data.result.UserInfo;
+import com.rideread.rideread.data.result.VCode;
 
+import java.util.List;
 import java.util.Map;
 
 import retrofit2.Call;
@@ -27,9 +31,6 @@ public interface ApiStore {
 
 
     public final static String TEMP_USER_TOKEN = "34070eae5335938f171db8a11594cccf";//用户注册时，获取七牛云token时所用的用户token，这个token是模拟的，有安全隐患
-    public final static int TEMP_UID = 1;//临时uid，同样有隐患
-    //http://121.42.195.113:3000
-    public static final String BaseUrl2 = "http://121.42.195.113";
 
     ////另一种方式，参数一一传递
     //    @POST("account/login")
@@ -42,58 +43,67 @@ public interface ApiStore {
     @POST("users/login")
     Call<BaseModel<UserInfo>> login(@QueryMap Map<String, String> params);
 
-    @POST("users/verify")
-    Call<BaseModel<UserInfo>> verify(@QueryMap Map<String, String> params);
+    @POST("users/reset_password")
+    Call<BaseModel<DefJsonResult>> resetPassword(@QueryMap Map<String, String> params);
 
-    @FormUrlEncoded
+    @POST("users/verify")
+    Call<BaseModel<DefJsonResult>> verify(@QueryMap Map<String, String> params);
+
     @POST("users/register")
-    Call<BaseModel<UserInfo>> register(@FieldMap Map<String, String> params);
+    Call<BaseModel<UserInfo>> register(@QueryMap Map<String, String> params);
 
     @POST("users/followers")
-    Call<BaseModel<UserInfo>> followers(@QueryMap Map<String, String> params);
-
+    Call<BaseModel<DefJsonResult>> followers(@QueryMap Map<String, String> params);
 
     @POST("users/followings")
-    Call<BaseModel<UserInfo>> followings(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> followings(@QueryMap Map<String, String> params);
+
+    @POST("users/follow")
+    Call<BaseModel<DefJsonResult>> follow(@QueryMap Map<String, String> params);
+
 
     @POST("users/unfollow")
-    Call<BaseModel<UserInfo>> unfollow(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> unfollow(@QueryMap Map<String, String> params);
 
     @POST("users/show_user")
-    Call<BaseModel<UserInfo>> showUser(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> showUser(@QueryMap Map<String, String> params);
 
+    @FormUrlEncoded
     @POST("users/update")
-    Call<BaseModel<UserInfo>> update(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> update(@FieldMap Map<String, String> params);
 
     @POST("moments/post_moment")
-    Call<BaseModel<UserInfo>> postMoment(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> postMoment(@QueryMap Map<String, String> params);
 
     @POST("moments/show_user")
-    Call<BaseModel<UserInfo>> showMomentUser(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> showMomentUser(@QueryMap Map<String, String> params);
 
     @POST("moments/add_thumbsup")
-    Call<BaseModel<UserInfo>> addThumbSup(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> addThumbsUp(@QueryMap Map<String, String> params);
 
     @POST("moments/add_comment")
-    Call<BaseModel<UserInfo>> addComment(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> addComment(@QueryMap Map<String, String> params);
 
     @POST("moments/remove_comment")
-    Call<BaseModel<UserInfo>> removeComment(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> removeComment(@QueryMap Map<String, String> params);
 
     @POST("moments/remove_thumbsup")
-    Call<BaseModel<UserInfo>> removeThumbSup(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> removeThumbsUp(@QueryMap Map<String, String> params);
 
     @POST("moments/remove_moment")
-    Call<BaseModel<UserInfo>> removeMoment(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> removeMoment(@QueryMap Map<String, String> params);
 
     @POST("moments/show_thumbsup")
-    Call<BaseModel<UserInfo>> showThumbSup(@QueryMap Map<String, String> params);
+    Call<BaseModel<DefJsonResult>> showThumbsUp(@QueryMap Map<String, String> params);
 
     @POST("moments/show_moment")
-    Call<BaseModel<UserInfo>> showMoment(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<Moment>>> showMoment(@QueryMap Map<String, String> params);
 
-    @POST("util/qiniu_koken")
+    @POST("util/qiniu_token")
     Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);
+
+    @POST("util/yun_pian_code")
+    Call<BaseModel<VCode>> getVCode(@QueryMap Map<String, String> params);
 
 
     //    @Multipart

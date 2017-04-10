@@ -56,5 +56,12 @@
     <string name="knew">知道了</string>
     <string name="confirm_user_id">确定 骑阅号，保存后无法修改</string>
     <string name="server_error_fail">服务器异常，请稍后重试</string>
+    <string name="read_circle">阅圈</string>
+    <string name="resend">重新发送</string>
+    <string name="phone_rrid_cannot_null">手机号/骑阅号不能为空</string>
+    <string name="pwd_cannot_null">密码不能为空</string>
+    <string name="login_error">登录异常</string>
+    <string name="please_fill_correct_phone_number">请填写11位正确手机号</string>
+    <string name="profile">我的</string>
 
 </resources>

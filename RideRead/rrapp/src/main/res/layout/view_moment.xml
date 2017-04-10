@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:descendantFocusability="blocksDescendants"
+                                             android:padding="12dip">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_avatar"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        tools:src="@drawable/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="2dp"
+        android:text="张晓明"
+        android:textColor="@color/black_common"
+        android:textSize="@dimen/text_def_size"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"
+        app:layout_constraintTop_toTopOf="@id/img_avatar"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="12dp"
+        android:text="6分钟前"
+        android:textColor="@color/gray_text"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"/>
+
+    <ImageButton
+        android:id="@+id/btn_attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/icon_attention"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/tv_time"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_time"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_moment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:text="风景很美"
+            android:textColor="@color/black_common"
+            android:textSize="@dimen/text_def_size"
+            android:visibility="gone"
+            />
+
+        <com.jaeger.ninegridimageview.NineGridImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nine_grid_img_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:visibility="gone"
+            app:imgGap="4dip"
+            app:showStyle="grid"
+            app:singleImgSize="125dp"
+            />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_loc_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="广州.白云山  距离我2km"
+        android:textColor="@color/gray_text"
+        android:textSize="12dp"
+        app:layout_constraintLeft_toLeftOf="@id/ll_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="@id/btn_attention"
+        app:layout_constraintTop_toBottomOf="@id/tv_loc_info">
+
+        <ImageButton
+            android:id="@+id/btn_like"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="6dip"
+            android:background="@drawable/ic_like"/>
+
+        <TextView
+            android:id="@+id/tv_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dip"
+            android:text="20"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/text_def_size"/>
+
+        <ImageButton
+            android:id="@+id/btn_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dip"
+            android:background="@drawable/ic_comment"/>
+
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/text_def_size"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
