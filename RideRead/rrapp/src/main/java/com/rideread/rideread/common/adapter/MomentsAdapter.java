@@ -17,11 +17,16 @@ import com.rideread.rideread.R;
 import com.rideread.rideread.common.util.ImgLoader;
 import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.PicassoImgLoader;
+import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.Utils;
 import com.rideread.rideread.data.result.Comment;
+import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.MomentUser;
 import com.rideread.rideread.data.result.ThumbsUpUser;
+import com.rideread.rideread.function.net.retrofit.ApiUtils;
+import com.rideread.rideread.function.net.retrofit.BaseCallback;
+import com.rideread.rideread.function.net.retrofit.BaseModel;
 
 import java.util.List;
 
@@ -78,6 +83,40 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.ViewHold
 
         boolean isAttent = 0 == user.getIsFollowed();
         holder.mBtnAttention.setBackgroundResource(isAttent ? R.drawable.icon_attented : R.drawable.icon_attention);
+        holder.mBtnAttention.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isAttent) {
+                    ApiUtils.unfollow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                        @Override
+                        protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                            holder.mBtnAttention.setBackgroundResource( R.drawable.icon_attention);
+                            user.setIsFollowed(-1);
+                        }
+                    });
+                } else {
+                    ApiUtils.follow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                        @Override
+                        protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                            holder.mBtnAttention.setBackgroundResource( R.drawable.icon_attented );
+                            user.setIsFollowed(1);
+                        }
+                    });
+                }
+            }
+        });
+
+        holder.mBtnLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApiUtils.addThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                    @Override
+                    protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                        ToastUtils.show("点赞成功");
+                    }
+                });
+            }
+        });
         holder.mTvTime.setText(moment.getCreatedAt() + "");
         List<ThumbsUpUser> thumbsUp = moment.getThumbsUp();
         int likeCount = ListUtils.isEmpty(thumbsUp) ? 0 : thumbsUp.size();

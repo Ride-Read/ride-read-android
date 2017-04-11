@@ -6,6 +6,9 @@ package com.rideread.rideread.data.result;
  */
 
 public class MomentUser extends UserBaseInfo {
+    /**
+     * 0-互相关注，1-单项关注，-1-无效
+     */
     private int isFollowed;
 
 

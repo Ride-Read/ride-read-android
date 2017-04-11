@@ -166,10 +166,12 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = MAIN)
     public void onLoading(final ShowLoadingEvent event) {
+        showProgressDialog("正在加载，请等候...");
     }
 
     @Subscribe(threadMode = MAIN)
     public void onLoadCancel(final HideLoadingEvent event) {
+        hideProgressDialog();
     }
 
 }

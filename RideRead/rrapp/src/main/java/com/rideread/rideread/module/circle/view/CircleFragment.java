@@ -16,9 +16,9 @@ import butterknife.BindView;
 
 public class CircleFragment extends BaseFragment {
 
-
     @BindView(R.id.tl_circle_top) TabLayout mTlCircleTop;
     @BindView(R.id.viewpager) ViewPager mViewpager;
+
     private Fragment mNearbyFragment;
     private Fragment mAttentionFragment;
 
@@ -39,8 +39,8 @@ public class CircleFragment extends BaseFragment {
         mNearbyFragment = MomentsFragment.newInstance(MomentsFragment.MOMENTS_TYPE_NEARBY);
         mAttentionFragment = MomentsFragment.newInstance(MomentsFragment.MOMENTS_TYPE_ATTENTION);
 
-        FragmentAdapter t = new FragmentAdapter();
-        mViewpager.setAdapter(t);
+        FragmentAdapter adapter = new FragmentAdapter();
+        mViewpager.setAdapter(adapter);
 
         mTlCircleTop.setupWithViewPager(mViewpager);
 

@@ -37,7 +37,7 @@ public class LoginActivity extends BaseMVPActivity<LoginPresenterImpl> implement
     @Override
     public void initView() {
         setPresenter(new LoginPresenterImpl(this));
-        getSupportActionBar().hide();//隐藏标题栏
+//        getSupportActionBar().hide();//隐藏标题栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         initViewPager();

@@ -7,6 +7,7 @@ import com.rideread.rideread.common.event.ShowLoadingEvent;
 import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.DateUtils;
 import com.rideread.rideread.common.util.EncryptUtils;
+import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
@@ -168,18 +169,24 @@ public class ApiUtils {
         params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
         params.put("type", Integer.toString(0));
 
-        setCurrentCall(getApiStore().showMomentUser(getParams(params)), callBack);
+        setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 
-    public static void postMomentPicture(@NonNull final String content, @NonNull final List<String> pictureUrl, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void postMoment(@NonNull final String content, @NonNull final List<String> pictureUrls, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("msg", content);
         params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
         params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
-        params.put("type", Integer.toString(1));
-
-        setCurrentCall(getApiStore().showMomentUser(getParams(params)), callBack);
+        if (ListUtils.isEmpty(pictureUrls)) {
+            params.put("type", Integer.toString(0));
+        } else {
+            params.put("type", Integer.toString(1));
+            String urlArrayStr = pictureUrls.toString();
+            int end = urlArrayStr.length() - 1;
+            params.put("pictures_url", urlArrayStr.substring(1, end));
+        }
+        setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 
     public static void postMomentVedio(@NonNull final String content, @NonNull final String coverUrl, @NonNull final String vedioUrl, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
@@ -253,7 +260,7 @@ public class ApiUtils {
     }
 
     public static void loadMoments(final int pages, final int type, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {
-        if (!onStart()) return;
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         params.put("pages", Integer.toString(pages));
         params.put("type", Integer.toString(type));

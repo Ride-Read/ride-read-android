@@ -50,7 +50,7 @@ public class AMapLocationUtils {
         mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
         mLocationOption.setInterval(10 * 1000);////设置定位间隔,单位毫秒,默认为5000ms
-        mLocationOption.setLocationCacheEnable(false);
+        mLocationOption.setLocationCacheEnable(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -80,7 +80,7 @@ public class AMapLocationUtils {
                     //                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     //                    Date date = new Date(aMapLocation.getTime());
                     //                    df.format(date);//定位时间
-                    Logger.e("Loc", mLatitude + "-" + mLongitude + "-" + mLastAddressFirst);
+                    Logger.e("Loc", mLatitude + "-" + mLongitude + "-" + mLastAddressFirst + "-" + mLastAddressSecond + "-" + aMapLocation.getDistrict() + "-" + aMapLocation.getStreet());
                     if (null != mOnLocationChangedListener) {
                         mOnLocationChangedListener.onLocationChanged(aMapLocation);
                     }

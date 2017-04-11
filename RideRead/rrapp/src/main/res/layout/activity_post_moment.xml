@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="bottom"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/include_simple_topbar"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1.0"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="12dp">
+
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="12dp"
+            android:fillViewport="true"
+            android:minHeight="200dp"
+            android:orientation="vertical"
+            android:scrollbars="vertical"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <EditText
+                android:id="@+id/edt_moment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="top"
+                android:hint="分享精彩时刻......"
+                android:padding="8dp"
+                android:textColorHint="@color/gray_text"
+                android:textSize="@dimen/text_def_size"/>
+
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/tv_post_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white_bg"
+            android:drawableLeft="@drawable/ic_post_loc"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="4dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingTop="4dp"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="广州市·白云山风景区"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_pic_container"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="12dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toTopOf="@id/tv_post_loc"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </android.support.constraint.ConstraintLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_bg"
+        android:paddingBottom="8dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/img_add_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_img_def"/>
+    </LinearLayout>
+
+
+</LinearLayout>
