@@ -64,4 +64,7 @@
     <string name="please_fill_correct_phone_number">请填写11位正确手机号</string>
     <string name="profile">我的</string>
 
+
+    <string name="personal_info">个人资料</string>
+
 </resources>

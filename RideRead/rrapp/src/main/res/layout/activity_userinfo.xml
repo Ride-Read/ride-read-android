@@ -1,13 +1,528 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/white_bg"
+              android:orientation="vertical">
 
-
-    <Button
-        android:id="@+id/btn_logout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:text="退出账号"/>
-</FrameLayout>
+        android:layout_height="40dip"
+        android:background="@color/green_common"
+        >
+        <ImageView
+            android:id="@+id/img_left_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/left_arrow"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@null"
+            android:gravity="center"
+            android:text="@string/personal_info"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_def_size"/>
+    </FrameLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="true">
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dip"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:stretchColumns="1"
+            >
+            <TableRow
+                android:id="@+id/tablerow_avatar"
+                android:minHeight="65dip"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/gray_text_55"
+                    android:text="头像"/>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingBottom="7.5dip"
+                    android:paddingTop="7.5dip"
+                    >
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/img_avatar"
+                            android:layout_width="64dip"
+                            android:layout_height="64dip"
+                            android:layout_marginRight="6.5dip"
+                            android:layout_marginLeft="20dip"
+                            android:src="@drawable/ic_launcher"
+                            fresco:placeholderImage="@drawable/ic_launcher"
+                            fresco:roundAsCircle="true"
+                            fresco:roundedCornerRadius="4dp"
+                            />
+                        <ImageView
+                            android:id="@+id/head_right_arrow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right|center_vertical"
+                            android:layout_marginRight="10dip"
+                            android:src="@drawable/right_arrow"/>
+                    </LinearLayout>
+
+
+                </RelativeLayout>
+
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_nickname"
+                android:minHeight="55dip"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dip"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:lines="1"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/gray_text_55"
+                    android:text="昵称"/>
+
+                <TextView
+                    android:id="@+id/tv_nickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:hint="建议使用真实姓名"
+                    android:background="@null"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="6.5dp"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_sex"
+                android:minHeight="42dip"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dip"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:clickable="true"
+                    android:textColor="@color/gray_text_55"
+                    android:text="性别"/>
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_label"
+                android:minHeight="55dip"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dip"
+                android:descendantFocusability="blocksDescendants">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/gray_text_55"
+                    android:text="标签"/>
+                <TextView
+                    android:id="@+id/tv_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:layout_weight="1"
+                    android:gravity="right|center_vertical"
+                    android:layout_marginRight="7dip"
+                    />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+            <TableRow
+                android:id="@+id/tablerow_signture"
+                android:minHeight="55dip"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dip"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:lines="1"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/gray_text_55"
+                    android:text="个性签名"/>
+
+                <TextView
+                    android:id="@+id/tv_signture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dip"
+                    android:layout_marginBottom="5dip"
+                    android:layout_marginRight="20dip"
+                    android:layout_weight="5"
+                    android:maxLines="2"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="6.5dp"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_birthday"
+                android:minHeight="55dip"
+                android:gravity="center_vertical"
+                android:layout_marginRight="15dip"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/gray_text_55"
+                    android:text="生日"/>
+
+                <TextView
+                    android:id="@+id/tv_birthdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_telphone"
+                android:minHeight="55dip"
+                android:layout_marginRight="15dip"
+                android:gravity="center_vertical"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dip"
+                    android:textColor="@color/gray_text_55"
+                    android:text="手机号码"/>
+
+                <TextView
+                    android:id="@+id/tv_telphone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_school"
+                android:minHeight="55dip"
+                android:layout_marginRight="15dip"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dip"
+                    android:textColor="@color/gray_text_55"
+                    android:text="毕业/在读学校"/>
+
+                <TextView
+                    android:id="@+id/tv_school"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_locale"
+                android:minHeight="55dip"
+                android:layout_marginRight="15dip"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dip"
+                    android:clickable="true"
+                    android:textColor="@color/gray_text_55"
+                    android:text="所在地"/>
+
+                <TextView
+                    android:id="@+id/tv_locale"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_hometown"
+                android:minHeight="55dip"
+                android:layout_marginRight="15dip"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dip"
+                    android:textColor="@color/gray_text_55"
+                    android:text="家乡"/>
+
+                <TextView
+                    android:id="@+id/tv_hometown"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+            <TableRow
+                android:id="@+id/tablerow_job"
+                android:minHeight="55dip"
+                android:layout_marginRight="15dip"
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:layout_gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:textColor="@color/gray_text_55"
+                    android:text="职业"/>
+
+                <TextView
+                    android:id="@+id/tv_job"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingTop="10dip"
+                    android:paddingBottom="10dip"
+                    android:layout_marginRight="7dip"
+                    android:layout_weight="1"
+                    android:textColor="@color/gray_text"
+                    android:textSize="16sp"
+                    android:gravity="right|center_vertical"
+                    />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:src="@drawable/right_arrow"/>
+
+            </TableRow>
+
+            <View android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/white_common_bg"/>
+
+        </TableLayout>
+    </ScrollView>
+
+</LinearLayout>
