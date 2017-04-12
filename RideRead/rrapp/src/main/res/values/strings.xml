@@ -63,6 +63,10 @@
     <string name="login_error">登录异常</string>
     <string name="please_fill_correct_phone_number">请填写11位正确手机号</string>
     <string name="profile">我的</string>
+    <string name="post_moment">发个阅圈</string>
+    <string name="query_2_quit_edit">您确定要退出编辑？</string>
+    <string name="transition_image">transition_image</string>
+
 
 
     <string name="personal_info">个人资料</string>

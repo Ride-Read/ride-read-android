@@ -33,7 +33,7 @@
         android:text="点击"/>
 
     <Button
-        android:id="@+id/btn_sign"
+        android:id="@+id/btn_sign_in"
         android:layout_width="120dp"
         android:layout_height="48dp"
         android:layout_alignParentBottom="true"

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_top_bar"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@color/green_common"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/img_top_bar_left"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_back_white"
+        android:layout_centerVertical="true"
+        android:padding="12dp"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_top_bar_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@drawable/btn_white_sel"
+        android:textSize="@dimen/text_def_size"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_top_bar_title"
+        style="@style/common_text_style"
+        android:textColor="@color/white"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:maxWidth="224dp" />
+
+    <ImageView
+        android:id="@+id/img_top_bar_right"
+        android:layout_width="48dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:padding="12dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tv_top_bar_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textColor="@drawable/btn_white_sel"
+        android:textSize="@dimen/text_def_size"
+        android:visibility="visible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_hint" />
+
+</RelativeLayout>

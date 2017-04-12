@@ -22,11 +22,14 @@ public class AMapLocationUtils {
     /**
      * 省份、国家(外国)
      */
-    private static String mLastAddressFirst;
+    private static String mProvince;
     /**
      * 城、地区，州(外国)
      */
-    private static String mLastAddressSecond;
+    private static String mCity;
+
+
+    private static String mLocDetail;
 
     private static double mLatitude;
     private static double mLongitude;
@@ -50,7 +53,7 @@ public class AMapLocationUtils {
         mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
         mLocationOption.setInterval(10 * 1000);////设置定位间隔,单位毫秒,默认为5000ms
-        mLocationOption.setLocationCacheEnable(false);
+        mLocationOption.setLocationCacheEnable(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         // 此方法为每隔固定时间会发起一次定位请求，为了减少电量消耗或网络流量消耗，
@@ -75,12 +78,13 @@ public class AMapLocationUtils {
                         setLongitude(mLongitude);
                     }
                     aMapLocation.getAccuracy();//获取精度信息
-                    mLastAddressFirst = aMapLocation.getProvince();
-                    mLastAddressSecond = aMapLocation.getCity();
+                    mProvince = aMapLocation.getProvince();
+                    mCity = aMapLocation.getCity();
                     //                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     //                    Date date = new Date(aMapLocation.getTime());
                     //                    df.format(date);//定位时间
-                    Logger.e("Loc", mLatitude + "-" + mLongitude + "-" + mLastAddressFirst);
+                    mLocDetail = mProvince + "·" + mCity + "·" + aMapLocation.getDistrict() + "·" + aMapLocation.getStreet();
+                    Logger.e("Loc", mLocDetail);
                     if (null != mOnLocationChangedListener) {
                         mOnLocationChangedListener.onLocationChanged(aMapLocation);
                     }
@@ -93,12 +97,12 @@ public class AMapLocationUtils {
     };
 
 
-    public static String getmLastAddressFirst() {
-        return mLastAddressFirst;
+    public static String getProvince() {
+        return mProvince;
     }
 
-    public static String getmLastAddressSecond() {
-        return mLastAddressSecond;
+    public static String getCity() {
+        return mCity;
     }
 
     public static void setLatitude(double latitude) {
@@ -143,5 +147,13 @@ public class AMapLocationUtils {
 
     public static void setOnLocationChangedListener(LocationSource.OnLocationChangedListener onLocationChangedListener) {
         mOnLocationChangedListener = onLocationChangedListener;
+    }
+
+    public static String getLocDetail() {
+        return mLocDetail;
+    }
+
+    public static void setLocDetail(String mLocDetail) {
+        AMapLocationUtils.mLocDetail = mLocDetail;
     }
 }

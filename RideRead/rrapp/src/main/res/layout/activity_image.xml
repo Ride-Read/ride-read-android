@@ -1,0 +1,31 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/black_common">
+    <ProgressBar
+        android:id="@+id/progressBar_image_activity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:max="100"/>
+    <me.relex.photodraweeview.PhotoDraweeView
+        android:id="@+id/iv_image_activity"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
+
+    <!-- android:progressDrawable="@drawable/progress_circle" -->
+    <!-- android:background="@drawable/loading_white" -->
+
+
+    <!-- <ImageView -->
+    <!-- android:badgeid="@+badgeid/img_default" -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_centerHorizontal="true" -->
+    <!-- android:layout_centerVertical="true" -->
+    <!-- android:src="@drawable/img_default" /> -->
+
+</RelativeLayout>

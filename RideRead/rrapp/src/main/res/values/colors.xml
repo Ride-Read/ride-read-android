@@ -38,4 +38,36 @@
 
     <color name="gallery_blue">@color/green_common</color>
 
+    <color name="tran_a50">#7F000000</color>
+    <color name="tran_a10">#1A000000</color>
+    <color name="tran">#00000000</color>
+    <color name="white_a90">#E6FFFFFF</color>
+    <color name="white_a70">#B3FFFFFF</color>
+    <color name="white_a60">#99FFFFFF</color>
+    <color name="white_a50">#7FFFFFFF</color>
+    <color name="white_a30">#4DFFFFFF</color>
+    <color name="white_a10">#1AFFFFFF</color>
+    <color name="white_a20">#33FFFFFF</color>
+    <color name="black_a10">#1A000000</color>
+    <color name="black_a20">#33000000</color>
+    <color name="black_a50">#7F000000</color>
+    <color name="black">#333333</color>
+    <color name="white_press">#7FFFFFFF</color>
+    <color name="green_tips">#74B12A</color>
+    <color name="grey_white_bg">#F3F3F3</color>
+    <color name="grey_hint">#AAAAAA</color>
+    <color name="little_grey">#E5E5E5</color>
+
+    <color name="red_error">#FF5555</color>
+    <color name="red_press">#FF5555</color>
+    <color name="dark_gray">#333333</color>
+    <color name="tab_text_color">#C9C9D1</color>
+    <color name="tab_selected_text_color">#88C43F</color>
+    <color name="border_color">#1a000000</color>
+    <color name="black_text">#333333</color>
+    <color name="grey_text">#CCCCCC</color>
+    <color name="orange_start">#FFC233</color>
+    <color name="red_end">#FF5555</color>
+    <color name="blue_a20">#3338AFEE</color>
+
 </resources>

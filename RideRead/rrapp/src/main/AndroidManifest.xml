@@ -48,6 +48,12 @@
             android:name=".module.main.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".module.map.view.PostMomentActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.circle.view.ImagesActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".module.profile.view.UserInfoActivity"
             android:screenOrientation="portrait"/>
         <activity

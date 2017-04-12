@@ -14,7 +14,7 @@ import java.io.File;
 
 public class PicassoImgLoader {
     public static void displayImage(ImageView iv, @NonNull String url) {
-        Picasso.with(iv.getContext()).load(url).into(iv);
+        Picasso.with(Utils.getAppContext()).load(url).into(iv);
     }
 
     public static void displayImage(ImageView iv, int resId) {
