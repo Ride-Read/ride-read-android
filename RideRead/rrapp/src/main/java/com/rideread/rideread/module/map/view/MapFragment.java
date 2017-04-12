@@ -67,7 +67,7 @@ public class MapFragment extends BaseFragment implements LocationSource {
         mAMap.setLocationSource(this);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
         mAMap.setMyLocationEnabled(true);
-        mUiSettings.setMyLocationButtonEnabled(true); //显示默认的定位按钮
+//        mUiSettings.setMyLocationButtonEnabled(true); //显示默认的定位按钮
         // 设置定位的类型为定位模式，有定位、跟随或地图根据面向方向旋转几种
         MyLocationStyle myLocationStyle = new MyLocationStyle();//初始化定位蓝点样式类
         //        myLocationStyle.myLocationType(MyLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
@@ -112,6 +112,8 @@ public class MapFragment extends BaseFragment implements LocationSource {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_refresh:
+                LatLng center = new LatLng(AMapLocationUtils.getLatitude(), AMapLocationUtils.getLongitude());
+                mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
                 break;
             case R.id.btn_right:
                 break;

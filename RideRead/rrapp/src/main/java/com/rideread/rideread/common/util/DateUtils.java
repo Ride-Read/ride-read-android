@@ -53,7 +53,7 @@ public class DateUtils {
      * @return
      */
     public static String getDateFormat(long timeMillis) {
-        SimpleDateFormat _fmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.CHINA);
+        SimpleDateFormat _fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
         return _fmt.format(new Date(timeMillis));
     }
 

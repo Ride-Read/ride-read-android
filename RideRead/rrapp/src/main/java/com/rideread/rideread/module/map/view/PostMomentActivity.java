@@ -1,6 +1,7 @@
 package com.rideread.rideread.module.map.view;
 
 import android.Manifest;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.adapter.PostPicAdapter;
 import com.rideread.rideread.common.base.MPermissionsActivity;
+import com.rideread.rideread.common.dialog.ConfirmDialogFragment;
 import com.rideread.rideread.common.event.SelectPicEvent;
 import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.DateUtils;
@@ -69,7 +71,7 @@ public class PostMomentActivity extends MPermissionsActivity {
         //设置适配器
         mPostPicAdapter = new PostPicAdapter(this, mSelectedPics);
         mRvPicContainer.setAdapter(mPostPicAdapter);
-        mTvPostLoc.setText(AMapLocationUtils.getmLastAddressFirst() + "·" + AMapLocationUtils.getmLastAddressSecond());
+        mTvPostLoc.setText(AMapLocationUtils.getLocDetail());
     }
 
 
@@ -77,9 +79,9 @@ public class PostMomentActivity extends MPermissionsActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_top_bar_right:
-                if (!ListUtils.isEmpty(mSelectedPics)){
+                if (!ListUtils.isEmpty(mSelectedPics)) {
                     post2QiNiuYun(0);
-                }else {
+                } else {
                     postMoment();
                 }
                 break;
@@ -152,6 +154,17 @@ public class PostMomentActivity extends MPermissionsActivity {
                 break;
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        DialogFragment newFragment = ConfirmDialogFragment.newInstance(R.string.query_2_quit_edit);
+        newFragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void doPositiveClick() {
+       finish();
     }
 
     @Subscribe(threadMode = MAIN, sticky = true)

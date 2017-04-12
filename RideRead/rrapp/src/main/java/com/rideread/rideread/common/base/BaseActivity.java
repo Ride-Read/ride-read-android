@@ -32,6 +32,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         this.mBackPressedListener = backPressedListener;
     }
 
+    public void doPositiveClick() {
+
+    }
+
     public interface BackPressedListener {
         boolean onBackPress();
     }

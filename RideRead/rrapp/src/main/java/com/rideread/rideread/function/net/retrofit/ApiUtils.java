@@ -186,6 +186,7 @@ public class ApiUtils {
             int end = urlArrayStr.length() - 1;
             params.put("pictures_url", urlArrayStr.substring(1, end));
         }
+        params.put("moment_location", AMapLocationUtils.getLocDetail());
         setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 

@@ -34,7 +34,7 @@ public class Utils {
         CurCache.init();
         ScreenUtils.init(context);
         AMapLocationUtils.init();
-//        PackageUtils.init(context);
+        //        PackageUtils.init(context);
     }
 
     /**
@@ -46,5 +46,14 @@ public class Utils {
     public static RRApp getAppContext() {
         if (_app != null) return _app.get();
         throw new NullPointerException("u should init first");
+    }
+
+    public static String getString(int resId) {
+        return getAppContext().getResources().getString(resId);
+    }
+
+
+    public static String getString(int resId, Object... formatArgs) {
+        return getAppContext().getResources().getString(resId, formatArgs);
     }
 }

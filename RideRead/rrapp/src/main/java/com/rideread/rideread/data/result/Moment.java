@@ -43,6 +43,7 @@ public class Moment {
     private double longitude;
     private int distance;
     private String distanceString;
+    private String momentLocation;
 
     private List<String> pictures;
     private List<Comment> comment;
@@ -174,5 +175,13 @@ public class Moment {
 
     public void setThumbsUp(List<ThumbsUpUser> thumbsUp) {
         this.thumbsUp = thumbsUp;
+    }
+
+    public String getMomentLocation() {
+        return momentLocation;
+    }
+
+    public void setMomentLocation(String momentLocation) {
+        this.momentLocation = momentLocation;
     }
 }

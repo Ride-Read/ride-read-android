@@ -1,19 +1,16 @@
 package com.rideread.rideread.module.circle.view;
 
 
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.adapter.MomentsAdapter;
-import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.common.base.BaseActivity;
 import com.rideread.rideread.common.util.ListUtils;
-import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
@@ -23,11 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
-public class MomentsFragment extends BaseFragment {
-    public static String MOMENTS_TYPE = "moments_type";
+public class MomentDetailActivity extends BaseActivity {
     public static int MOMENTS_TYPE_NEARBY = 1;
     public static int MOMENTS_TYPE_ATTENTION = 0;
     private int mMomentsType;
@@ -43,25 +38,24 @@ public class MomentsFragment extends BaseFragment {
 
     @Override
     public int getLayoutRes() {
-        return R.layout.common_recycle_view;
+        return R.layout.activity_moment_detail;
     }
 
     @Override
     public void initView() {
-        mMomentsType = getArguments().getInt(MOMENTS_TYPE);
         mMoments = new ArrayList<>();
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mPages = 0;
             loadMoments();
         });
         mRecyclerView.setHasFixedSize(true);
-        mMomentsAdapter = new MomentsAdapter(getBaseActivity(),mMoments);
-        LayoutInflater layoutInflater = getBaseActivity().getLayoutInflater();
+        mMomentsAdapter = new MomentsAdapter(this, mMoments);
+        LayoutInflater layoutInflater =getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.view_msg_tips, null);
         mMomentsAdapter.addHeadView(view);
         mRecyclerView.setAdapter(mMomentsAdapter);
 
-        mLayoutManager = new LinearLayoutManager(getBaseActivity());
+        mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -78,7 +72,6 @@ public class MomentsFragment extends BaseFragment {
                 if (lastVisibleItem >= totalItemCount - 2 && dy > 0) {
                     if (isLoadingMore) {
                         isLoadingMore = false;
-                        Logger.d(TAG, "ignore manually update!");
                     } else {
                         loadMoments();//这里多线程也要手动控制isLoadingMore
                         isLoadingMore = true;
@@ -117,21 +110,5 @@ public class MomentsFragment extends BaseFragment {
                 mSwipeRefreshLayout.setRefreshing(false);
             }
         });
-    }
-
-    public static MomentsFragment newInstance(int type) {
-        MomentsFragment fragment = new MomentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(MOMENTS_TYPE, type);
-        fragment.setArguments(bundle);
-        return fragment;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
     }
 }

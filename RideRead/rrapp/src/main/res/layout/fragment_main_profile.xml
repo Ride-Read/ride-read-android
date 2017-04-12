@@ -54,7 +54,8 @@
                     android:layout_marginLeft="20dp"
                     app:layout_constraintBottom_toBottomOf="@id/v_bottom"
                     app:layout_constraintLeft_toLeftOf="@id/v_bottom"
-                    fresco:placeholderImage="@drawable/ic_launcher"/>
+                    fresco:placeholderImage="@drawable/ic_launcher"
+                    fresco:roundedCornerRadius="4dp"/>
 
                 <TextView
                     android:id="@+id/tv_name"

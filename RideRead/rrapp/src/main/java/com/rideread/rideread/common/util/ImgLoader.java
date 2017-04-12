@@ -58,4 +58,5 @@ public class ImgLoader {
         }
         simpleDraweeView.setController(draweeControllerBuilder.build());
     }
+
 }
