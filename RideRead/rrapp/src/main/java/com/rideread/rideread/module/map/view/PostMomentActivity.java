@@ -1,7 +1,6 @@
 package com.rideread.rideread.module.map.view;
 
 import android.Manifest;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -54,6 +53,7 @@ public class PostMomentActivity extends MPermissionsActivity {
     private PostPicAdapter mPostPicAdapter;
     private List<String> mSelectedPics = new ArrayList<>();
     private List<String> mPictureUrls = new ArrayList<>();
+    private ConfirmDialogFragment mQuitEditDialog;
 
     @Override
     public int getLayoutRes() {
@@ -62,8 +62,7 @@ public class PostMomentActivity extends MPermissionsActivity {
 
     @Override
     public void initView() {
-        new TitleBuilder(this).setTitleText("发个阅圈").IsBack(true).setLeftOnClickListener(v -> onBackPressed()).setRightText("发送").build();
-        //得到控件
+        new TitleBuilder(this).setTitleText("发个阅圈").IsBack(true).setRightText("发送").build();
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -75,9 +74,12 @@ public class PostMomentActivity extends MPermissionsActivity {
     }
 
 
-    @OnClick({R.id.tv_top_bar_right, R.id.tv_post_loc, R.id.img_add_picture})
+    @OnClick({R.id.img_top_bar_left, R.id.tv_top_bar_right, R.id.tv_post_loc, R.id.img_add_picture})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.img_top_bar_left:
+                showQuitDialog();
+                break;
             case R.id.tv_top_bar_right:
                 if (!ListUtils.isEmpty(mSelectedPics)) {
                     post2QiNiuYun(0);
@@ -93,6 +95,13 @@ public class PostMomentActivity extends MPermissionsActivity {
                 requestPermission(permission, 0x0001);
                 break;
         }
+    }
+
+    private void showQuitDialog() {
+        if (null == mQuitEditDialog) {
+            mQuitEditDialog = ConfirmDialogFragment.newInstance(R.string.query_2_quit_edit);
+        }
+        mQuitEditDialog.show(getSupportFragmentManager(), "dialog");
     }
 
     private void postMoment() {
@@ -156,15 +165,10 @@ public class PostMomentActivity extends MPermissionsActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        DialogFragment newFragment = ConfirmDialogFragment.newInstance(R.string.query_2_quit_edit);
-        newFragment.show(getSupportFragmentManager(), "dialog");
-    }
 
     @Override
     public void doPositiveClick() {
-       finish();
+        finish();
     }
 
     @Subscribe(threadMode = MAIN, sticky = true)

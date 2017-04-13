@@ -25,6 +25,10 @@ import butterknife.ButterKnife;
 import me.relex.photodraweeview.OnViewTapListener;
 import me.relex.photodraweeview.PhotoDraweeView;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.KITKAT;
+import static android.view.WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
+
 /**
  * Created by SkyXiao on 2017/4/6.
  */
@@ -48,7 +52,11 @@ public class ImagesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        if (SDK_INT >= KITKAT) {
+            getWindow().addFlags(FLAG_TRANSLUCENT_STATUS);
+        } else {
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        }
         super.onCreate(savedInstanceState);
         setContentView(getLayoutRes());
         ButterKnife.bind(this);

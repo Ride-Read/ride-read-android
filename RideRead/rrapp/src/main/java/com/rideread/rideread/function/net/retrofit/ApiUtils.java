@@ -11,6 +11,7 @@ import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
+import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
@@ -221,13 +222,13 @@ public class ApiUtils {
         setCurrentCall(getApiStore().addThumbsUp(getParams(params)), callBack);
     }
 
-    public static void addComment(final int mid, final int replyId, @NonNull String commentMsg, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void addComment(final int mid, final int replyId, @NonNull String commentMsg, @NonNull final BaseCallback<BaseModel<Comment>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("mid", Integer.toString(mid));
         params.put("reply_uid", Integer.toString(replyId));
         params.put("msg", commentMsg);
-        setCurrentCall(getApiStore().removeComment(getParams(params)), callBack);
+        setCurrentCall(getApiStore().addComment(getParams(params)), callBack);
     }
 
     public static void cancelComment(final int commentId, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
@@ -258,6 +259,14 @@ public class ApiUtils {
         params.put("mid", Integer.toString(mid));
 
         setCurrentCall(getApiStore().showThumbsUp(getParams(params)), callBack);
+    }
+
+    public static void collectMoment(final int mid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", Integer.toString(mid));
+
+        setCurrentCall(getApiStore().collectMoment(getParams(params)), callBack);
     }
 
     public static void loadMoments(final int pages, final int type, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {

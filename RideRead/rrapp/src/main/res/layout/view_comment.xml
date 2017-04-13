@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:paddingBottom="12dip"
+                                             android:paddingLeft="12dip"
+                                             android:paddingRight="12dip"
+                                             android:paddingTop="12dip">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sdv_thumb_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        fresco:layout_constraintLeft_toLeftOf="parent"
+        fresco:layout_constraintTop_toBottomOf="parent"
+        fresco:placeholderImage="@drawable/ic_launcher"
+        fresco:roundAsCircle="true"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dip"
+        android:orientation="vertical"
+        fresco:layout_constraintLeft_toRightOf="@id/sdv_thumb_avatar"
+        fresco:layout_constraintRight_toRightOf="parent">
+
+        <TextView
+            android:id="@+id/tv_thumb_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="陈晓村"
+            android:textColor="@color/gray_hint"
+            android:textSize="12dp"/>
+
+        <TextView
+            android:id="@+id/tv_thumb_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dip"
+            android:text="18:28"
+            android:textColor="@color/gray_text"
+            android:textSize="10sp"/>
+
+        <TextView
+            android:id="@+id/tv_thumb_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:text="拍的真好"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

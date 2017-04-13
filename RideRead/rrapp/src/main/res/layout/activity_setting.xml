@@ -6,7 +6,7 @@
               android:orientation="vertical">
 
     <include
-        layout="@layout/include_toolbar_green"
+        layout="@layout/include_simple_topbar"
         />
 
     <FrameLayout
@@ -108,7 +108,7 @@
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_green_common_corners_sel"
+        android:background="@drawable/btn_green_sel"
         android:text="退出账号"
         android:textColor="@color/white"
         android:textSize="@dimen/text_def_size"/>

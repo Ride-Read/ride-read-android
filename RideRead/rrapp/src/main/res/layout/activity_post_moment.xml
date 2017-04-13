@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
             android:fillViewport="true"
-            android:minHeight="200dp"
+            android:minHeight="100dp"
             android:orientation="vertical"
             android:scrollbars="vertical"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -87,6 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_img_def"/>
+
     </LinearLayout>
 
 

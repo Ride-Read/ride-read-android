@@ -31,9 +31,7 @@ public class ConfirmDialogFragment extends DialogFragment {
     Unbinder unbinder;
 
     public static ConfirmDialogFragment newInstance(int titleId) {
-
         return newInstance(titleId, R.string.confirm);
-
     }
 
     public static ConfirmDialogFragment newInstance(int titleId, int btnConfirmTxtId) {

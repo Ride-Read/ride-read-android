@@ -66,6 +66,7 @@
     <string name="post_moment">发个阅圈</string>
     <string name="query_2_quit_edit">您确定要退出编辑？</string>
     <string name="transition_image">transition_image</string>
+    <string name="send">发送</string>
 
 
 </resources>

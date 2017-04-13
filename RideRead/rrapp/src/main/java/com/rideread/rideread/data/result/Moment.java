@@ -1,12 +1,13 @@
 package com.rideread.rideread.data.result;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by SkyXiao on 2017/4/5.
  */
 
-public class Moment {
+public class Moment implements Serializable{
     /**
      * mid : 20
      * uid : 7

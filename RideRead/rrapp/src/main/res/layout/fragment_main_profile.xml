@@ -88,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="28dp"
                     android:layout_marginRight="20dp"
-                    android:background="@drawable/btn_green_common_corners_sel"
+                    android:background="@drawable/btn_green_sel"
                     android:paddingBottom="4dp"
                     android:paddingLeft="12dp"
                     android:paddingRight="12dp"

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
 import com.rideread.rideread.module.circle.view.ImagesActivity;
+import com.rideread.rideread.module.circle.view.MomentDetailActivity;
 
 import java.util.List;
 
@@ -105,10 +107,20 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder tHolder, int position) {
 
+
         if (TYPE_ITEM == tHolder.getItemViewType()) {
+            Moment moment = mMomentList.get(position);
 
             MomentViewHolder holder = (MomentViewHolder) tHolder;
-            Moment moment = mMomentList.get(position);
+            holder.mClMomentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
+                    mActivity.gotoActivity(MomentDetailActivity.class, bundle);
+                }
+            });
+
 
             MomentUser user = moment.getUser();
 
@@ -134,40 +146,32 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             boolean isAttent = 0 == user.getIsFollowed();
             holder.mBtnAttention.setBackgroundResource(isAttent ? R.drawable.icon_attented : R.drawable.icon_attention);
-            holder.mBtnAttention.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (isAttent) {
-                        ApiUtils.unfollow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
-                            @Override
-                            protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                                holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attention);
-                                user.setIsFollowed(-1);
-                            }
-                        });
-                    } else {
-                        ApiUtils.follow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
-                            @Override
-                            protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                                holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attented);
-                                user.setIsFollowed(1);
-                            }
-                        });
-                    }
-                }
-            });
-
-            holder.mBtnLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ApiUtils.addThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+            holder.mBtnAttention.setOnClickListener(v -> {
+                if (isAttent) {
+                    ApiUtils.unfollow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
                         @Override
                         protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                            ToastUtils.show("点赞成功");
+                            holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attention);
+                            user.setIsFollowed(-1);
+                        }
+                    });
+                } else {
+                    ApiUtils.follow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                        @Override
+                        protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                            holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attented);
+                            user.setIsFollowed(1);
                         }
                     });
                 }
             });
+
+            holder.mBtnLike.setOnClickListener(v -> ApiUtils.addThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                @Override
+                protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                    ToastUtils.show("点赞成功");
+                }
+            }));
             holder.mTvTime.setText(getFriendlyTimeSpanByNow(moment.getCreatedAt()));
             List<ThumbsUpUser> thumbsUp = moment.getThumbsUp();
             int likeCount = ListUtils.isEmpty(thumbsUp) ? 0 : thumbsUp.size();
@@ -178,9 +182,9 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             holder.mTvLocInfo.setText(moment.getMomentLocation() + " 距离我" + moment.getDistanceString());//TODO
             holder.setIsRecyclable(false);
         } else if (TYPE_HEADER == tHolder.getItemViewType()) {
-            //最后一个位置
-        } else {
 
+        } else {
+            //最后一个位置
         }
     }
 
@@ -191,6 +195,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
 
     class MomentViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.cl_moment_layout) ConstraintLayout mClMomentLayout;
         @BindView(R.id.img_avatar) SimpleDraweeView mImgAvatar;
         @BindView(R.id.tv_name) TextView mTvName;
         @BindView(R.id.btn_attention) ImageButton mBtnAttention;
@@ -257,8 +262,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 Intent intent = new Intent(mActivity, ImagesActivity.class);
                 intent.putExtras(bundle);
                 //5.0及以上系统实现共享元素动画
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity
-                        , imageView, getString(R.string.transition_image));
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(mActivity, imageView, getString(R.string.transition_image));
                 ActivityCompat.startActivity(mActivity, intent, options.toBundle());
             }
 

@@ -7,18 +7,18 @@
 
     <Button
         android:id="@+id/btn_msg_tips"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginLeft="120dp"
+        android:layout_width="100dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="124dp"
         android:layout_marginRight="120dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="12dip"
         android:layout_marginTop="12dip"
-        android:background="@drawable/btn_green_common_corners_sel"
-        android:paddingLeft="24dip"
-        android:paddingRight="24dip"
+        android:background="@drawable/btn_green_sel"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
         android:text="2个消息"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textSize="13sp"/>
 
 </FrameLayout>

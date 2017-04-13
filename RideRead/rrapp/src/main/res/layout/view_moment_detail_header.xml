@@ -1,169 +1,165 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:descendantFocusability="blocksDescendants"
+                                             android:paddingTop="12dip">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="12dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        fresco:placeholderImage="@drawable/ic_launcher"/>
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="28dip"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="2dp"
+        android:text="张晓明"
+        android:textColor="@color/black_common"
+        android:textSize="@dimen/text_def_size"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"
+        app:layout_constraintTop_toTopOf="@id/img_avatar"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="12dp"
+        android:text="6分钟前"
+        android:textColor="@color/gray_text"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"/>
+
+    <ImageButton
+        android:id="@+id/btn_attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/icon_attention"
+        android:visibility="visible"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/img_avatar"
         >
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/tv_moment_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingRight="15dip"
-            android:paddingLeft="15dip"
-            android:orientation="vertical"
-            >
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <ImageView
-                    android:id="@+id/timeline_head"
-                    android:layout_width="36dip"
-                    android:layout_height="36dip"
-                    android:layout_alignParentLeft="true"
-                    android:src="@drawable/ic_launcher"/>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/timeline_head"
-                    android:layout_marginTop="3dip"
-                    android:layout_marginLeft="15dip"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/timeline_nickname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black_common"
-                        android:text="张晓明"
-                        android:textSize="15dp"/>
-                    <TextView
-                        android:id="@+id/timeline_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/gray_text"
-                        android:layout_marginLeft="0.5dip"
-                        android:layout_marginTop="5dip"
-                        android:textSize="10dp"
-                        android:text="6分钟前"/>
-                </LinearLayout>
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:background="@drawable/icon_attention"/>
-            </RelativeLayout>
+            android:layout_marginTop="12dip"
+            android:textColor="@color/black_common"
+            android:textSize="@dimen/text_def_size"
+            tools:text="风景很美"
+            />
 
-            <TextView
-                android:id="@+id/timeline_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black_common"
-                android:visibility="gone"
-                android:layout_marginTop="14dip"
-                android:textSize="15dp"
-                android:text="风景很美"
-                />
-
-            <com.jaeger.ninegridimageview.NineGridImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/timeline_imgs"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13dip"
-                android:layout_width="match_parent"
-                app:imgGap="3.5dp"
-                app:showStyle="fill"
-                android:visibility="gone"
-                app:singleImgSize="120dp"
-                />
-            <!--<RelativeLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_margin="10dip"-->
-                <!--android:background="#212121">-->
-                <!--<com.rideread.rideread.widget.VideoTextureView-->
-                    <!--android:id="@+id/timeline_videotextureview"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:minHeight="96dip"-->
-                    <!--android:visibility="gone"-->
-                    <!--&gt;-->
-
-                <!--</com.rideread.rideread.widget.VideoTextureView>-->
-                <!--<ImageView-->
-                    <!--android:id="@+id/iv_play"-->
-                    <!--android:layout_width="36dip"-->
-                    <!--android:layout_height="36dip"-->
-                    <!--android:src="@mipmap/icon_play"-->
-                    <!--android:layout_centerInParent="true"-->
-                    <!--android:visibility="gone"/>-->
-            <!--</RelativeLayout>-->
+        <com.rideread.rideread.common.widget.NineGridImgView.NineGridImgView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nine_grid_img_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dip"
+            android:visibility="gone"
+            app:imgGap="4dip"
+            app:showStyle="grid"
+            app:singleImgSize="125dp"
+            />
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dip"
-                android:paddingBottom="15dip"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_like_pre"
-                    android:layout_marginRight="9.5dip"
-                    android:layout_gravity="center_vertical"
-                    />
-                <com.rideread.rideread.widget.LikeLinearLayout
-                    android:id="@+id/likes_linearlayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="horizontal">
+    </LinearLayout>
 
-                </com.rideread.rideread.widget.LikeLinearLayout>
-                <TextView
-                    android:id="@+id/like_nums"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_blue_green_round_sel"
-                    android:textColor="@android:color/white"
-                    android:layout_marginLeft="8dp"
-                    android:padding="4dp"
-                    android:textSize="12sp"
-                    android:gravity="center"
-                    android:text="22"/>
 
-            </LinearLayout>
-        </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dip"
-        android:background="@color/white_common_bg"/>
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/ll_thump_ups"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingTop="15dip"
-        android:paddingBottom="14.5dip"
-        android:paddingLeft="15dip"
-        android:paddingRight="15dip"
-        android:orientation="horizontal">
-        <TextView
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dip"
+        android:paddingTop="12dip"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_content">
+
+        <ImageView
+            android:id="@+id/img_thumb_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="13dip"
-            android:text="评论"
-            android:textColor="@color/gray_text"/>
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="8dip"
+            android:src="@drawable/ic_like_pre"
+            />
+
+        <com.rideread.rideread.common.widget.HLinearLayout
+            android:id="@+id/hll_thump_ups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+        </com.rideread.rideread.common.widget.HLinearLayout>
+
         <TextView
-            android:id="@+id/timeline_detail_comment_num"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:textSize="13dip"
-            android:text="12"
-            android:textColor="@color/gray_text"/>
+            android:id="@+id/tv_thumb_count"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/btn_blue_green_round_sel"
+            android:gravity="center"
+            android:padding="4dp"
+            android:text="22"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
+
     </LinearLayout>
-    </LinearLayout>
+
+    <View
+        android:id="@+id/v_line"
+        android:layout_width="0dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/white_common_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll_thump_ups"
+        />
+
+    <TextView
+        android:id="@id/tv_comment_count"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:paddingBottom="4dp"
+        android:paddingLeft="12dp"
+        android:paddingTop="4dp"
+        android:text="评论 12"
+        android:textColor="@color/gray_text"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/v_line"/>
+
+</android.support.constraint.ConstraintLayout>

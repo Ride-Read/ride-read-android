@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.adapter.MomentsAdapter;
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 
 public class MomentsFragment extends BaseFragment {
@@ -55,7 +53,7 @@ public class MomentsFragment extends BaseFragment {
             loadMoments();
         });
         mRecyclerView.setHasFixedSize(true);
-        mMomentsAdapter = new MomentsAdapter(getBaseActivity(),mMoments);
+        mMomentsAdapter = new MomentsAdapter(getBaseActivity(), mMoments);
         LayoutInflater layoutInflater = getBaseActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.view_msg_tips, null);
         mMomentsAdapter.addHeadView(view);
@@ -127,11 +125,4 @@ public class MomentsFragment extends BaseFragment {
         return fragment;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 }
