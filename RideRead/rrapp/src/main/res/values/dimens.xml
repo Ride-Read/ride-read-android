@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="text_def_size">44px</dimen>
-    <dimen name="def_top_bar_height">48dp</dimen>
+    <dimen name="def_text_size_small">12sp</dimen>
+    <dimen name="def_top_bar_height">@dimen/def_item_height</dimen>
+    <dimen name="def_item_height">48dp</dimen>
 </resources>

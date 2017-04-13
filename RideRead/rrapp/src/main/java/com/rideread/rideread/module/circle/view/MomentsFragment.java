@@ -31,6 +31,7 @@ public class MomentsFragment extends BaseFragment {
     private int mMomentsType;
     private List<Moment> mMoments;
     private MomentsAdapter mMomentsAdapter;
+    private View mViewMsgTips;
 
 
     @BindView(R.id.recycle_view) RecyclerView mRecyclerView;
@@ -55,8 +56,9 @@ public class MomentsFragment extends BaseFragment {
         mRecyclerView.setHasFixedSize(true);
         mMomentsAdapter = new MomentsAdapter(getBaseActivity(), mMoments);
         LayoutInflater layoutInflater = getBaseActivity().getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.view_msg_tips, null);
-        mMomentsAdapter.addHeadView(view);
+        mViewMsgTips = layoutInflater.inflate(R.layout.view_msg_tips, null);
+        mMomentsAdapter.addHeadView(mViewMsgTips);
+        mViewMsgTips.setVisibility(View.GONE);
         mRecyclerView.setAdapter(mMomentsAdapter);
 
         mLayoutManager = new LinearLayoutManager(getBaseActivity());

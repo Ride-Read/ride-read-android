@@ -1,6 +1,7 @@
 package com.rideread.rideread.common.util;
 
 import android.app.Activity;
+import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,6 +49,12 @@ public class TitleBuilder {
     public TitleBuilder setTitleText(String text) {
         tvTitle.setVisibility(TextUtils.isEmpty(text) ? View.GONE : View.VISIBLE);
         tvTitle.setText(text);
+        return this;
+    }
+
+    public TitleBuilder setTitleText(@StringRes int textResId) {
+        tvTitle.setVisibility(0 != textResId ? View.GONE : View.VISIBLE);
+        tvTitle.setText(textResId);
         return this;
     }
 

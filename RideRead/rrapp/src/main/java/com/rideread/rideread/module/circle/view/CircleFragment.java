@@ -57,8 +57,6 @@ public class CircleFragment extends BaseFragment {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case 0:
-                    return mNearbyFragment;
                 case 1:
                     return mAttentionFragment;
                 default:

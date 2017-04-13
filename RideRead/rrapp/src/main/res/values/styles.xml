@@ -78,12 +78,21 @@
         <item name="android:textColor">@color/black_common</item>
         <item name="android:textSize">@dimen/text_def_size</item>
     </style>
+
     <style name="common_text_style">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/black_common</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/text_def_size</item>
+    </style>
+
+    <style name="def_text_small_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/gray_text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textSize">@dimen/def_text_size_small</item>
     </style>
 
 </resources>

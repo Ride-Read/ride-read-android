@@ -25,6 +25,7 @@ import com.rideread.rideread.common.adapter.CommentsAdapter;
 import com.rideread.rideread.common.base.BaseActivity;
 import com.rideread.rideread.common.dialog.ShareCollectDialogFragment;
 import com.rideread.rideread.common.util.ImgLoader;
+import com.rideread.rideread.common.util.KeyboardUtils;
 import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.ScreenUtils;
 import com.rideread.rideread.common.util.TimeUtils;
@@ -83,7 +84,7 @@ public class MomentDetailActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        new TitleBuilder(this).setTitleText("详情").IsBack(true).setRightImage(R.drawable.icon_more).build();
+        new TitleBuilder(this).setTitleText(R.string.details).IsBack(true).setRightImage(R.drawable.icon_more).build();
 
         View momentHeader = initMomentHeader();
 
@@ -277,6 +278,8 @@ public class MomentDetailActivity extends BaseActivity {
                 if (null != curComment) {
                     mCommentList.add(0, curComment);
                     mAdapter.notifyDataSetChanged();
+                    mEdtComment.setText("");
+                    KeyboardUtils.hideSoftInput(MomentDetailActivity.this);
                 } else {
                     ToastUtils.show("评论失败");
                 }
