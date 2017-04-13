@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -54,7 +55,7 @@ public class MomentDetailActivity extends BaseActivity {
 
     @BindView(R.id.lv_comments) ListView mLvComments;
     @BindView(R.id.edt_comment) EditText mEdtComment;
-    @BindView(R.id.btn_thumbs_up) EditText mBtnThumbsUp;
+    @BindView(R.id.btn_thumbs_up) Button mBtnThumbsUp;
 
     private SimpleDraweeView mImgAvatar;
     private TextView mTvName;
