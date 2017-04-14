@@ -3,11 +3,16 @@ package com.rideread.rideread.common.util;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilder;
 import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.request.ImageRequest;
 import com.rideread.rideread.common.other.DisplayImageOptions;
+
+import java.io.File;
 
 /**
  * Created by SkyXiao on 2017/4/9.
@@ -57,6 +62,19 @@ public class ImgLoader {
             draweeControllerBuilder.setControllerListener(controllerListener);
         }
         simpleDraweeView.setController(draweeControllerBuilder.build());
+    }
+
+
+    public File getDiscCacheFile(String url) {
+        ImageRequest imageRequest = ImageRequest.fromUri(Uri.parse(url));
+        CacheKey cacheKey = Utils.getAppContext().getImagePipeLineConfig().getCacheKeyFactory().getEncodedCacheKey(imageRequest, null);
+        FileBinaryResource fileBinaryResource = (FileBinaryResource) Fresco.getImagePipelineFactory().getMainDiskStorageCache().getResource(cacheKey);
+
+        if (fileBinaryResource == null) {
+            return null;
+        } else {
+            return fileBinaryResource.getFile();
+        }
     }
 
 }

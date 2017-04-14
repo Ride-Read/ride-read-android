@@ -8,6 +8,7 @@ package com.rideread.rideread.data.result;
 public class ThumbsUpUser extends UserBaseInfo {
     private int thumbsUpId;
     private int mid;
+    private int isFollowed;
     private String createdAt;
     private String updatedAt;
 
@@ -41,5 +42,13 @@ public class ThumbsUpUser extends UserBaseInfo {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public int getIsFollowed() {
+        return isFollowed;
+    }
+
+    public void setIsFollowed(int isFollowed) {
+        this.isFollowed = isFollowed;
     }
 }

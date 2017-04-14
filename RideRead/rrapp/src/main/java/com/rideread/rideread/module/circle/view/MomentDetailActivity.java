@@ -43,6 +43,7 @@ import com.rideread.rideread.data.result.ThumbsUpUser;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
+import com.rideread.rideread.module.profile.view.UserMomentsActivity;
 
 import java.util.List;
 
@@ -70,6 +71,7 @@ public class MomentDetailActivity extends BaseActivity {
 
     private ShareCollectDialogFragment mMoreDialog;
     private Moment mCurMoment;
+    private MomentUser mCurMomentUser;
     private CommentsAdapter mAdapter;
     private List<Comment> mCommentList;
 
@@ -94,20 +96,29 @@ public class MomentDetailActivity extends BaseActivity {
             return;
         }
 
-        MomentUser momentUser = mCurMoment.getUser();
-        if (null != momentUser) {
+        mCurMomentUser = mCurMoment.getUser();
+        if (null != mCurMomentUser) {
             ImgLoader.getInstance().displayImage(mCurMoment.getUser().getFaceUrl(), mImgAvatar);
-            mTvName.setText(momentUser.getUsername());
+            mTvName.setText(mCurMomentUser.getUsername());
             mTvTime.setText(TimeUtils.getFriendlyTimeSpanByNow(mCurMoment.getCreatedAt()));
-            isAttention = 0 == momentUser.getIsFollowed();
+            isAttention = 0 == mCurMomentUser.getIsFollowed();
             mBtnAttention.setBackgroundResource(isAttention ? R.drawable.icon_attented : R.drawable.icon_attention);
             mTvMomentText.setText(mCurMoment.getMsg());
             mTvCommentCount.setText("评论 " + mCurMoment.getComment().size());
             mTvThumbCount.setText(Integer.toString(mCurMoment.getThumbsUp().size()));
 
+            if (mCurMomentUser.getUid() == UserUtils.getUid())
+                mBtnAttention.setVisibility(View.GONE);
+
+            mImgAvatar.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(UserMomentsActivity.SELECTED_UID, mCurMomentUser.getUid());
+                bundle.putString(UserMomentsActivity.SELECTED_USERNAME, mCurMomentUser.getUsername());
+                gotoActivity(UserMomentsActivity.class, bundle);
+            });
             mBtnAttention.setOnClickListener(v -> {
                 if (isAttention) {
-                    ApiUtils.unfollow(momentUser.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                    ApiUtils.unfollow(mCurMomentUser.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
                         @Override
                         protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                             mBtnAttention.setBackgroundResource(R.drawable.icon_attention);
@@ -115,7 +126,7 @@ public class MomentDetailActivity extends BaseActivity {
                         }
                     });
                 } else {
-                    ApiUtils.follow(momentUser.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+                    ApiUtils.follow(mCurMomentUser.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
                         @Override
                         protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                             mBtnAttention.setBackgroundResource(R.drawable.icon_attented);
@@ -151,6 +162,13 @@ public class MomentDetailActivity extends BaseActivity {
             if (!mHllThumpUps.canAddView()) {
                 break;
             }
+        }
+        if (!ListUtils.isEmpty(thumbsUpUsers)) {
+            mHllThumpUps.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(ThumbsUpUserActivity.MOMENT_ID, mCurMoment.getMid());
+                gotoActivity(ThumbsUpUserActivity.class, bundle);
+            });
         }
 
         for (ThumbsUpUser thumbsUpUser : thumbsUpUsers) {
@@ -209,7 +227,7 @@ public class MomentDetailActivity extends BaseActivity {
             bundle.putInt(ImagesActivity.POSITION, index);
 
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                gotoActivity(ImagesActivity.class, bundle, false);
+                gotoActivity(ImagesActivity.class, bundle);
             } else {
                 Intent intent = new Intent(MomentDetailActivity.this, ImagesActivity.class);
                 intent.putExtras(bundle);
@@ -231,6 +249,7 @@ public class MomentDetailActivity extends BaseActivity {
                 break;
             case R.id.btn_thumbs_up:
                 thumbsUp();
+
                 break;
             case R.id.btn_send:
                 postComment();

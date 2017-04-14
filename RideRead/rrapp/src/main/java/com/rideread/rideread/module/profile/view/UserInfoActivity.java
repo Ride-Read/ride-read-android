@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
+import com.rideread.rideread.common.util.DateUtils;
 import com.rideread.rideread.common.util.ImgLoader;
 import com.rideread.rideread.common.util.TitleBuilder;
 import com.rideread.rideread.common.util.ToastUtils;
@@ -74,8 +75,9 @@ public class UserInfoActivity extends BaseActivity {
         }
         if (!TextUtils.isEmpty(sb.toString())) mTvLabel.setText(sb.toString());
 
-        String birthday = mUserInfo.getBirthday();
-        if (!TextUtils.isEmpty(birthday)) mTvBirthday.setText(birthday);
+
+        long birthday = mUserInfo.getBirthday();
+        if (0!=birthday) mTvBirthday.setText(DateUtils.getDateDayFormat(birthday));
 
         String phoneNumber = mUserInfo.getPhonenumber();
         if (!TextUtils.isEmpty(phoneNumber)) mTvPhone.setText(phoneNumber);

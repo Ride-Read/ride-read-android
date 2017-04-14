@@ -53,7 +53,7 @@ public class TitleBuilder {
     }
 
     public TitleBuilder setTitleText(@StringRes int textResId) {
-        tvTitle.setVisibility(0 != textResId ? View.GONE : View.VISIBLE);
+        tvTitle.setVisibility(0 != textResId ? View.VISIBLE : View.GONE);
         tvTitle.setText(textResId);
         return this;
     }

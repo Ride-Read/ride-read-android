@@ -2,8 +2,10 @@ package com.rideread.rideread.function.net.retrofit;
 
 import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
+import com.rideread.rideread.data.result.FollowUser;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
+import com.rideread.rideread.data.result.ThumbsUpUser;
 import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.data.result.VCode;
 
@@ -54,10 +56,10 @@ public interface ApiStore {
     Call<BaseModel<UserInfo>> register(@QueryMap Map<String, String> params);
 
     @POST("users/followers")
-    Call<BaseModel<DefJsonResult>> followers(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<FollowUser>>>  followers(@QueryMap Map<String, String> params);
 
     @POST("users/followings")
-    Call<BaseModel<DefJsonResult>> followings(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<FollowUser>>>  followings(@QueryMap Map<String, String> params);
 
     @POST("users/follow")
     Call<BaseModel<DefJsonResult>> follow(@QueryMap Map<String, String> params);
@@ -66,8 +68,8 @@ public interface ApiStore {
     @POST("users/unfollow")
     Call<BaseModel<DefJsonResult>> unfollow(@QueryMap Map<String, String> params);
 
-    @POST("users/show_user")
-    Call<BaseModel<DefJsonResult>> showUser(@QueryMap Map<String, String> params);
+    @POST("users/show_user_info")
+    Call<BaseModel<DefJsonResult>> showUserInfo(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST("users/update")
@@ -77,7 +79,7 @@ public interface ApiStore {
     Call<BaseModel<DefJsonResult>> postMoment(@QueryMap Map<String, String> params);
 
     @POST("moments/show_user")
-    Call<BaseModel<DefJsonResult>> showMomentUser(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<Moment>>> showUserMoments(@QueryMap Map<String, String> params);
 
     @POST("moments/add_thumbsup")
     Call<BaseModel<DefJsonResult>> addThumbsUp(@QueryMap Map<String, String> params);
@@ -95,7 +97,7 @@ public interface ApiStore {
     Call<BaseModel<DefJsonResult>> removeMoment(@QueryMap Map<String, String> params);
 
     @POST("moments/show_thumbsup")
-    Call<BaseModel<DefJsonResult>> showThumbsUp(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<ThumbsUpUser>>> showThumbsUpUsers(@QueryMap Map<String, String> params);
 
     @POST("moments/show_moment")
     Call<BaseModel<List<Moment>>> showMoment(@QueryMap Map<String, String> params);

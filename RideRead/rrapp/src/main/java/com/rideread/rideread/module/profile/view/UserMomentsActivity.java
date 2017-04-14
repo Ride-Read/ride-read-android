@@ -1,17 +1,20 @@
-package com.rideread.rideread.module.circle.view;
+package com.rideread.rideread.module.profile.view;
 
-
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
 import com.rideread.rideread.R;
-import com.rideread.rideread.common.adapter.MomentsAdapter;
-import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.common.adapter.UserMomentsAdapter;
+import com.rideread.rideread.common.base.BaseActivity;
 import com.rideread.rideread.common.util.ListUtils;
+import com.rideread.rideread.common.util.NetworkUtils;
+import com.rideread.rideread.common.util.TitleBuilder;
+import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
@@ -21,48 +24,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * Created by SkyXiao on 2017/4/6.
+ */
+
+public class UserMomentsActivity extends BaseActivity {
+    public   final static String SELECTED_UID = "selected_uid";
+    public final static String SELECTED_USERNAME = "selected_username";
 
 
-public class MomentsFragment extends BaseFragment {
-    public static String MOMENTS_TYPE = "moments_type";
-    public static int MOMENTS_TYPE_NEARBY = 1;
-    public static int MOMENTS_TYPE_ATTENTION = 0;
-    private int mMomentsType;
-    private List<Moment> mMoments;
-    private MomentsAdapter mMomentsAdapter;
-    private View mViewMsgTips;
-
-
-    @BindView(R.id.recycle_view) RecyclerView mRecyclerView;
+    @BindView(R.id.recycle_view) RecyclerView mRecycleView;
     @BindView(R.id.swipe_refresh_layout) SwipeRefreshLayout mSwipeRefreshLayout;
+
+    private List<Moment> mMoments;
+    private UserMomentsAdapter mUserMomentsAdapter;
+    private View mMomentsHeaderView;
+
+
     private int mPages = 0;
     private LinearLayoutManager mLayoutManager;
     private boolean isLoadingMore;
+    private int mSelectedUid;
 
     @Override
     public int getLayoutRes() {
-        return R.layout.common_recycle_view;
+        return R.layout.activity_common_recycle;
     }
 
     @Override
     public void initView() {
-        mMomentsType = getArguments().getInt(MOMENTS_TYPE);
+        mSelectedUid = getIntent().getIntExtra(SELECTED_UID, UserUtils.getUid());
+        String username = getIntent().getStringExtra(SELECTED_USERNAME);
+        if (TextUtils.isEmpty(username)) username = "阅圈";
+        new TitleBuilder(this).setTitleText(mSelectedUid == UserUtils.getUid() ? getString(R.string.my_circle) : username).IsBack(true).build();
+
         mMoments = new ArrayList<>();
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             mPages = 0;
-            loadMoments();
+            loadUserMoments();
         });
-        mRecyclerView.setHasFixedSize(true);
-        mMomentsAdapter = new MomentsAdapter(getBaseActivity(), mMoments);
-        LayoutInflater layoutInflater = getBaseActivity().getLayoutInflater();
-        mViewMsgTips = layoutInflater.inflate(R.layout.view_msg_tips, null);
+        mRecycleView.setHasFixedSize(true);
+        mUserMomentsAdapter = new UserMomentsAdapter(this, mMoments);
+        LayoutInflater layoutInflater = getLayoutInflater();
+        mMomentsHeaderView = layoutInflater.inflate(R.layout.view_msg_tips, null);
         //        mMomentsAdapter.addHeadView(mViewMsgTips);
         //        mViewMsgTips.setVisibility(View.GONE);
-        mRecyclerView.setAdapter(mMomentsAdapter);
+        mRecycleView.setAdapter(mUserMomentsAdapter);
 
-        mLayoutManager = new LinearLayoutManager(getBaseActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        mLayoutManager = new LinearLayoutManager(this);
+        mRecycleView.setLayoutManager(mLayoutManager);
+        mRecycleView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             }
@@ -72,25 +85,27 @@ public class MomentsFragment extends BaseFragment {
                 super.onScrolled(recyclerView, dx, dy);
                 int lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
                 int totalItemCount = mLayoutManager.getItemCount();
-                //lastVisibleItem >= totalItemCount - 4 表示剩下4个item自动加载，各位自由选择
                 // dy>0 表示向下滑动
                 if (lastVisibleItem >= totalItemCount - 1 && dy > 0) {
                     if (!isLoadingMore) {
-                        loadMoments();//这里多线程也要手动控制isLoadingMore
+                        loadUserMoments();//这里多线程也要手动控制isLoadingMore
                     }
                 }
             }
         });
 
 
-        loadMoments();
+        loadUserMoments();
+
     }
 
-
-    private void loadMoments() {
+    private void loadUserMoments() {
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.show(R.string.network_error_fail);
+        }
         isLoadingMore = true;
         if (0 == mPages) mSwipeRefreshLayout.setRefreshing(true);
-        ApiUtils.loadMoments(mPages, mMomentsType, new BaseCallback<BaseModel<List<Moment>>>() {
+        ApiUtils.showUserMoments(mSelectedUid, mPages, new BaseCallback<BaseModel<List<Moment>>>() {
             @Override
             protected void onSuccess(BaseModel<List<Moment>> model) throws Exception {
 
@@ -99,7 +114,7 @@ public class MomentsFragment extends BaseFragment {
                     if (0 == mPages) mMoments.clear();
 
                     mMoments.addAll(tMoments);
-                    mMomentsAdapter.notifyDataSetChanged();
+                    mUserMomentsAdapter.notifyDataSetChanged();
 
                     mPages++;
                 }
@@ -114,12 +129,8 @@ public class MomentsFragment extends BaseFragment {
         });
     }
 
-    public static MomentsFragment newInstance(int type) {
-        MomentsFragment fragment = new MomentsFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(MOMENTS_TYPE, type);
-        fragment.setArguments(bundle);
-        return fragment;
+    @OnClick(R.id.img_top_bar_left)
+    public void onViewClicked() {
+        finish();
     }
-
 }

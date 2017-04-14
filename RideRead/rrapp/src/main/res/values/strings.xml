@@ -80,5 +80,16 @@
     <string name="nick">昵称</string>
     <string name="nick_tips">建议使用真实姓名</string>
     <string name="edit_user_info">编辑资料</string>
+    <string name="network_error_timeout">网络连接超时</string>
+    <string name="network_error_fail">网络请求失败</string>
+
+    <string name="source_file_not_exist">源文件不存在</string>
+    <string name="destination_dir_not_exist">目标目录不存在</string>
+    <string name="filename_null">文件名为null</string>
+    <string name="save_image_to">图片已保存到 %1$s</string>
+    <string name="my_circle">我的阅圈</string>
+    <string name="thumbs_up_user">点赞用户</string>
+    <string name="attention">关注</string>
+    <string name="fans">粉丝</string>
 
 </resources>

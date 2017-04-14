@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/cl_moment_layout"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:descendantFocusability="blocksDescendants"
+                                             android:paddingTop="8dip">
+
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:text="6分钟前"
+        android:textColor="@color/gray_text"
+        android:textSize="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+
+    <LinearLayout
+        android:id="@+id/ll_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dip"
+        android:orientation="vertical"
+        app:layout_constraintLeft_toLeftOf="@id/tv_time"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_time"
+        >
+
+
+        <TextView
+            android:id="@+id/tv_moment_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black_common"
+            android:textSize="@dimen/text_def_size"
+            tools:text="风景很美"
+            />
+
+        <com.rideread.rideread.common.widget.NineGridImgView.NineGridImgView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/nine_grid_img_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dip"
+            android:visibility="gone"
+            app:imgGap="4dip"
+            app:showStyle="grid"
+            app:singleImgSize="125dp"
+            />
+
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_loc_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="广州.白云山  距离我2km"
+        android:textColor="@color/gray_text"
+        android:textSize="12dp"
+        app:layout_constraintLeft_toLeftOf="@id/ll_content"
+        app:layout_constraintTop_toBottomOf="@id/ll_content"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginRight="12dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_loc_info">
+
+
+        <TextView
+            android:id="@+id/tv_like_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dip"
+            android:drawableLeft="@drawable/ic_like"
+            android:drawablePadding="4dp"
+            android:text="20"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/text_def_size"/>
+
+
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="4dp"
+            android:text="6"
+            android:textColor="@color/gray_text"
+            android:textSize="@dimen/text_def_size"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/gray_hint"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

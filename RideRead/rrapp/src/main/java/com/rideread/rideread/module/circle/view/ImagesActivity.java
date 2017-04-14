@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +21,18 @@ import com.facebook.drawee.controller.BaseControllerListener;
 import com.facebook.imagepipeline.image.ImageInfo;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
+import com.rideread.rideread.common.util.AppUtils;
+import com.rideread.rideread.common.util.FileUtils;
+import com.rideread.rideread.common.util.ImageUtils;
+import com.rideread.rideread.common.util.ImgLoader;
+import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.Utils;
+import com.rideread.rideread.common.widget.SaveImgPopWin;
+
+import java.io.File;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import me.relex.photodraweeview.OnViewTapListener;
 import me.relex.photodraweeview.PhotoDraweeView;
 
 import static android.os.Build.VERSION.SDK_INT;
@@ -43,6 +53,10 @@ public class ImagesActivity extends BaseActivity {
     private String[] imageArray;
     private int index;
     private int count;
+    private String mCurImgUrl;
+
+
+    private SaveImgPopWin mSaveImgPopWin;
 
 
     @Override
@@ -73,13 +87,15 @@ public class ImagesActivity extends BaseActivity {
             mTvImgIndex.setVisibility(View.VISIBLE);
             mTvImgIndex.setText((index + 1) + "/" + count);
         }
+        mCurImgUrl = imageArray[0];
 
         mImgViewpager.setAdapter(new SamplePagerAdapter(getLayoutInflater(), imageArray));
         mImgViewpager.setCurrentItem(index);
         mImgViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
-            public void onPageSelected(int arg0) {
-                mTvImgIndex.setText((arg0 + 1) + "/" + count);
+            public void onPageSelected(int tIndex) {
+                mTvImgIndex.setText((tIndex + 1) + "/" + count);
+                mCurImgUrl = imageArray[tIndex];
             }
 
             public void onPageScrolled(int arg0, float arg1, int arg2) {
@@ -88,6 +104,51 @@ public class ImagesActivity extends BaseActivity {
             public void onPageScrollStateChanged(int arg0) {
             }
         });
+
+        mSaveImgPopWin = new SaveImgPopWin(ImagesActivity.this, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //                File imageFile = ImgLoader.getInstance().getDiscCacheFile(imageUrl);
+                ToastUtils.show("保存图片");
+                mSaveImgPopWin.dismiss();
+
+                saveImg(mCurImgUrl);
+            }
+        });
+        //显示窗口
+
+    }
+
+    private void saveImg(String imageUrl) {
+        if (TextUtils.isEmpty(imageUrl)) return;
+
+        File imageFile = ImgLoader.getInstance().getDiscCacheFile(imageUrl);
+
+        String parent = imageFile.getParent();// /storage/emulated/0/ride-read/imageCache
+        String path = imageFile.getPath();// /storage/emulated/0/ride-read/imageCache/48474458
+        final String imageName = path.substring(parent.length() + 1, path.length()) + ".jpg";// /48474458
+        // if (imageName.startsWith("-"))
+        // imageName = "f" + imageName.substring(1);
+
+        if (imageFile != null && imageFile.exists()) {
+            final String dir = AppUtils.getMyCacheDir("IMAGE");// /storage/emulated/0/ride-read/IMAGE/
+            File desFile = new File(dir);
+
+            FileUtils.copyFile(imageFile, desFile, imageName, new FileUtils.CopyFileListener() {
+
+                @Override
+                public void exception(String msg) {
+                    ToastUtils.show(msg);
+                }
+
+                @Override
+                public void success(String path) {
+                    ToastUtils.show(getString(R.string.save_image_to, path));
+
+                    ImageUtils.scanPhotos(path, Utils.getAppContext());
+                }
+            });
+        }
     }
 
     private void getIntentValue() {
@@ -97,6 +158,7 @@ public class ImagesActivity extends BaseActivity {
         imageArray = urls.split(",");
         count = imageArray.length;
     }
+
 
     class SamplePagerAdapter extends PagerAdapter {
 
@@ -119,7 +181,7 @@ public class ImagesActivity extends BaseActivity {
 
             final PhotoDraweeView photoDraweeView = (PhotoDraweeView) view.findViewById(R.id.pdv_image);
             PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-            controller.setUri(Uri.parse(imageArray[position]));
+            controller.setUri(Uri.parse(mCurImgUrl));
             controller.setOldController(photoDraweeView.getController());
             controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
                 @Override
@@ -132,10 +194,15 @@ public class ImagesActivity extends BaseActivity {
                 }
             });
             photoDraweeView.setController(controller.build());
-            photoDraweeView.setOnViewTapListener(new OnViewTapListener() {
+            photoDraweeView.setOnViewTapListener((view1, x, y) -> onBackPressed());
+
+            photoDraweeView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onViewTap(View view, float x, float y) {
-                    onBackPressed();
+                public boolean onLongClick(View v) {
+                    if (null != mSaveImgPopWin) {
+                        mSaveImgPopWin.showAtLocation(ImagesActivity.this.findViewById(R.id.root_layout), Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                    }
+                    return false;
                 }
             });
             container.addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);

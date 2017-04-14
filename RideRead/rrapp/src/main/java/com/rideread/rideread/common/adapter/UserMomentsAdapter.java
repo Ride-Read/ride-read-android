@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -21,21 +20,14 @@ import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
 import com.rideread.rideread.common.util.ImgLoader;
 import com.rideread.rideread.common.util.ListUtils;
-import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.Utils;
 import com.rideread.rideread.common.widget.NineGridImgView.NineGridImgView;
 import com.rideread.rideread.common.widget.NineGridImgView.NineGridImgViewAdapter;
 import com.rideread.rideread.data.result.Comment;
-import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.Moment;
-import com.rideread.rideread.data.result.MomentUser;
 import com.rideread.rideread.data.result.ThumbsUpUser;
-import com.rideread.rideread.function.net.retrofit.ApiUtils;
-import com.rideread.rideread.function.net.retrofit.BaseCallback;
-import com.rideread.rideread.function.net.retrofit.BaseModel;
 import com.rideread.rideread.module.circle.view.ImagesActivity;
 import com.rideread.rideread.module.circle.view.MomentDetailActivity;
-import com.rideread.rideread.module.profile.view.UserMomentsActivity;
 
 import java.util.List;
 
@@ -49,12 +41,11 @@ import static com.rideread.rideread.common.util.Utils.getString;
  * Created by SkyXiao on 2017/4/9.
  */
 
-public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class UserMomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_HEADER = 0, TYPE_ITEM = 1, TYPE_FOOT = 2;
+
     private View headView;
     private View footView;
-    private int headViewSize = 0;
-    private int footViewSize = 0;
     private boolean isAddFoot = false;
     private boolean isAddHead = false;
     private LayoutInflater mLayoutInflater;
@@ -62,7 +53,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private BaseActivity mActivity;
 
 
-    public MomentsAdapter(BaseActivity baseActivity, List<Moment> moments) {
+    public UserMomentsAdapter(BaseActivity baseActivity, List<Moment> moments) {
         this.mActivity = baseActivity;
         this.mMomentList = moments;
         mLayoutInflater = LayoutInflater.from(Utils.getAppContext());
@@ -70,22 +61,20 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     public void addHeadView(View view) {
         headView = view;
-        headViewSize = 1;
         isAddHead = true;
     }
 
     public void addFootView(View view) {
         footView = view;
-        footViewSize = 1;
         isAddFoot = true;
     }
 
     @Override
     public int getItemViewType(int position) {
         int type = TYPE_ITEM;
-        if (headViewSize == 1 && position == 0) {
+        if (isAddHead && position == 0) {
             type = TYPE_HEADER;
-        } else if (footViewSize == 1 && position == getItemCount() - 1) {
+        } else if (isAddFoot && position == getItemCount() - 1) {
             //最后一个位置
             type = TYPE_FOOT;
         }
@@ -96,7 +85,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         if (TYPE_ITEM == viewType) {
-            View v = mLayoutInflater.inflate(R.layout.view_moment, parent, false);
+            View v = mLayoutInflater.inflate(R.layout.view_user_moment, parent, false);
             return new MomentViewHolder(v);
         } else if (TYPE_HEADER == viewType) {
             return new HeadViewHolder(headView);
@@ -113,27 +102,13 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Moment moment = mMomentList.get(position);
 
             MomentViewHolder holder = (MomentViewHolder) tHolder;
+
             holder.mClMomentLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
                     bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
                     mActivity.gotoActivity(MomentDetailActivity.class, bundle);
-                }
-            });
-
-
-            MomentUser user = moment.getUser();
-
-            ImgLoader.getInstance().displayImage(user.getFaceUrl(), holder.mImgAvatar);
-            holder.mTvName.setText(user.getUsername());
-            holder.mImgAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(UserMomentsActivity.SELECTED_UID, user.getUid());
-                    bundle.putString(UserMomentsActivity.SELECTED_USERNAME, user.getUsername());
-                    mActivity.gotoActivity(UserMomentsActivity.class, bundle);
                 }
             });
 
@@ -154,34 +129,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.mNineGridImgView.setVisibility(View.GONE);
             }
 
-            boolean isAttent = 0 == user.getIsFollowed();
-            holder.mBtnAttention.setBackgroundResource(isAttent ? R.drawable.icon_attented : R.drawable.icon_attention);
-            holder.mBtnAttention.setOnClickListener(v -> {
-                if (isAttent) {
-                    ApiUtils.unfollow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
-                        @Override
-                        protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                            holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attention);
-                            user.setIsFollowed(-1);
-                        }
-                    });
-                } else {
-                    ApiUtils.follow(user.getUid(), new BaseCallback<BaseModel<DefJsonResult>>() {
-                        @Override
-                        protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                            holder.mBtnAttention.setBackgroundResource(R.drawable.icon_attented);
-                            user.setIsFollowed(1);
-                        }
-                    });
-                }
-            });
 
-            holder.mBtnLike.setOnClickListener(v -> ApiUtils.addThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
-                @Override
-                protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                    ToastUtils.show("点赞成功");
-                }
-            }));
             holder.mTvTime.setText(getFriendlyTimeSpanByNow(moment.getCreatedAt()));
             List<ThumbsUpUser> thumbsUp = moment.getThumbsUp();
             int likeCount = ListUtils.isEmpty(thumbsUp) ? 0 : thumbsUp.size();
@@ -206,17 +154,11 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     class MomentViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.cl_moment_layout) ConstraintLayout mClMomentLayout;
-        @BindView(R.id.img_avatar) SimpleDraweeView mImgAvatar;
-        @BindView(R.id.tv_name) TextView mTvName;
-        @BindView(R.id.btn_attention) ImageButton mBtnAttention;
         @BindView(R.id.tv_time) TextView mTvTime;
         @BindView(R.id.tv_moment_text) TextView mTvMomentText;
         @BindView(R.id.nine_grid_img_view) NineGridImgView mNineGridImgView;
         @BindView(R.id.tv_loc_info) TextView mTvLocInfo;
-        @BindView(R.id.btn_like) ImageButton mBtnLike;
         @BindView(R.id.tv_like_count) TextView mTvLikeCount;
-        @BindView(R.id.btn_comment) ImageButton mBtnComment;
-
         @BindView(R.id.tv_comment_count) TextView mTvCommentCount;
 
         public MomentViewHolder(View view) {

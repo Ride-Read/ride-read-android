@@ -2,6 +2,7 @@ package com.rideread.rideread.module.profile.view;
 
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -58,6 +59,7 @@ public class ProfileFragment extends BaseFragment {
     @OnClick({R.id.img_avatar, R.id.btn_personality_map, R.id.tv_msg, R.id.tv_attention, R.id.tv_fans, R.id.btn_post_date, R.id.btn_my_circle, R.id.btn_my_collect, R.id.btn_invite_friend, R.id.btn_setting})
     public void onViewClicked(View view) {
         Class<? extends Activity> targetActivity = null;
+        Bundle bundle = new Bundle();
         switch (view.getId()) {
             case R.id.img_avatar:
                 targetActivity = UserInfoActivity.class;
@@ -69,16 +71,18 @@ public class ProfileFragment extends BaseFragment {
                 targetActivity = MsgActivity.class;
                 break;
             case R.id.tv_attention:
-                targetActivity = AttentionActivity.class;
-                break;
+                bundle.putInt(FollowUserActivity.USER_TYPE, FollowUserActivity.USER_TYPE_ATTENTION);
+                getBaseActivity().gotoActivity(FollowUserActivity.class,bundle);
+                return;
             case R.id.tv_fans:
-                targetActivity = FansActivity.class;
-                break;
+                bundle.putInt(FollowUserActivity.USER_TYPE, FollowUserActivity.USER_TYPE_FANS);
+                getBaseActivity().gotoActivity(FollowUserActivity.class,bundle);
+                return;
             case R.id.btn_post_date:
                 targetActivity = PostDateActivity.class;
                 break;
             case R.id.btn_my_circle:
-                targetActivity = MyCircleActivity.class;
+                targetActivity = UserMomentsActivity.class;
                 break;
             case R.id.btn_my_collect:
                 targetActivity = CollectActivity.class;

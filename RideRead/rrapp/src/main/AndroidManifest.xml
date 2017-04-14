@@ -54,6 +54,9 @@
             android:name=".module.circle.view.MomentDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".module.circle.view.ThumbsUpUserActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".module.circle.view.ImagesActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -66,16 +69,13 @@
             android:name=".module.profile.view.MsgActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.profile.view.AttentionActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".module.profile.view.FansActivity"
+            android:name=".module.profile.view.FollowUserActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.profile.view.PostDateActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".module.profile.view.MyCircleActivity"
+            android:name=".module.profile.view.UserMomentsActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.profile.view.CollectActivity"

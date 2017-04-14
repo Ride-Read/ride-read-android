@@ -84,11 +84,11 @@ public abstract class BaseCallback<T extends BaseModel> implements Callback<T> {
         t.printStackTrace();
         if (!NetworkUtils.isConnected()) {
             //网络不通直接阻断
-            //            onFail(Utils.getAppContext().getString(R.string.error_network_fail));
+            onFail(Utils.getAppContext().getString(R.string.network_error_fail));
         } else if (t instanceof SocketTimeoutException) {
-            //            onFail(Utils.getAppContext().getString(R.string.error_network_timeout));
+            onFail(Utils.getAppContext().getString(R.string.network_error_timeout));
         } else {
-            //            onFail(Utils.getAppContext().getString(R.string.error_server_fail));
+            onFail(Utils.getAppContext().getString(R.string.server_error_fail));
             Log.e("https", "onFailure:" + t.getMessage());
         }
 

@@ -141,4 +141,6 @@ dependencies {
 
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'jp.wasabeef:picasso-transformations:2.1.2'
+
+    compile 'com.kyleduo.switchbutton:library:1.4.5'
 }

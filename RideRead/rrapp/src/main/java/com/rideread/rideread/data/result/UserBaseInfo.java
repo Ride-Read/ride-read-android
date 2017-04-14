@@ -11,6 +11,7 @@ public class UserBaseInfo implements Serializable {
     private int uid;
     private String faceUrl;
     private String username;
+    private String signature;
 
 
     public String getFaceUrl() {
@@ -35,5 +36,13 @@ public class UserBaseInfo implements Serializable {
 
     public void setUid(int uid) {
         this.uid = uid;
+    }
+
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 }

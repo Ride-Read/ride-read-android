@@ -12,16 +12,15 @@ public class UserInfo extends UserBaseInfo {
     private int sex;//0-未知，1-男，2-女
     private String school;
     private String phonenumber;
-    private String updatedAt;
+    private long updatedAt;
     private int follower;
     private String token;
     private String hometown;
     private String location;
-    private String createdAt;
-    private String birthday;
+    private long createdAt;
+    private long birthday;
     private int following;
     private String career;
-    private String signature;
 
     private List<String> tags;
     private double longitude;
@@ -54,13 +53,6 @@ public class UserInfo extends UserBaseInfo {
         this.phonenumber = phonenumber;
     }
 
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
 
     public int getFollower() {
         return follower;
@@ -94,21 +86,6 @@ public class UserInfo extends UserBaseInfo {
         this.location = location;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
-    }
 
     public int getFollowing() {
         return following;
@@ -158,12 +135,29 @@ public class UserInfo extends UserBaseInfo {
         this.rideReadId = rideReadId;
     }
 
-    public String getSignature() {
-        return signature;
+
+    public long getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setSignature(String signature) {
-        this.signature = signature;
+    public void setUpdatedAt(long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(long createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public long getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(long birthday) {
+        this.birthday = birthday;
     }
 }
 //"data": {

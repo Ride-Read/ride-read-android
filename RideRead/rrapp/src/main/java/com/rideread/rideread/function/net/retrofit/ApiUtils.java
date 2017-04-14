@@ -13,8 +13,10 @@ import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
+import com.rideread.rideread.data.result.FollowUser;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
+import com.rideread.rideread.data.result.ThumbsUpUser;
 import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.data.result.VCode;
 
@@ -120,14 +122,14 @@ public class ApiUtils {
         setCurrentCall(getApiStore().register(params), callBack);
     }
 
-    public static void loadFollowers(@NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+    public static void loadFollowers(@NonNull final BaseCallback<BaseModel<List<FollowUser>>> callBack) {
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         setCurrentCall(getApiStore().followers(getParams(params)), callBack);
     }
 
-    public static void loadFollowing(@NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+    public static void loadFollowing(@NonNull final BaseCallback<BaseModel<List<FollowUser>>> callBack) {
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         setCurrentCall(getApiStore().followings(getParams(params)), callBack);
     }
@@ -146,13 +148,14 @@ public class ApiUtils {
         setCurrentCall(getApiStore().unfollow(getParams(params)), callBack);
     }
 
-    public static void showUser(final int uid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void showUserInfo(final int uid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
-        params.put("timestamp", Long.toString(System.currentTimeMillis()));
-        params.put("uid", Integer.toString(uid));
-        params.put("token", UserUtils.getToken());
-        setCurrentCall(getApiStore().showUser(getParams(params)), callBack);
+        params.put("user_id", Integer.toString(uid));
+        if (0 != uid) {
+            params.put("type", Integer.toString(2));
+        }
+        setCurrentCall(getApiStore().showUserInfo(getParams(params)), callBack);
     }
 
     public static void update(final int userId, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
@@ -201,18 +204,18 @@ public class ApiUtils {
         params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
         params.put("type", Integer.toString(2));
 
-        setCurrentCall(getApiStore().showMomentUser(getParams(params)), callBack);
+        setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 
-    public static void showMomentUser(final int userId, final int pages, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+    public static void showUserMoments(final int userId, final int pages, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         params.put("user_id", Integer.toString(userId));
         params.put("pages", Integer.toString(pages));
         params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
         params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
 
-        setCurrentCall(getApiStore().showMomentUser(getParams(params)), callBack);
+        setCurrentCall(getApiStore().showUserMoments(getParams(params)), callBack);
     }
 
     public static void addThumbsUp(final int mid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
@@ -252,13 +255,13 @@ public class ApiUtils {
         setCurrentCall(getApiStore().removeMoment(getParams(params)), callBack);
     }
 
-    public static void loadThumbsUp(final int pages, final int mid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+    public static void loadThumbsUpUser(final int mid, final int pages, @NonNull final BaseCallback<BaseModel<List<ThumbsUpUser>>> callBack) {
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
-        params.put("pages", Integer.toString(pages));
         params.put("mid", Integer.toString(mid));
+        params.put("pages", Integer.toString(pages));
 
-        setCurrentCall(getApiStore().showThumbsUp(getParams(params)), callBack);
+        setCurrentCall(getApiStore().showThumbsUpUsers(getParams(params)), callBack);
     }
 
     public static void collectMoment(final int mid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
