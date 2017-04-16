@@ -1,5 +1,7 @@
 package com.rideread.rideread.data.result;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 /**
@@ -51,6 +53,9 @@ public class FollowUser implements Serializable {
     }
 
     public String getFollowedSignature() {
+        if (TextUtils.isEmpty(followedSignature)) {
+            return "暂无个性签名";
+        }
         return followedSignature;
     }
 

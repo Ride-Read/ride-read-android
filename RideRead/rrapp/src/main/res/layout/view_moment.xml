@@ -2,8 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                              xmlns:app="http://schemas.android.com/apk/res-auto"
                                              xmlns:tools="http://schemas.android.com/tools"
-                                             android:layout_width="match_parent"
                                              android:id="@+id/cl_moment_layout"
+                                             android:layout_width="match_parent"
                                              android:layout_height="wrap_content"
                                              android:descendantFocusability="blocksDescendants"
                                              android:paddingTop="12dip">
@@ -24,7 +24,7 @@
         android:layout_marginTop="2dp"
         android:text="张晓明"
         android:textColor="@color/black_common"
-        android:textSize="@dimen/text_def_size"
+        android:textSize="@dimen/def_text_size"
         app:layout_constraintLeft_toRightOf="@id/img_avatar"
         app:layout_constraintTop_toTopOf="@id/img_avatar"/>
 
@@ -36,7 +36,7 @@
         android:layout_marginLeft="12dp"
         android:text="6分钟前"
         android:textColor="@color/gray_text"
-        android:textSize="12sp"
+        android:textSize="@dimen/def_text_size_mini"
         app:layout_constraintBottom_toBottomOf="@id/img_avatar"
         app:layout_constraintLeft_toRightOf="@id/img_avatar"/>
 
@@ -69,7 +69,7 @@
             android:layout_marginTop="12dip"
             android:text="风景很美"
             android:textColor="@color/black_common"
-            android:textSize="@dimen/text_def_size"
+            android:textSize="@dimen/def_text_size"
             android:visibility="gone"
             />
 
@@ -95,7 +95,7 @@
         android:layout_marginTop="8dp"
         android:text="广州.白云山  距离我2km"
         android:textColor="@color/gray_text"
-        android:textSize="12dp"
+        android:textSize="@dimen/def_text_size_small"
         app:layout_constraintLeft_toLeftOf="@id/ll_content"
         app:layout_constraintTop_toBottomOf="@id/ll_content"/>
 
@@ -124,7 +124,7 @@
             android:layout_marginRight="20dip"
             android:text="20"
             android:textColor="@color/gray_text"
-            android:textSize="@dimen/text_def_size"/>
+            android:textSize="@dimen/def_text_size"/>
 
         <ImageButton
             android:id="@+id/btn_comment"
@@ -139,7 +139,7 @@
             android:layout_height="wrap_content"
             android:text="6"
             android:textColor="@color/gray_text"
-            android:textSize="@dimen/text_def_size"/>
+            android:textSize="@dimen/def_text_size"/>
     </LinearLayout>
 
     <View

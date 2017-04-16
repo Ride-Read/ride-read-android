@@ -249,7 +249,6 @@ public class MomentDetailActivity extends BaseActivity {
                 break;
             case R.id.btn_thumbs_up:
                 thumbsUp();
-
                 break;
             case R.id.btn_send:
                 postComment();
@@ -316,6 +315,7 @@ public class MomentDetailActivity extends BaseActivity {
 
     public void shareMoment() {
         ToastUtils.show("分享");
+
     }
 
     public void collectMoment() {

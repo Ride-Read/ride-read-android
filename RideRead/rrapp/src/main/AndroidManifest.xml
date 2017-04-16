@@ -54,6 +54,9 @@
             android:name=".module.circle.view.MomentDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".module.circle.view.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".module.circle.view.ThumbsUpUserActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -85,6 +88,9 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.profile.view.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".module.profile.view.AboutUsActivity"
             android:screenOrientation="portrait"/>
 
         <service android:name="com.amap.api.location.APSService"></service>

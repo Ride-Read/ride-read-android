@@ -4,6 +4,7 @@ import android.Manifest;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -47,6 +48,7 @@ public class PostMomentActivity extends MPermissionsActivity {
 
     @BindView(R.id.edt_moment) EditText mEdtMoment;
     @BindView(R.id.tv_post_loc) TextView mTvPostLoc;
+    @BindView(R.id.cb_show_loc) CheckBox mCbShowLoc;
     @BindView(R.id.rv_pic_container) RecyclerView mRvPicContainer;
 
     public final int SELECT_PICTURE_MAX = 9;
@@ -106,7 +108,9 @@ public class PostMomentActivity extends MPermissionsActivity {
 
     private void postMoment() {
         String momentText = mEdtMoment.getText().toString().trim();
-        ApiUtils.postMoment(momentText, mPictureUrls, new BaseCallback<BaseModel<DefJsonResult>>() {
+        String locInfo = "";
+        if (mCbShowLoc.isChecked()) locInfo = mTvPostLoc.getText().toString();
+        ApiUtils.postMoment(momentText, locInfo, mPictureUrls, new BaseCallback<BaseModel<DefJsonResult>>() {
             @Override
             protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                 ToastUtils.show("发送成功");

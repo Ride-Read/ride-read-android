@@ -29,17 +29,15 @@ import butterknife.ButterKnife;
  * Created by SkyXiao on 2017/4/9.
  */
 
-public class FollowUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class SearchUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private LayoutInflater mLayoutInflater;
     private List<FollowUser> mUserList;
     private BaseActivity mActivity;
-    private boolean isFans;
 
-    public FollowUserAdapter(BaseActivity baseActivity, boolean isFans, List<FollowUser> users) {
+    public SearchUserAdapter(BaseActivity baseActivity, List<FollowUser> users) {
         this.mActivity = baseActivity;
         this.mUserList = users;
-        this.isFans = isFans;
         mLayoutInflater = LayoutInflater.from(Utils.getAppContext());
     }
 
@@ -55,8 +53,8 @@ public class FollowUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
         FollowUser user = mUserList.get(position);
 
-        if (isFans) {
-
+        if (0 == user.getTid()) {
+            //粉丝
             ImgLoader.getInstance().displayImage(user.getFollowerFaceUrl(), holder.mImgAvatar);
 
             holder.mTvName.setText(user.getFollowerUsername());
@@ -94,8 +92,8 @@ public class FollowUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(UserMomentsActivity.SELECTED_UID, isFans ? user.getTid() : user.getFid());
-                bundle.putString(UserMomentsActivity.SELECTED_USERNAME, isFans ? user.getFollowerUsername() : user.getFollowedUsername());
+                bundle.putInt(UserMomentsActivity.SELECTED_UID, 0 != user.getTid() ? user.getTid() : user.getFid());
+                bundle.putString(UserMomentsActivity.SELECTED_USERNAME, 0 != user.getTid()  ? user.getFollowerUsername() : user.getFollowedUsername());
                 mActivity.gotoActivity(UserMomentsActivity.class, bundle);
             }
         });

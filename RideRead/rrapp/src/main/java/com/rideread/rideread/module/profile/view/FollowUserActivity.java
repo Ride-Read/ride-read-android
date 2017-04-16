@@ -3,7 +3,6 @@ package com.rideread.rideread.module.profile.view;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.adapter.FollowUserAdapter;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by SkyXiao on 2017/4/6.
@@ -94,7 +92,7 @@ public class FollowUserActivity extends BaseActivity {
         if (USER_TYPE_FANS == mUserType) {
             titleRes = R.string.fans;
         }
-        new TitleBuilder(this).setTitleText(titleRes).IsBack(true).setRightImage(R.drawable.icon_search).build();
+        new TitleBuilder(this).setTitleText(titleRes).IsBack(true).setLeftOnClickListener(v -> finish()).build();
     }
 
     private void loadUsers() {
@@ -145,15 +143,6 @@ public class FollowUserActivity extends BaseActivity {
         if (mSwipeRefreshLayout.isRefreshing()) mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    @OnClick({R.id.img_top_bar_left, R.id.img_top_bar_right})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.img_top_bar_left:
-                finish();
-                break;
-            case R.id.img_top_bar_right:
-                break;
-        }
-    }
+
 
 }

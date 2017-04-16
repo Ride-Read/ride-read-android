@@ -76,6 +76,7 @@ public class ConfirmDialogFragment extends DialogFragment {
                 dismiss();
                 break;
             case R.id.tv_confirm:
+                dismiss();
                 ((BaseActivity) getActivity()).doPositiveClick();
                 break;
         }

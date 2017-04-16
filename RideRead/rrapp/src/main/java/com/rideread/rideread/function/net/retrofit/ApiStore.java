@@ -5,6 +5,7 @@ import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.FollowUser;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
+import com.rideread.rideread.data.result.SearchUsers;
 import com.rideread.rideread.data.result.ThumbsUpUser;
 import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.data.result.VCode;
@@ -72,7 +73,7 @@ public interface ApiStore {
     Call<BaseModel<DefJsonResult>> showUserInfo(@QueryMap Map<String, String> params);
 
     @POST("users/search_follower_or_following")
-    Call<BaseModel<DefJsonResult>> searchUser(@QueryMap Map<String, String> params);
+    Call<BaseModel<SearchUsers>> searchUser(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST("users/update")

@@ -16,6 +16,7 @@ import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.FollowUser;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
+import com.rideread.rideread.data.result.SearchUsers;
 import com.rideread.rideread.data.result.ThumbsUpUser;
 import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.data.result.VCode;
@@ -158,7 +159,7 @@ public class ApiUtils {
         setCurrentCall(getApiStore().showUserInfo(getParams(params)), callBack);
     }
 
-    public static void searchUser(final String shortname, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void searchUser(final String shortname, @NonNull final BaseCallback<BaseModel<SearchUsers>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("shortname", shortname);
@@ -183,7 +184,7 @@ public class ApiUtils {
         setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 
-    public static void postMoment(@NonNull final String content, @NonNull final List<String> pictureUrls, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void postMoment(@NonNull final String content,@NonNull final String locInfo, @NonNull final List<String> pictureUrls, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("msg", content);
@@ -197,7 +198,7 @@ public class ApiUtils {
             int end = urlArrayStr.length() - 1;
             params.put("pictures_url", urlArrayStr.substring(1, end));
         }
-        params.put("moment_location", AMapLocationUtils.getLocDetail());
+        params.put("moment_location", locInfo);
         setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
     }
 

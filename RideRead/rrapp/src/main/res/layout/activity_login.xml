@@ -46,5 +46,6 @@
 
     <include
         layout="@layout/include_third_platform"
+        android:visibility="gone"
         />
 </LinearLayout>

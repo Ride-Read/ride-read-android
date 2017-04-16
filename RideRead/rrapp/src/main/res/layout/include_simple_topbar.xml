@@ -23,7 +23,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="@color/white_normal"
-        android:textSize="@dimen/text_def_size"
+        android:textSize="@dimen/def_text_size"
         android:visibility="gone"/>
 
     <TextView
@@ -32,6 +32,7 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:maxWidth="224dp"
+        android:textSize="@dimen/def_title_size"
         android:textColor="@color/white_normal"/>
 
     <ImageView
@@ -52,7 +53,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:textColor="@color/white_normal"
-        android:textSize="@dimen/text_def_size"
+        android:textSize="@dimen/def_text_size"
         android:visibility="visible"/>
 
     <View

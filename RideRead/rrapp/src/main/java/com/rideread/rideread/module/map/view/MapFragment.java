@@ -18,7 +18,6 @@ import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
 import com.rideread.rideread.common.dialog.SignInDialogFragment;
 import com.rideread.rideread.common.util.AMapLocationUtils;
-import com.rideread.rideread.common.util.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,12 +57,6 @@ public class MapFragment extends BaseFragment implements LocationSource {
         mUiSettings.setZoomControlsEnabled(false);
         mUiSettings.setCompassEnabled(true);
         mAMap.moveCamera(CameraUpdateFactory.zoomBy(18));
-        mAMap.setOnMapLongClickListener(new AMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-                ToastUtils.show("弹窗选择发布");
-            }
-        });
         // 设置定位监听
         mAMap.setLocationSource(this);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -110,14 +103,14 @@ public class MapFragment extends BaseFragment implements LocationSource {
     }
 
 
-    @OnClick({R.id.btn_refresh, R.id.btn_right, R.id.btn_sign_in})
+    @OnClick({R.id.btn_location, R.id.btn_recently, R.id.btn_sign_in})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn_refresh:
+            case R.id.btn_location:
                 LatLng center = new LatLng(AMapLocationUtils.getLatitude(), AMapLocationUtils.getLongitude());
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
                 break;
-            case R.id.btn_right:
+            case R.id.btn_recently:
                 break;
 
         }
@@ -125,9 +118,7 @@ public class MapFragment extends BaseFragment implements LocationSource {
 
     @OnLongClick(R.id.btn_sign_in)
     public boolean onLongClick() {
-        if (null == mSignInDialogFragment) {
-            mSignInDialogFragment = new SignInDialogFragment();
-        }
+        mSignInDialogFragment = SignInDialogFragment.newInstance(AMapLocationUtils.getLocDetail());
         mSignInDialogFragment.show(getFragmentManager(), "sign_in");
         return false;
     }

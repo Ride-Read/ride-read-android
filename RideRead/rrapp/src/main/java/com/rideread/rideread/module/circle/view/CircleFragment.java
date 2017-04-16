@@ -10,14 +10,18 @@ import android.widget.LinearLayout;
 
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.module.profile.view.SettingActivity;
 
 import butterknife.BindView;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 
 public class CircleFragment extends BaseFragment {
 
     @BindView(R.id.tl_circle_top) TabLayout mTlCircleTop;
     @BindView(R.id.viewpager) ViewPager mViewpager;
+    Unbinder unbinder;
 
     private Fragment mNearbyFragment;
     private Fragment mAttentionFragment;
@@ -44,6 +48,17 @@ public class CircleFragment extends BaseFragment {
 
         mTlCircleTop.setupWithViewPager(mViewpager);
 
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick(R.id.btn_search)
+    public void onViewClicked() {
+        getBaseActivity().gotoActivity(SearchActivity.class);
     }
 
 

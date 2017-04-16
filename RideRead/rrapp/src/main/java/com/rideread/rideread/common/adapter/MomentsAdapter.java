@@ -113,13 +113,10 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             Moment moment = mMomentList.get(position);
 
             MomentViewHolder holder = (MomentViewHolder) tHolder;
-            holder.mClMomentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
-                    mActivity.gotoActivity(MomentDetailActivity.class, bundle);
-                }
+            holder.mClMomentLayout.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
+                mActivity.gotoActivity(MomentDetailActivity.class, bundle);
             });
 
 
@@ -127,14 +124,11 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
             ImgLoader.getInstance().displayImage(user.getFaceUrl(), holder.mImgAvatar);
             holder.mTvName.setText(user.getUsername());
-            holder.mImgAvatar.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt(UserMomentsActivity.SELECTED_UID, user.getUid());
-                    bundle.putString(UserMomentsActivity.SELECTED_USERNAME, user.getUsername());
-                    mActivity.gotoActivity(UserMomentsActivity.class, bundle);
-                }
+            holder.mImgAvatar.setOnClickListener(v -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt(UserMomentsActivity.SELECTED_UID, user.getUid());
+                bundle.putString(UserMomentsActivity.SELECTED_USERNAME, user.getUsername());
+                mActivity.gotoActivity(UserMomentsActivity.class, bundle);
             });
 
             String msg = moment.getMsg();

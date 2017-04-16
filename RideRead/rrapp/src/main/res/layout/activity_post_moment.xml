@@ -41,7 +41,7 @@
                 android:hint="分享精彩时刻......"
                 android:padding="8dp"
                 android:textColorHint="@color/gray_text"
-                android:textSize="@dimen/text_def_size"/>
+                android:textSize="@dimen/def_text_size"/>
 
         </ScrollView>
 
@@ -55,11 +55,24 @@
             android:gravity="center_vertical"
             android:paddingBottom="4dp"
             android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingRight="28dp"
             android:paddingTop="4dp"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             tools:text="广州市·白云山风景区"/>
+
+        <CheckBox
+            android:id="@+id/cb_show_loc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:background="@color/white_bg"
+            android:button="@drawable/cb_sel"
+            android:checked="true"
+            app:layout_constraintBottom_toBottomOf="@id/tv_post_loc"
+            app:layout_constraintRight_toRightOf="@id/tv_post_loc"
+            app:layout_constraintTop_toTopOf="@id/tv_post_loc"
+            />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_pic_container"
@@ -74,7 +87,7 @@
     </android.support.constraint.ConstraintLayout>
 
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white_bg"
@@ -88,7 +101,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_img_def"/>
 
-    </LinearLayout>
+    </FrameLayout>
 
 
 </LinearLayout>

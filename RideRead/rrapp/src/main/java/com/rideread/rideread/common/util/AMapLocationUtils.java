@@ -1,5 +1,6 @@
 package com.rideread.rideread.common.util;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.amap.api.location.AMapLocation;
@@ -52,7 +53,7 @@ public class AMapLocationUtils {
         mLocationOption.setOnceLocationLatest(false);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
-        mLocationOption.setInterval(10 * 1000);////设置定位间隔,单位毫秒,默认为5000ms
+        mLocationOption.setInterval(60 * 1000);////设置定位间隔,单位毫秒,默认为5000ms
         mLocationOption.setLocationCacheEnable(true);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
@@ -150,6 +151,7 @@ public class AMapLocationUtils {
     }
 
     public static String getLocDetail() {
+        if (TextUtils.isEmpty(mLocDetail)) mLocDetail = "位置获取失败";
         return mLocDetail;
     }
 

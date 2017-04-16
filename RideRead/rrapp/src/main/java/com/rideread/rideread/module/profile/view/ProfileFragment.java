@@ -17,14 +17,17 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
 import com.rideread.rideread.common.util.ImgLoader;
+import com.rideread.rideread.common.util.ListUtils;
+import com.rideread.rideread.common.util.ShareUtils;
 import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.data.result.UserInfo;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import static com.rideread.rideread.R.id.tv_name;
 
 
 public class ProfileFragment extends BaseFragment {
@@ -32,11 +35,14 @@ public class ProfileFragment extends BaseFragment {
 
     @BindView(R.id.map_view_bg) TextureMapView mMapView;
     @BindView(R.id.img_avatar) SimpleDraweeView mImgAvatar;
-    @BindView(tv_name) TextView mTvName;
+    @BindView(R.id.tv_name) TextView mTvName;
     @BindView(R.id.tv_signature) TextView mTvSignature;
     @BindView(R.id.tv_msg) TextView mTvMsg;
     @BindView(R.id.tv_attention) TextView mTvAttention;
     @BindView(R.id.tv_fans) TextView mTvFans;
+    @BindView(R.id.tv_tag_job) TextView mTvTagJob;
+    @BindView(R.id.tv_tag_loc) TextView mTvTagLoc;
+    @BindView(R.id.tv_tag_label) TextView mTvTagLabel;
 
     private AMap mAMap;
     private UiSettings mUiSettings;//定义一个UiSettings对象
@@ -74,6 +80,28 @@ public class ProfileFragment extends BaseFragment {
         String signature = mUserInfo.getSignature();
         if (TextUtils.isEmpty(signature)) signature = "人生需要留白";
         mTvSignature.setText(signature);
+
+        String job = mUserInfo.getCareer();
+        if (TextUtils.isEmpty(job)) {
+            mTvTagJob.setVisibility(View.GONE);
+        } else {
+            mTvTagJob.setVisibility(View.VISIBLE);
+            mTvTagJob.setText(job);
+        }
+        String location = mUserInfo.getLocation();
+        if (TextUtils.isEmpty(location)) {
+            mTvTagLoc.setVisibility(View.GONE);
+        } else {
+            mTvTagLoc.setVisibility(View.VISIBLE);
+            mTvTagLoc.setText(location);
+        }
+        List<String> tags = mUserInfo.getTags();
+        if (ListUtils.isEmpty(tags)) {
+            mTvTagLabel.setVisibility(View.GONE);
+        } else {
+            mTvTagLabel.setVisibility(View.VISIBLE);
+            mTvTagLabel.setText(tags.get(0));
+        }
 
         mTvMsg.setText("消息 10");//TODO 获取消息数
         mTvAttention.setText("关注 " + mUserInfo.getFollowing());
@@ -136,12 +164,14 @@ public class ProfileFragment extends BaseFragment {
                 targetActivity = CollectActivity.class;
                 break;
             case R.id.btn_invite_friend:
-                targetActivity = InviteActivity.class;
-                break;
+                ShareUtils.share(getBaseActivity(), R.string.share_text);
+                //                targetActivity = InviteActivity.class;
+                return;
             case R.id.btn_setting:
                 targetActivity = SettingActivity.class;
                 break;
         }
         if (null != targetActivity) getBaseActivity().gotoActivity(targetActivity);
     }
+
 }

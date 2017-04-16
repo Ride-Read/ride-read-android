@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_normal"
+              android:gravity="bottom"
+              android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/def_top_bar_height"
+        android:background="@color/green_common"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edt_search"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_white_radius"
+            android:drawableLeft="@drawable/ic_search_black"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:hint="输入你想搜索的关键字"
+            android:paddingLeft="8dp"
+            android:textColor="@color/gray_text"
+            android:textColorHint="@color/gray_hint"
+            android:textSize="@dimen/def_text_size"/>
+
+        <ImageView
+            android:id="@+id/img_clear"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginLeft="-32dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_delete_pic"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            style="@style/common_text_style"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="12dp"
+            android:paddingTop="8dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white_normal"
+            />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#C8C7CC"
+            android:dividerHeight="0dp"
+            android:overScrollMode="never"
+            />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

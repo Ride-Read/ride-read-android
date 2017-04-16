@@ -47,6 +47,7 @@
     <string name="profile">我的</string>
     <string name="post_moment">发个阅圈</string>
     <string name="query_2_quit_edit">您确定要退出编辑？</string>
+    <string name="query_2_logout">您确定要退出登录？</string>
     <string name="transition_image">transition_image</string>
     <string name="send">发送</string>
 
@@ -73,5 +74,9 @@
     <string name="attention">关注</string>
     <string name="fans">粉丝</string>
     <string name="personality_map">个性地图</string>
+    <string name="setting">设置</string>
+    <string name="share">分享</string>
+    <string name="share_text">发现了一款非常精彩的App「骑阅」，骑行者都认同的骑行爱好者社区，旅途分享，精彩无限！这是我的骑阅号：%1$s 诚邀您加入！推荐~：https://www.pgyer.com/RideRead_Ad</string>
+
 
 </resources>

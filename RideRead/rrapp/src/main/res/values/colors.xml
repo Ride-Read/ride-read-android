@@ -20,8 +20,7 @@
 
 
     <color name="gray_btn_bg">#E5E5E5</color>
-    <color name="white_normal">#FFFFFF</color>
-    <color name="white_common_bg">#EEEEEE</color>
+
     <color name="green_common">#58c9c0</color>
     <color name="green_common_tran_70p">#B252CACE</color>
 
@@ -35,18 +34,22 @@
     <color name="tran_a50">#7F000000</color>
     <color name="tran_a10">#1A000000</color>
     <color name="tran">#00000000</color>
+
+    <color name="white_normal">#FFFFFF</color>
+    <color name="white_common_bg">#EEEEEE</color>
     <color name="white_a90">#E6FFFFFF</color>
     <color name="white_a70">#B3FFFFFF</color>
     <color name="white_a60">#99FFFFFF</color>
     <color name="white_a50">#7FFFFFFF</color>
     <color name="white_a30">#4DFFFFFF</color>
-    <color name="white_a10">#1AFFFFFF</color>
     <color name="white_a20">#33FFFFFF</color>
+    <color name="white_a10">#1AFFFFFF</color>
     <color name="black_a10">#1A000000</color>
     <color name="black_a20">#33000000</color>
     <color name="black_a50">#7F000000</color>
     <color name="black">#333333</color>
     <color name="white_press">#7FFFFFFF</color>
+
     <color name="green_tips">#74B12A</color>
     <color name="grey_white_bg">#F3F3F3</color>
     <color name="grey_hint">#AAAAAA</color>

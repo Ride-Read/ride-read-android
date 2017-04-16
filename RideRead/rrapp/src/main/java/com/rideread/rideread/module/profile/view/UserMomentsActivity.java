@@ -24,14 +24,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by SkyXiao on 2017/4/6.
  */
 
 public class UserMomentsActivity extends BaseActivity {
-    public   final static String SELECTED_UID = "selected_uid";
+    public final static String SELECTED_UID = "selected_uid";
     public final static String SELECTED_USERNAME = "selected_username";
 
 
@@ -57,8 +56,13 @@ public class UserMomentsActivity extends BaseActivity {
     public void initView() {
         mSelectedUid = getIntent().getIntExtra(SELECTED_UID, UserUtils.getUid());
         String username = getIntent().getStringExtra(SELECTED_USERNAME);
-        if (TextUtils.isEmpty(username)) username = "阅圈";
-        new TitleBuilder(this).setTitleText(mSelectedUid == UserUtils.getUid() ? getString(R.string.my_circle) : username).IsBack(true).build();
+        if (TextUtils.isEmpty(username)) {
+            username = "阅圈";
+
+        } else {
+            username = username + "的阅圈";
+        }
+        new TitleBuilder(this).setTitleText(mSelectedUid == UserUtils.getUid() ? getString(R.string.my_circle) : username).IsBack(true).setLeftOnClickListener(v -> finish()).build();
 
         mMoments = new ArrayList<>();
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
@@ -129,8 +133,4 @@ public class UserMomentsActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.img_top_bar_left)
-    public void onViewClicked() {
-        finish();
-    }
 }

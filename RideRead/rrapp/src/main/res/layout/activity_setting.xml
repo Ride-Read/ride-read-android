@@ -4,6 +4,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/white_bg"
               android:orientation="vertical">
 
     <include
@@ -107,5 +108,5 @@
         android:background="@drawable/btn_green_sel"
         android:text="退出账号"
         android:textColor="@color/white_normal"
-        android:textSize="@dimen/text_def_size"/>
+        android:textSize="@dimen/def_text_size"/>
 </LinearLayout>

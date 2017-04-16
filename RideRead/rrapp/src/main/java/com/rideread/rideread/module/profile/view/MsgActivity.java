@@ -11,12 +11,12 @@ import com.rideread.rideread.common.util.TitleBuilder;
 public class MsgActivity extends BaseActivity {
     @Override
     public int getLayoutRes() {
-        return R.layout.activity_setting;
+        return R.layout.activity_common_recycle;
     }
 
     @Override
     public void initView() {
-        new TitleBuilder(this).setTitleText("消息").IsBack(true).build();
+        new TitleBuilder(this).setTitleText("消息").IsBack(true).setLeftOnClickListener(v -> finish()).build();
     }
 
 }
