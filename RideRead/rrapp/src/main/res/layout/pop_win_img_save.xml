@@ -13,7 +13,7 @@
         android:layout_height="40dp"
         android:background="@drawable/btn_green_sel"
         android:text="保存图片"
-        android:textColor="@color/white"
+        android:textColor="@color/white_normal"
         />
 
     <Button
@@ -23,7 +23,7 @@
         android:layout_marginTop="10dip"
         android:background="@drawable/btn_green_sel"
         android:text="@string/cancel"
-        android:textColor="@color/white"
+        android:textColor="@color/white_normal"
         android:textSize="@dimen/text_def_size"
         />
 </LinearLayout>

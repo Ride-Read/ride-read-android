@@ -3,7 +3,7 @@
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white"
+              android:background="@color/white_normal"
               android:gravity="bottom"
               android:orientation="vertical">
 
@@ -69,7 +69,7 @@
             android:layout_marginRight="12dp"
             android:background="@drawable/btn_green_sel"
             android:text="@string/send"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white_normal"/>
     </LinearLayout>
 
 

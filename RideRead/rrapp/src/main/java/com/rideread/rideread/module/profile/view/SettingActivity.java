@@ -7,6 +7,7 @@ import com.kyleduo.switchbutton.SwitchButton;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
 import com.rideread.rideread.common.util.TitleBuilder;
+import com.rideread.rideread.common.util.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,6 +38,7 @@ public class SettingActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_top_bar_left:
+                finish();
                 break;
             case R.id.tv_clear_cache:
                 break;
@@ -45,6 +47,8 @@ public class SettingActivity extends BaseActivity {
             case R.id.tv_use_guide:
                 break;
             case R.id.btn_logout:
+                UserUtils.logout();
+                finish();
                 break;
         }
     }

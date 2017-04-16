@@ -253,7 +253,6 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         @Override
         protected void onItemImageClick(Context context, SimpleDraweeView imageView, int index, List<String> list) {
-            super.onItemImageClick(context, imageView, index, list);
 
             StringBuilder urls = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {

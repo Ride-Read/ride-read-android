@@ -4,10 +4,15 @@ package com.rideread.rideread.module.profile.view;
 import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amap.api.maps.AMap;
+import com.amap.api.maps.CameraUpdateFactory;
+import com.amap.api.maps.TextureMapView;
+import com.amap.api.maps.UiSettings;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
@@ -16,6 +21,7 @@ import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.data.result.UserInfo;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.rideread.rideread.R.id.tv_name;
@@ -24,7 +30,7 @@ import static com.rideread.rideread.R.id.tv_name;
 public class ProfileFragment extends BaseFragment {
 
 
-    @BindView(R.id.img_map_bg) ImageView mImgMapBg;
+    @BindView(R.id.map_view_bg) TextureMapView mMapView;
     @BindView(R.id.img_avatar) SimpleDraweeView mImgAvatar;
     @BindView(tv_name) TextView mTvName;
     @BindView(R.id.tv_signature) TextView mTvSignature;
@@ -32,6 +38,8 @@ public class ProfileFragment extends BaseFragment {
     @BindView(R.id.tv_attention) TextView mTvAttention;
     @BindView(R.id.tv_fans) TextView mTvFans;
 
+    private AMap mAMap;
+    private UiSettings mUiSettings;//定义一个UiSettings对象
     private UserInfo mUserInfo;
 
     @Override
@@ -40,7 +48,24 @@ public class ProfileFragment extends BaseFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(getLayoutRes(), container, false);
+        }
+        ButterKnife.bind(this, mRootView);
+        mMapView.onCreate(savedInstanceState);
+        initView();
+        return mRootView;
+    }
+
+    @Override
     public void initView() {
+        mAMap = mMapView.getMap();
+        mUiSettings = mAMap.getUiSettings();//实例化UiSettings类对象
+        mUiSettings.setZoomControlsEnabled(false);
+        mAMap.moveCamera(CameraUpdateFactory.zoomTo(1F));
+
+
         mUserInfo = UserUtils.getCurUser();
         ImgLoader.getInstance().displayImage(mUserInfo.getFaceUrl(), mImgAvatar);
         mTvName.setText(mUserInfo.getUsername());
@@ -55,6 +80,29 @@ public class ProfileFragment extends BaseFragment {
         mTvFans.setText("阅粉 " + mUserInfo.getFollower());
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle bundle) {
+        super.onSaveInstanceState(bundle);
+        mMapView.onSaveInstanceState(bundle);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
 
     @OnClick({R.id.img_avatar, R.id.btn_personality_map, R.id.tv_msg, R.id.tv_attention, R.id.tv_fans, R.id.btn_post_date, R.id.btn_my_circle, R.id.btn_my_collect, R.id.btn_invite_friend, R.id.btn_setting})
     public void onViewClicked(View view) {
@@ -72,11 +120,11 @@ public class ProfileFragment extends BaseFragment {
                 break;
             case R.id.tv_attention:
                 bundle.putInt(FollowUserActivity.USER_TYPE, FollowUserActivity.USER_TYPE_ATTENTION);
-                getBaseActivity().gotoActivity(FollowUserActivity.class,bundle);
+                getBaseActivity().gotoActivity(FollowUserActivity.class, bundle);
                 return;
             case R.id.tv_fans:
                 bundle.putInt(FollowUserActivity.USER_TYPE, FollowUserActivity.USER_TYPE_FANS);
-                getBaseActivity().gotoActivity(FollowUserActivity.class,bundle);
+                getBaseActivity().gotoActivity(FollowUserActivity.class, bundle);
                 return;
             case R.id.btn_post_date:
                 targetActivity = PostDateActivity.class;

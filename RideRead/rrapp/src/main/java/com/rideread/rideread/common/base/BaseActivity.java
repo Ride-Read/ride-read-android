@@ -8,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MotionEvent;
 
+import com.bugtags.library.Bugtags;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.dialog.ProgressDialogFragment;
 import com.rideread.rideread.common.event.HideLoadingEvent;
@@ -56,13 +58,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        Bugtags.onResume(this);
         EventBus.getDefault().register(this);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Bugtags.onPause(this);
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        //注：回调 3
+        Bugtags.onDispatchTouchEvent(this, event);
+        return super.dispatchTouchEvent(event);
     }
 
     /**

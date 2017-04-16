@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/read_circle"
-            android:textColor="@color/white"
+            android:textColor="@color/white_normal"
             android:textSize="@dimen/text_def_size"/>
 
         <ImageButton

@@ -195,7 +195,6 @@ public class UserMomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @Override
         protected void onItemImageClick(Context context, SimpleDraweeView imageView, int index, List<String> list) {
-            super.onItemImageClick(context, imageView, index, list);
 
             StringBuilder urls = new StringBuilder();
             for (int i = 0; i < list.size(); i++) {

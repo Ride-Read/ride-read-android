@@ -158,6 +158,13 @@ public class ApiUtils {
         setCurrentCall(getApiStore().showUserInfo(getParams(params)), callBack);
     }
 
+    public static void searchUser(final String shortname, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("shortname", shortname);
+        setCurrentCall(getApiStore().searchUser(getParams(params)), callBack);
+    }
+
     public static void update(final int userId, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         //TODO
         if (!onStart()) return;

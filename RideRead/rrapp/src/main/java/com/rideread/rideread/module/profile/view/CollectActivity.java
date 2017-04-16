@@ -22,9 +22,5 @@ public class CollectActivity extends BaseActivity {
         new TitleBuilder(this).setTitleText("我的收藏").IsBack(true).build();
     }
 
-    @OnClick(R.id.btn_logout)
-    public void onClick() {
-        UserUtils.logout();
-        finish();
-    }
+
 }

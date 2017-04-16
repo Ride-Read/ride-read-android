@@ -143,4 +143,15 @@ dependencies {
     compile 'jp.wasabeef:picasso-transformations:2.1.2'
 
     compile 'com.kyleduo.switchbutton:library:1.4.5'
+    compile 'com.bugtags.library:bugtags-lib:2.2.3'
+}
+apply plugin: 'com.bugtags.library.plugin'
+bugtags {
+    //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表
+    appKey "b5f67bdeaa3897a93fa83553c4574397"  //这里是你的 appKey
+    appSecret "81e535be64c6e73345ed224dbf741201"    //这里是你的 appSecret，管理员在设置页可以查看
+    mappingUploadEnabled true
+
+    //网络跟踪功能配置(企业版)
+    trackingNetworkEnabled false
 }

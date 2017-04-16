@@ -11,10 +11,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:textColor="@color/white"
+        android:textColor="@color/white_normal"
         android:textSize="@dimen/text_def_size"/>
 
     <android.support.v4.view.ViewPager

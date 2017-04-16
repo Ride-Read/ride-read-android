@@ -3,6 +3,7 @@ package com.rideread.rideread.common.util;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
+import com.bugtags.library.Bugtags;
 import com.rideread.rideread.data.CurCache;
 import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.Storage;
@@ -34,6 +35,9 @@ public class Utils {
         CurCache.init();
         ScreenUtils.init(context);
         AMapLocationUtils.init();
+
+        //在这里初始化
+        Bugtags.start("b5f67bdeaa3897a93fa83553c4574397", context, Bugtags.BTGInvocationEventNone);
         //        PackageUtils.init(context);
     }
 

@@ -56,10 +56,10 @@ public interface ApiStore {
     Call<BaseModel<UserInfo>> register(@QueryMap Map<String, String> params);
 
     @POST("users/followers")
-    Call<BaseModel<List<FollowUser>>>  followers(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<FollowUser>>> followers(@QueryMap Map<String, String> params);
 
     @POST("users/followings")
-    Call<BaseModel<List<FollowUser>>>  followings(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<FollowUser>>> followings(@QueryMap Map<String, String> params);
 
     @POST("users/follow")
     Call<BaseModel<DefJsonResult>> follow(@QueryMap Map<String, String> params);
@@ -70,6 +70,9 @@ public interface ApiStore {
 
     @POST("users/show_user_info")
     Call<BaseModel<DefJsonResult>> showUserInfo(@QueryMap Map<String, String> params);
+
+    @POST("users/search_follower_or_following")
+    Call<BaseModel<DefJsonResult>> searchUser(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST("users/update")

@@ -4,8 +4,6 @@
     <string name="phone_account">手机 / 骑阅号</string>
     <string name="please_fill_pwd">输入密码</string>
     <string name="forget_password">忘记密码?</string>
-    <string name="register">注册</string>
-    <string name="login">登录</string>
     <string name="login_by_third_platform">第三方账号登录</string>
     <string name="please_fill_invite_code">填写邀请码</string>
     <string name="next">下一步</string>
@@ -15,24 +13,12 @@
     <string name="set_password">设置密码</string>
     <string name="password_limit">6~16个字符</string>
     <string name="password_confirm">确认密码</string>
-    <string name="nick_limit">6~20个字符</string>
-    <string name="set_nick">设置用户名</string>
-    <string name="ride_read_name">骑阅名</string>
-    <string name="save_and_not_modify">保存后无法修改</string>
     <string name="complete">完成</string>
-    <string name="reset_pwd">重置密码</string>
-    <string name="user_agreement_text_read">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus
-        accumsan et viverra justo commodo. Proin sodales pulvinar tempor.
-        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-        ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus
-        mollis orci, sed rhoncus sapien nunc eget.</string>
 
     <string name="main_text_map">阅图</string>
     <string name="main_text_circle">阅圈</string>
     <string name="main_text_mine">我的</string>
 
-    <string name="mine_setting_contact_text_email">邮箱：156456456454151@qq.com</string>
     <string-array name="circle_tab_title">
         <item>最新</item>
         <item>关注</item>
@@ -47,10 +33,7 @@
     <string name="details">详情</string>
     <string name="invite_user_id">邀请人的骑阅号</string>
     <string name="avatar">头像</string>
-    <string name="register_as_agree">注册即视为同意</string>
-    <string name="user_protocol">骑阅用户协议</string>
     <string name="label">标签</string>
-    <string name="create_my_tag">创建自己的标签</string>
     <string name="cancel">取消</string>
     <string name="confirm">确定</string>
     <string name="knew">知道了</string>
@@ -60,7 +43,6 @@
     <string name="resend">重新发送</string>
     <string name="phone_rrid_cannot_null">手机号/骑阅号不能为空</string>
     <string name="pwd_cannot_null">密码不能为空</string>
-    <string name="login_error">登录异常</string>
     <string name="please_fill_correct_phone_number">请填写11位正确手机号</string>
     <string name="profile">我的</string>
     <string name="post_moment">发个阅圈</string>
@@ -68,7 +50,6 @@
     <string name="transition_image">transition_image</string>
     <string name="send">发送</string>
 
-    <string name="personal_info">个人资料</string>
     <string name="job">职业</string>
     <string name="hometown">家乡</string>
     <string name="locale">所在地</string>
@@ -91,5 +72,6 @@
     <string name="thumbs_up_user">点赞用户</string>
     <string name="attention">关注</string>
     <string name="fans">粉丝</string>
+    <string name="personality_map">个性地图</string>
 
 </resources>

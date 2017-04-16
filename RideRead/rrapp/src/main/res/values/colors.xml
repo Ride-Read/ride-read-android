@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <drawable name="abc_ic_ab_back_mtrl_am_alpha">@drawable/abc_ic_ab_back_material</drawable>
+
     <color name="colorPrimary">@color/green_common</color>
     <color name="colorPrimaryDark">@color/green_common</color>
     <color name="colorAccent">#FF4081</color>
@@ -13,20 +13,14 @@
     <color name="gray_hint">#c1c0c0</color>
 
 
-
-    <color name="blue_btn_normal">#1E90FF</color>
-    <color name="blue_btn_pressed">#4169E1</color>
-
-    <color name="gray_main_top_line">#999999</color>
     <color name="gray_text_55">#555555</color>
     <color name="gray_comment_text">#333333</color>
     <color name="blue_gallery">#52cace</color>
     <color name="white_bg">#F2F2F2</color>
 
 
-
     <color name="gray_btn_bg">#E5E5E5</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white_normal">#FFFFFF</color>
     <color name="white_common_bg">#EEEEEE</color>
     <color name="green_common">#58c9c0</color>
     <color name="green_common_tran_70p">#B252CACE</color>
@@ -69,5 +63,5 @@
     <color name="orange_start">#FFC233</color>
     <color name="red_end">#FF5555</color>
     <color name="blue_a20">#3338AFEE</color>
-
+    <drawable name="abc_ic_ab_back_mtrl_am_alpha">@drawable/abc_ic_ab_back_material</drawable>
 </resources>

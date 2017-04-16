@@ -18,7 +18,7 @@
         android:paddingLeft="20dip"
         android:paddingRight="20dip"
         android:text="2个消息"
-        android:textColor="@color/white"
+        android:textColor="@color/white_normal"
         android:textSize="13sp"/>
 
 </FrameLayout>

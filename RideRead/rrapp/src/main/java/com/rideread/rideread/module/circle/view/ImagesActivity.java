@@ -32,7 +32,6 @@ import com.rideread.rideread.common.widget.SaveImgPopWin;
 import java.io.File;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import me.relex.photodraweeview.PhotoDraweeView;
 
 import static android.os.Build.VERSION.SDK_INT;
@@ -72,9 +71,6 @@ public class ImagesActivity extends BaseActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         super.onCreate(savedInstanceState);
-        setContentView(getLayoutRes());
-        ButterKnife.bind(this);
-        initView();
     }
 
     @Override
@@ -87,7 +83,7 @@ public class ImagesActivity extends BaseActivity {
             mTvImgIndex.setVisibility(View.VISIBLE);
             mTvImgIndex.setText((index + 1) + "/" + count);
         }
-        mCurImgUrl = imageArray[0];
+        mCurImgUrl = imageArray[index];
 
         mImgViewpager.setAdapter(new SamplePagerAdapter(getLayoutInflater(), imageArray));
         mImgViewpager.setCurrentItem(index);
@@ -181,7 +177,7 @@ public class ImagesActivity extends BaseActivity {
 
             final PhotoDraweeView photoDraweeView = (PhotoDraweeView) view.findViewById(R.id.pdv_image);
             PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
-            controller.setUri(Uri.parse(mCurImgUrl));
+            controller.setUri(Uri.parse(imageArray[position]));
             controller.setOldController(photoDraweeView.getController());
             controller.setControllerListener(new BaseControllerListener<ImageInfo>() {
                 @Override
