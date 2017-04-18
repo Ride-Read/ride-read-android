@@ -3,7 +3,8 @@
 
     <color name="colorPrimary">@color/green_common</color>
     <color name="colorPrimaryDark">@color/green_common</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">@color/green_common</color>
+    <!--<color name="colorAccent">#FF4081</color>-->
 
 
     <!--命名规范：颜色名称_模块_用途_状态（可有可无）,或者是共用的颜色 common_颜色名称-->
@@ -20,6 +21,7 @@
 
 
     <color name="gray_btn_bg">#E5E5E5</color>
+    <color name="gray_normal">#D6D6D6</color>
 
     <color name="green_common">#58c9c0</color>
     <color name="green_common_tran_70p">#B252CACE</color>

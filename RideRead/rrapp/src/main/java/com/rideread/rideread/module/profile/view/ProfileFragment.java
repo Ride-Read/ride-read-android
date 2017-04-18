@@ -29,7 +29,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
 public class ProfileFragment extends BaseFragment {
 
 
@@ -164,7 +163,7 @@ public class ProfileFragment extends BaseFragment {
                 targetActivity = CollectActivity.class;
                 break;
             case R.id.btn_invite_friend:
-                ShareUtils.share(getBaseActivity(), R.string.share_text);
+                ShareUtils.share(getBaseActivity(), getString(R.string.share_text, mUserInfo.getRideReadId()));
                 //                targetActivity = InviteActivity.class;
                 return;
             case R.id.btn_setting:

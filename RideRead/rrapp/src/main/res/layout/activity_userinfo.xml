@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
@@ -75,24 +76,16 @@
                 <TextView
                     style="@style/common_icon_item_style"
                     android:layout_height="match_parent"
-                    android:drawableRight="@null"
                     android:text="@string/sex"
                     />
 
-                <Switch
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_marginRight="20dp"
-                    android:checked="true"
-                    android:textOff="女"
-                    android:textOn="男"/>
 
                 <TextView
                     android:id="@+id/tv_sex"
                     style="@style/def_text_small_style"
                     android:layout_gravity="center_vertical|right"
                     android:layout_marginRight="36dp"
+                    tools:text="男"
                     />
             </FrameLayout>
 
@@ -117,13 +110,29 @@
                     />
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_signature"
-                style="@style/common_icon_item_style"
-                android:layout_marginTop="0.5dp"
-                android:text="@string/signature"
-                />
 
+            <FrameLayout
+                android:id="@+id/fl_signature"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/def_item_height"
+                android:layout_marginTop="4dp">
+
+                <TextView
+                    style="@style/common_icon_item_style"
+                    android:layout_height="match_parent"
+                    android:text="@string/signature"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_signature"
+                    style="@style/def_text_small_style"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="36dp"
+                    android:ellipsize="end"
+                    android:maxWidth="200dp"
+                    />
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fl_birthday"
@@ -167,12 +176,27 @@
                     />
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_school"
-                style="@style/common_icon_item_style"
-                android:layout_marginTop="0.5dp"
-                android:text="@string/school"
-                />
+
+            <FrameLayout
+                android:id="@+id/fl_school"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/def_item_height"
+                android:layout_marginTop="0.5dp">
+
+                <TextView
+                    style="@style/common_icon_item_style"
+                    android:layout_height="match_parent"
+                    android:text="@string/school"
+                    />
+
+
+                <TextView
+                    android:id="@+id/tv_school"
+                    style="@style/def_text_small_style"
+                    android:layout_gravity="center_vertical|right"
+                    android:layout_marginRight="36dp"
+                    />
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/fl_locale"
@@ -225,7 +249,7 @@
                 <TextView
                     style="@style/common_icon_item_style"
                     android:layout_height="match_parent"
-                    android:text="@string/job"
+                    android:text="@string/career"
                     />
 
                 <TextView

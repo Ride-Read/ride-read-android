@@ -27,6 +27,36 @@
         <item>登录</item>
         <item>注册</item>
     </string-array>
+    <string-array name="sex_choices">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="tags_label">
+        <item>随性</item>
+        <item>喜欢简单</item>
+        <item>理想主义</item>
+        <item>热血</item>
+        <item>安静</item>
+        <item>萌萌哒</item>
+        <item>女汉子</item>
+        <item>强迫症</item>
+    </string-array>
+    <string-array name="careers">
+        <item>学生</item>
+        <item>IT/互联网/通信</item>
+        <item>媒体/公关</item>
+        <item>法律</item>
+        <item>金融</item>
+        <item>咨询</item>
+        <item>文化/艺术</item>
+        <item>影视/娱乐</item>
+        <item>医药/健康</item>
+        <item>房地产/建筑</item>
+        <item>教育/科研</item>
+        <item>能源/环保</item>
+        <item>政府机构</item>
+        <item>其他</item>
+    </string-array>
 
     <string name="nonsupport_message_type">不支持的消息类型</string>
 
@@ -51,7 +81,7 @@
     <string name="transition_image">transition_image</string>
     <string name="send">发送</string>
 
-    <string name="job">职业</string>
+    <string name="career">职业</string>
     <string name="hometown">家乡</string>
     <string name="locale">所在地</string>
     <string name="school">毕业/在读学校</string>
@@ -76,7 +106,9 @@
     <string name="personality_map">个性地图</string>
     <string name="setting">设置</string>
     <string name="share">分享</string>
-    <string name="share_text">发现了一款非常精彩的App「骑阅」，骑行者都认同的骑行爱好者社区，旅途分享，精彩无限！这是我的骑阅号：%1$s 诚邀您加入！推荐~：https://www.pgyer.com/RideRead_Ad</string>
+    <string name="share_text">发现一款非常棒的App「骑阅」，骑行者都认可的骑行爱好者社区，旅途分享，精彩无限！这是我的骑阅号：%1$s 诚邀您加入！推荐~：https://www.pgyer.com/RideRead_Ad</string>
+    <string name="message">消息</string>
+    <string name="sure2unfollow">确定要取消关注吗？</string>
 
 
 </resources>

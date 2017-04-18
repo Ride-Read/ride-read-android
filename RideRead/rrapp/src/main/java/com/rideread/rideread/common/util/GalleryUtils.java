@@ -2,13 +2,10 @@ package com.rideread.rideread.common.util;
 
 import android.app.Activity;
 
-import com.rideread.rideread.common.event.SelectPicEvent;
 import com.rideread.rideread.data.Logger;
 import com.yancy.gallerypick.config.GalleryConfig;
 import com.yancy.gallerypick.config.GalleryPick;
 import com.yancy.gallerypick.inter.IHandlerCallBack;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,8 @@ public class GalleryUtils {
     private GalleryConfig galleryConfig;
     private IHandlerCallBack iHandlerCallBack;
 
-    public void getPictures(Activity mActivity,int countLimit) {
+
+    public void getPictures(Activity mActivity, int countLimit,OnGetPicsCallBack callBack) {
         iHandlerCallBack = new IHandlerCallBack() {
             @Override
             public void onStart() {
@@ -38,7 +36,7 @@ public class GalleryUtils {
                     Logger.i(TAG, s);
                     path.add(s);
                 }
-                EventBus.getDefault().postSticky(new SelectPicEvent(path));
+                callBack.onGetPictures(path);
             }
 
             @Override
@@ -70,6 +68,11 @@ public class GalleryUtils {
                 .build();
         GalleryPick.getInstance().setGalleryConfig(galleryConfig).open(mActivity);
 
+    }
+
+
+    public interface OnGetPicsCallBack {
+        void onGetPictures(List<String> paths);
     }
 
 }

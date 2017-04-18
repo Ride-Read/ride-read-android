@@ -44,6 +44,8 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="2dp"
             android:drawablePadding="8dp"
+            android:shadowDx="4"
+            android:shadowDy="4"
             android:drawableRight="@drawable/ic_sex_female"
             android:textSize="@dimen/def_title_size"
             app:layout_constraintLeft_toRightOf="@id/img_avatar"

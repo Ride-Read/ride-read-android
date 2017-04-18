@@ -111,16 +111,17 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         if (TYPE_ITEM == tHolder.getItemViewType()) {
             Moment moment = mMomentList.get(position);
+            MomentUser user = moment.getUser();
+            boolean isAttent = 0 == user.getIsFollowed();
 
             MomentViewHolder holder = (MomentViewHolder) tHolder;
             holder.mClMomentLayout.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
+                bundle.putInt(MomentDetailActivity.USER_TYPE, isAttent ? MomentDetailActivity.USER_TYPE_ATTENTED : MomentDetailActivity.USER_TYPE_NEARBY);
                 mActivity.gotoActivity(MomentDetailActivity.class, bundle);
             });
 
-
-            MomentUser user = moment.getUser();
 
             ImgLoader.getInstance().displayImage(user.getFaceUrl(), holder.mImgAvatar);
             holder.mTvName.setText(user.getUsername());
@@ -148,7 +149,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 holder.mNineGridImgView.setVisibility(View.GONE);
             }
 
-            boolean isAttent = 0 == user.getIsFollowed();
+
             holder.mBtnAttention.setBackgroundResource(isAttent ? R.drawable.icon_attented : R.drawable.icon_attention);
             holder.mBtnAttention.setOnClickListener(v -> {
                 if (isAttent) {
@@ -169,16 +170,18 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                     });
                 }
             });
-
-            holder.mBtnLike.setOnClickListener(v -> ApiUtils.addThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+            List<ThumbsUpUser> thumbsUp = moment.getThumbsUp();
+            int likeCount = ListUtils.isEmpty(thumbsUp) ? 0 : thumbsUp.size();
+            holder.mBtnLike.setOnClickListener(v -> ApiUtils.updateThumbsUp(moment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
                 @Override
                 protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
-                    ToastUtils.show("点赞成功");
+                    ToastUtils.show("成功点赞");
+                    holder.mTvLikeCount.setText((likeCount + 1) + "");
                 }
             }));
             holder.mTvTime.setText(getFriendlyTimeSpanByNow(moment.getCreatedAt()));
-            List<ThumbsUpUser> thumbsUp = moment.getThumbsUp();
-            int likeCount = ListUtils.isEmpty(thumbsUp) ? 0 : thumbsUp.size();
+
+
             holder.mTvLikeCount.setText(likeCount + "");
             List<Comment> comments = moment.getComment();
             int commentSize = ListUtils.isEmpty(comments) ? 0 : comments.size();
@@ -209,7 +212,6 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @BindView(R.id.tv_loc_info) TextView mTvLocInfo;
         @BindView(R.id.btn_like) ImageButton mBtnLike;
         @BindView(R.id.tv_like_count) TextView mTvLikeCount;
-        @BindView(R.id.btn_comment) ImageButton mBtnComment;
 
         @BindView(R.id.tv_comment_count) TextView mTvCommentCount;
 

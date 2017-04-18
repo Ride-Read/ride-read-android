@@ -2,6 +2,7 @@ package com.rideread.rideread.function.net.retrofit;
 
 import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
+import com.rideread.rideread.data.result.DetailUserInfo;
 import com.rideread.rideread.data.result.FollowUser;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
@@ -70,14 +71,14 @@ public interface ApiStore {
     Call<BaseModel<DefJsonResult>> unfollow(@QueryMap Map<String, String> params);
 
     @POST("users/show_user_info")
-    Call<BaseModel<DefJsonResult>> showUserInfo(@QueryMap Map<String, String> params);
+    Call<BaseModel<DetailUserInfo>> showUserInfo(@QueryMap Map<String, String> params);
 
     @POST("users/search_follower_or_following")
     Call<BaseModel<SearchUsers>> searchUser(@QueryMap Map<String, String> params);
 
     @FormUrlEncoded
     @POST("users/update")
-    Call<BaseModel<DefJsonResult>> update(@FieldMap Map<String, String> params);
+    Call<BaseModel<UserInfo>> update(@FieldMap Map<String, String> params);
 
     @POST("moments/post_moment")
     Call<BaseModel<DefJsonResult>> postMoment(@QueryMap Map<String, String> params);
@@ -85,8 +86,8 @@ public interface ApiStore {
     @POST("moments/show_user")
     Call<BaseModel<List<Moment>>> showUserMoments(@QueryMap Map<String, String> params);
 
-    @POST("moments/add_thumbsup")
-    Call<BaseModel<DefJsonResult>> addThumbsUp(@QueryMap Map<String, String> params);
+    @POST("moments/update_thumbsup")
+    Call<BaseModel<DefJsonResult>> updateThumbsUp(@QueryMap Map<String, String> params);
 
     @POST("moments/add_comment")
     Call<BaseModel<Comment>> addComment(@QueryMap Map<String, String> params);

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_normal"
+              android:gravity="bottom"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/include_simple_topbar"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0"
+        android:overScrollMode="never">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:divider="#C8C7CC"
+                android:dividerHeight="0dp"
+                android:overScrollMode="never"
+                />
+
+            <com.rideread.rideread.common.widget.RecyclerViewHeader
+                android:id="@+id/view_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:background="@color/white_bg"
+                android:paddingBottom="8dp">
+
+                <include layout="@layout/view_user_info"/>
+
+            </com.rideread.rideread.common.widget.RecyclerViewHeader>
+        </FrameLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_follow_action"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/def_item_height"
+        android:background="@drawable/bg_white_gray_stroke"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_attention"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="12dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_gray_sel"
+            android:drawableLeft="@drawable/ic_tick_mini"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="4dp"
+            android:text="@string/attention"
+            android:textColor="@color/gray_text_55"
+            android:textSize="@dimen/def_text_size_small"/>
+
+        <Button
+            android:id="@+id/btn_message"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_green_sel"
+            android:drawableLeft="@drawable/ic_msg_mini"
+            android:drawablePadding="8dp"
+            android:gravity="center"
+            android:paddingBottom="4dp"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            android:paddingTop="4dp"
+            android:text="@string/message"
+            android:textColor="@color/white_normal"
+            android:textSize="@dimen/def_text_size_small"/>
+    </LinearLayout>
+</LinearLayout>

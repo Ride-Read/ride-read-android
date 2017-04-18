@@ -112,31 +112,28 @@
 
         <ImageButton
             android:id="@+id/btn_like"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="6dip"
-            android:background="@drawable/ic_like"/>
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@color/tran"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_like"/>
 
         <TextView
             android:id="@+id/tv_like_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="20dip"
+            android:layout_marginRight="12dip"
             android:text="20"
             android:textColor="@color/gray_text"
             android:textSize="@dimen/def_text_size"/>
 
-        <ImageButton
-            android:id="@+id/btn_comment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dip"
-            android:background="@drawable/ic_comment"/>
 
         <TextView
             android:id="@+id/tv_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_comment"
+            android:drawablePadding="8dp"
             android:text="6"
             android:textColor="@color/gray_text"
             android:textSize="@dimen/def_text_size"/>

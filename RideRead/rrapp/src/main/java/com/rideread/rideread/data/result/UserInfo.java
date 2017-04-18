@@ -28,6 +28,20 @@ public class UserInfo extends UserBaseInfo {
 
     private String rideReadId;
 
+    public UserInfo(String faceUrl, String nick, int sex, List<String> labels, String signature, String school, String location, String homeTown, String career) {
+        super();
+        this.faceUrl = faceUrl;
+        this.username = nick;
+        this.sex = sex;
+        this.tags = labels;
+        this.signature = signature;
+        this.school = school;
+        this.location = location;
+        this.hometown = homeTown;
+        this.career = career;
+
+    }
+
 
     public int getSex() {
         return sex;

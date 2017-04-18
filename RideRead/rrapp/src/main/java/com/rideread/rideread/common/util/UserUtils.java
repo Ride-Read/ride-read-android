@@ -56,6 +56,10 @@ public final class UserUtils {
         Storage.put(UserUtils.USER_TOKEN, userInfo.getToken());
         Storage.put(UserUtils.USER_PHONE, userInfo.getPhonenumber());
         Storage.put(UserUtils.CUR_USER_INFO, userInfo);
+    }
 
+    public static void saveUserInfo(UserInfo userInfo){
+        CurCache.put(UserUtils.CUR_USER_INFO, userInfo);
+        Storage.put(UserUtils.CUR_USER_INFO, userInfo);
     }
 }

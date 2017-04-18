@@ -72,6 +72,7 @@ public class MapFragment extends BaseFragment implements LocationSource {
         mAMap.setMyLocationStyle(myLocationStyle);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+        AMapLocationUtils.init();
 
     }
 

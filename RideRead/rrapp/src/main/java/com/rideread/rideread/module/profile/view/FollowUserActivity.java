@@ -23,6 +23,7 @@ import butterknife.BindView;
 
 /**
  * Created by SkyXiao on 2017/4/6.
+ * 关注人||粉丝界面
  */
 
 public class FollowUserActivity extends BaseActivity {
@@ -142,7 +143,6 @@ public class FollowUserActivity extends BaseActivity {
         isLoadingMore = false;
         if (mSwipeRefreshLayout.isRefreshing()) mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
 
 }

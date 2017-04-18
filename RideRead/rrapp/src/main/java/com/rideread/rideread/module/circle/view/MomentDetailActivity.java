@@ -54,6 +54,11 @@ import butterknife.OnClick;
 public class MomentDetailActivity extends BaseActivity {
 
     public static String SELECTED_MOMENT = "selected_moment";
+    public static int USER_TYPE_ATTENTED = 1;
+    public static int USER_TYPE_FANS = 2;
+    public static int USER_TYPE_NEARBY = 3;
+    public static String USER_TYPE = "user_type";
+    private int curUserType;
 
     @BindView(R.id.lv_comments) ListView mLvComments;
     @BindView(R.id.edt_comment) EditText mEdtComment;
@@ -91,6 +96,7 @@ public class MomentDetailActivity extends BaseActivity {
         View momentHeader = initMomentHeader();
 
         mCurMoment = (Moment) getIntent().getExtras().getSerializable(SELECTED_MOMENT);
+        curUserType = getIntent().getIntExtra(USER_TYPE, USER_TYPE_NEARBY);
         if (null == mCurMoment) {
             ToastUtils.show("无数据");
             return;
@@ -267,7 +273,7 @@ public class MomentDetailActivity extends BaseActivity {
                 }
             });
         } else {
-            ApiUtils.addThumbsUp(mCurMoment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+            ApiUtils.updateThumbsUp(mCurMoment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
                 @Override
                 protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                     isThumbsUp = !isThumbsUp;
@@ -323,7 +329,7 @@ public class MomentDetailActivity extends BaseActivity {
             ToastUtils.show("加载动态失败");
             return;
         }
-        ApiUtils.collectMoment(mCurMoment.getMid(), new BaseCallback<BaseModel<DefJsonResult>>() {
+        ApiUtils.collectMoment(mCurMoment.getMid(), curUserType, new BaseCallback<BaseModel<DefJsonResult>>() {
             @Override
             protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                 ToastUtils.show("收藏成功");

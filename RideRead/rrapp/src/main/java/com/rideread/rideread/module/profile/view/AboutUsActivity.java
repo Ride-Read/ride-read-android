@@ -9,6 +9,7 @@ import com.rideread.rideread.common.util.AppUtils;
 import com.rideread.rideread.common.util.ShareUtils;
 import com.rideread.rideread.common.util.TitleBuilder;
 import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.UserUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,7 +29,7 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     public void initView() {
         new TitleBuilder(this).setTitleText("关于骑阅").IsBack(true).setLeftOnClickListener(v -> finish()).build();
-        mTvVersion.setText("当前版本 V"+ AppUtils.getVersionName());
+        mTvVersion.setText("当前版本 V" + AppUtils.getVersionName());
     }
 
 
@@ -45,7 +46,7 @@ public class AboutUsActivity extends BaseActivity {
                 ToastUtils.show("用户协议");
                 break;
             case R.id.tv_share:
-                ShareUtils.share(this, R.string.share_text);
+                ShareUtils.share(this, getString(R.string.share_text, UserUtils.getCurUser().getRideReadId()));
                 break;
         }
     }

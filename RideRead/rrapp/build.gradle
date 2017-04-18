@@ -103,14 +103,6 @@ dependencies {
 
     compile 'com.badoo.mobile:android-weak-handler:1.1'
 
-//    compile 'com.afollestad.material-dialogs:core:0.9.4.2'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.3@aar') {
-        transitive = true
-        exclude module: 'appcompat-v7', group: 'com.android.support'
-        exclude module: 'support-annotations', group: 'com.android.support'
-        exclude module: 'recyclerview-v7', group: 'com.android.support'
-        exclude module: 'support-v4', group: 'com.android.support'
-    }
     //七牛云，图片上传、存储
     compile 'com.qiniu:qiniu-android-sdk:7.3.3'
     // LeanCloud 基础包
@@ -137,14 +129,14 @@ dependencies {
 
     compile 'com.github.YancyYe:GalleryPick:1.2.1'
 
-//    compile 'com.jaeger.ninegridimageview:library:1.0.2'
-
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'jp.wasabeef:picasso-transformations:2.1.2'
 
     compile 'com.kyleduo.switchbutton:library:1.4.5'
     compile 'com.bugtags.library:bugtags-lib:2.2.3'
+    compile 'com.afollestad.material-dialogs:commons:0.9.4.3'
 }
+
 apply plugin: 'com.bugtags.library.plugin'
 bugtags {
     //自动上传符号表功能配置，如果需要根据 build varint 配置，请参考帮助中心->符号表->Android 符号表->配置自动上传符号表

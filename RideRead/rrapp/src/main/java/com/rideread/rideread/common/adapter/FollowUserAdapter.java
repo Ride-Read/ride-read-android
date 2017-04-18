@@ -94,7 +94,7 @@ public class FollowUserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             @Override
             public void onClick(View v) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(UserMomentsActivity.SELECTED_UID, isFans ? user.getTid() : user.getFid());
+                bundle.putInt(UserMomentsActivity.SELECTED_UID, isFans ? user.getFid() : user.getTid());
                 bundle.putString(UserMomentsActivity.SELECTED_USERNAME, isFans ? user.getFollowerUsername() : user.getFollowedUsername());
                 mActivity.gotoActivity(UserMomentsActivity.class, bundle);
             }

@@ -8,10 +8,10 @@ import java.io.Serializable;
  */
 
 public class UserBaseInfo implements Serializable {
-    private int uid;
-    private String faceUrl;
-    private String username;
-    private String signature;
+    protected int uid;
+    protected String faceUrl;
+    protected String username;
+    protected String signature;
 
 
     public String getFaceUrl() {

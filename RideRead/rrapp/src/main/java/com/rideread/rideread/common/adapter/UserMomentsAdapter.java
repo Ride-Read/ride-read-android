@@ -12,7 +12,6 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -168,7 +167,6 @@ public class UserMomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class HeadViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btn_msg_tips) Button mBtnMsgTips;
 
         public HeadViewHolder(View view) {
             super(view);
@@ -177,7 +175,6 @@ public class UserMomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     class FootViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.btn_msg_tips) Button mBtnMsgTips;
 
         public FootViewHolder(View view) {
             super(view);

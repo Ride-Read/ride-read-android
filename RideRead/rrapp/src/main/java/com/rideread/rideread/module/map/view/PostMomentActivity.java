@@ -12,7 +12,6 @@ import com.rideread.rideread.R;
 import com.rideread.rideread.common.adapter.PostPicAdapter;
 import com.rideread.rideread.common.base.MPermissionsActivity;
 import com.rideread.rideread.common.dialog.ConfirmDialogFragment;
-import com.rideread.rideread.common.event.SelectPicEvent;
 import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.DateUtils;
 import com.rideread.rideread.common.util.GalleryUtils;
@@ -29,16 +28,11 @@ import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static org.greenrobot.eventbus.ThreadMode.MAIN;
 
 /**
  * Created by SkyXiao on 2017/46.
@@ -163,25 +157,19 @@ public class PostMomentActivity extends MPermissionsActivity {
         switch (requestCode) {
             case 0x0001:
                 GalleryUtils galleryUtils = new GalleryUtils();
-                galleryUtils.getPictures(this, SELECT_PICTURE_MAX - mSelectedPics.size());
+                galleryUtils.getPictures(this, SELECT_PICTURE_MAX - mSelectedPics.size(), paths -> {
+                    if (!ListUtils.isEmpty(paths)) {
+                        mSelectedPics.addAll(paths);
+                        mPostPicAdapter.notifyDataSetChanged();
+                    }
+                });
                 break;
         }
-
     }
-
 
     @Override
     public void doPositiveClick() {
         finish();
     }
 
-    @Subscribe(threadMode = MAIN, sticky = true)
-    public void onSelected(final SelectPicEvent event) {
-        EventBus.getDefault().removeStickyEvent(SelectPicEvent.class);
-        List<String> list = event.picList;
-        if (!ListUtils.isEmpty(list)) {
-            mSelectedPics.addAll(list);
-            mPostPicAdapter.notifyDataSetChanged();
-        }
-    }
 }
