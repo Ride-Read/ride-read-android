@@ -13,9 +13,9 @@ import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
-import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
 import com.rideread.rideread.common.widget.MainFragmentTabHost;
+import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.been.Tab;
 import com.rideread.rideread.function.net.im.AVImClientManager;
 import com.rideread.rideread.module.auth.view.LoginActivity;
@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 
 public class MainActivity extends BaseActivity {
-    public final static String INVITED_RIDE_READ_ID="invited_ride_read_id";
+    public final static String INVITED_RIDE_READ_ID = "invited_ride_read_id";
 
     @BindView(R.id.tab_content) FrameLayout mTabContent;
     @BindView(android.R.id.tabhost) MainFragmentTabHost mTabHost;
@@ -42,8 +42,35 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initView() {
-//        getSupportActionBar().hide();
+        //        getSupportActionBar().hide();
         initTab();
+
+        //        AVObject testObject = new AVObject("TestObject");
+        //        testObject.put("words","Hello World!");
+        //        testObject.saveInBackground(new SaveCallback() {
+        //            @Override
+        //            public void done(AVException e) {
+        //                if(e == null){
+        //                    Logger.d("saved","success!");
+        //                }
+        //            }
+        //        });
+
+        openClient();
+    }
+
+    private void openClient() {
+        AVImClientManager.getInstance().open(UserUtils.getUid() + "", new AVIMClientCallback() {
+            @Override
+            public void done(AVIMClient avimClient, AVIMException e) {
+                if (e == null) {
+                    Logger.d("LeanCloud", "登录成功!");
+                } else {
+                    Logger.d("LeanCloud", "登录失败!");
+                }
+            }
+        });
+
     }
 
     @Override
@@ -87,21 +114,5 @@ public class MainActivity extends BaseActivity {
 
         return view;
     }
-
-    private void openClient() {
-        AVImClientManager.getInstance().open(UserUtils.getUid() + "", new AVIMClientCallback() {
-            @Override
-            public void done(AVIMClient avimClient, AVIMException e) {
-                if (e == null) {
-
-                } else {
-                    ToastUtils.show("注册异常，消息开启失败");
-                }
-            }
-        });
-
-    }
-
-
 }
 

@@ -1,5 +1,6 @@
 package com.rideread.rideread.function.net.retrofit;
 
+import com.rideread.rideread.data.result.CollectInfo;
 import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.DetailUserInfo;
@@ -35,7 +36,6 @@ public interface ApiStore {
     public final static String TOKEN = "MRBbJCJr-MDVxa08p6eMv6SouPViY8wqSfZek7Pt:fYQJktezBxHakBx1UBvsfciRPjg=:eyJzY29wZSI6InJlYWRyaWRlIiwiZGVhZGxpbmUiOjE0ODU5MTMyNTd9";//测试用的token
 
 
-    public final static String TEMP_USER_TOKEN = "34070eae5335938f171db8a11594cccf";//用户注册时，获取七牛云token时所用的用户token，这个token是模拟的，有安全隐患
 
     ////另一种方式，参数一一传递
     //    @POST("account/login")
@@ -45,6 +45,7 @@ public interface ApiStore {
     //            @Query("app_version") String app_version, @Query("hardware_version") String hardware_version,
     //            @Query("phone_type") String phone_type,
     //            @Query("apply_time") String apply_time, @Query("code") String code);
+
     @POST("users/login")
     Call<BaseModel<UserInfo>> login(@QueryMap Map<String, String> params);
 
@@ -109,6 +110,9 @@ public interface ApiStore {
 
     @POST("moments/collect_moment")
     Call<BaseModel<DefJsonResult>> collectMoment(@QueryMap Map<String, String> params);
+
+    @POST("moments/show_collect_moment")
+    Call<BaseModel<List<CollectInfo>>> loadCollectMoment(@QueryMap Map<String, String> params);
 
     @POST("util/qiniu_token")
     Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);

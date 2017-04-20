@@ -11,6 +11,7 @@ import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
+import com.rideread.rideread.data.result.CollectInfo;
 import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.DetailUserInfo;
@@ -193,17 +194,6 @@ public class ApiUtils {
         setCurrentCall(getApiStore().update(getParams(params)), callBack);
     }
 
-    public static void postMomentText(@NonNull final String content, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
-        Map<String, String> params = new HashMap<>();
-        params.put("msg", content);
-        params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
-        params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
-        params.put("type", Integer.toString(0));
-
-        setCurrentCall(getApiStore().postMoment(getParams(params)), callBack);
-    }
-
     public static void postMoment(@NonNull final String content, @NonNull final String locInfo, @NonNull final List<String> pictureUrls, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
@@ -292,13 +282,19 @@ public class ApiUtils {
         setCurrentCall(getApiStore().showThumbsUpUsers(getParams(params)), callBack);
     }
 
-    public static void collectMoment(final int mid,final int type, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+    public static void collectMoment(final int mid, final int type, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
         params.put("mid", Integer.toString(mid));
         params.put("type", Integer.toString(type));
 
         setCurrentCall(getApiStore().collectMoment(getParams(params)), callBack);
+    }
+
+    public static void loadCollectMoment(@NonNull final BaseCallback<BaseModel<List<CollectInfo>>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        setCurrentCall(getApiStore().loadCollectMoment(getParams(params)), callBack);
     }
 
     public static void loadMoments(final int pages, final int type, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {

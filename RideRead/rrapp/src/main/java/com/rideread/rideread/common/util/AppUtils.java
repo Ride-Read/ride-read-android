@@ -25,8 +25,9 @@ import java.util.Map;
 
 public class AppUtils {
 
-    public final static String APP_KEY="VQSndpkC1LxD73qK0pMcIWHl";
-    public final static String APP_ID="W8uDmfHGJ6bjr2x8vSG5O846-gzGzoHsz";
+    public final static String LEAN_CLOUD_APP_KEY ="qJDqp18BOykwgwNsFXJ8YxEn";
+//    public final static String LEAN_CLOUD_APP_KEY ="VQSndpkC1LxD73qK0pMcIWHl";
+    public final static String LEAN_CLOUD_APP_ID ="W8uDmfHGJ6bjr2x8vSG5O846-gzGzoHsz";
     public final static String USERHEAD_LINK="http://om1ccbp21.bkt.clouddn.com/";
     public final static String TOKEN="MRBbJCJr-MDVxa08p6eMv6SouPViY8wqSfZek7Pt:fYQJktezBxHakBx1UBvsfciRPjg=:eyJzY29wZSI6InJlYWRyaWRlIiwiZGVhZGxpbmUiOjE0ODU5MTMyNTd9";//测试用的token
     public final static String TEMP_USER_TOKEN="34070eae5335938f171db8a11594cccf";//用户注册时，获取七牛云token时所用的用户token，这个token是模拟的，有安全隐患

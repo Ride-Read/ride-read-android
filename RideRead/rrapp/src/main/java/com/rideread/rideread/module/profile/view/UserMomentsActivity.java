@@ -208,7 +208,8 @@ public class UserMomentsActivity extends BaseActivity {
         mTvAttention.setText("关注 " + mUserInfo.getFollowing());
         mTvFans.setText("阅粉 " + mUserInfo.getFollower());
 
-        isFollow = mUserInfo.getIsFollow() <= 1;
+        int isFollowInt = mUserInfo.getIsFollowed();
+        isFollow = isFollowInt == 0 || isFollowInt == 1;
         refreshFollowAction(isFollow);
     }
 

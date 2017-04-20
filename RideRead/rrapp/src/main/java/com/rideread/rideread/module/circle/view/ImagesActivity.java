@@ -71,6 +71,7 @@ public class ImagesActivity extends BaseActivity {
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -176,6 +177,7 @@ public class ImagesActivity extends BaseActivity {
             View view = layoutInflater.inflate(R.layout.view_image, null);
 
             final PhotoDraweeView photoDraweeView = (PhotoDraweeView) view.findViewById(R.id.pdv_image);
+//            ViewCompat.setTransitionName(photoDraweeView, getString(R.string.transition_image));
             PipelineDraweeControllerBuilder controller = Fresco.newDraweeControllerBuilder();
             controller.setUri(Uri.parse(imageArray[position]));
             controller.setOldController(photoDraweeView.getController());

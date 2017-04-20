@@ -24,7 +24,7 @@ public class RRApp extends FrescoApp {
 //        XLog.init(BuildConfig.DEBUG ? LogLevel.ALL : LogLevel.NONE);
 
         // 请用你的AppId，AppKey。并在管理台启用手机号码短信验证
-        AVOSCloud.initialize(this, AppUtils.APP_ID, AppUtils.APP_KEY);
+        AVOSCloud.initialize(this, AppUtils.LEAN_CLOUD_APP_ID, AppUtils.LEAN_CLOUD_APP_KEY);
         AVOSCloud.setDebugLogEnabled(BuildConfig.DEBUG);
         // 必须在启动的时候注册 MessageHandler
         // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理

@@ -11,13 +11,13 @@ public class DetailUserInfo extends UserInfo {
         super(faceUrl, nick, sex, labels, signature, school, location, homeTown, career);
     }
 
-    private int  isFollow;
+    private int  isFollowed;
 
-    public int getIsFollow() {
-        return isFollow;
+    public int getIsFollowed() {
+        return isFollowed;
     }
 
-    public void setIsFollow(int isFollow) {
-        this.isFollow = isFollow;
+    public void setIsFollowed(int isFollowed) {
+        this.isFollowed = isFollowed;
     }
 }

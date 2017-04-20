@@ -46,6 +46,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.main.MainActivity"
+            android:windowSoftInputMode="adjustNothing"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".module.map.view.PostMomentActivity"

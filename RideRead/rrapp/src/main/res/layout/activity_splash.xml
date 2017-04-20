@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/green_common"
+              android:background="@color/white_bg"
               android:orientation="vertical">
 
 
@@ -11,22 +11,59 @@
         android:layout_height="0dp"
         android:layout_weight="1.0"
         android:adjustViewBounds="true"
-        android:background="@color/green_common"
-        android:scaleType="centerCrop"/>
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_splash"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="gone">
+        android:layout_height="96dp"
+        android:visibility="visible">
 
-        <Button
-            android:id="@+id/btn_skip"
+        <TextView
+            android:id="@+id/ic_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
-            android:text="跳过"/>
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="16dp"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:drawablePadding="12dp"
+            android:gravity="center_vertical"
+            android:lineSpacingExtra="4dp"
+            android:text="约上志同道合的阅友阅世界。\nV1.0.0"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="8dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_hint"/>
+
+            <TextView
+                android:id="@+id/tv_third_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:text="由骑阅提供服务"
+                android:textColor="@color/gray_text"
+                android:textSize="12sp"
+                />
+
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_hint"/>
+        </LinearLayout>
     </RelativeLayout>
 
 

@@ -7,7 +7,7 @@ package com.rideread.rideread.data.result;
 public class CollectInfo extends UserBaseInfo {
     private int type;
     private String firstPicture;
-    private String createAt;
+    private long createAt;
     private int mid;
     private int id;
 
@@ -28,11 +28,11 @@ public class CollectInfo extends UserBaseInfo {
         this.firstPicture = firstPicture;
     }
 
-    public String getCreateAt() {
+    public long getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(String createAt) {
+    public void setCreateAt(long createAt) {
         this.createAt = createAt;
     }
 
