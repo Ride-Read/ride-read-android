@@ -8,6 +8,7 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.model.LatLng;
 import com.rideread.rideread.data.CurCache;
 import com.rideread.rideread.data.Logger;
 import com.rideread.rideread.data.Storage;
@@ -28,12 +29,14 @@ public class AMapLocationUtils {
      * 城、地区，州(外国)
      */
     private static String mCity;
+    private static String mDistrict;
 
 
     private static String mLocDetail;
 
     private static double mLatitude;
     private static double mLongitude;
+    public static LatLng sLatLng;
 
     private static AMapLocationClient mLocationClient;
 
@@ -49,7 +52,7 @@ public class AMapLocationUtils {
         AMapLocationClientOption mLocationOption = new AMapLocationClientOption();
         //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(false);
+        mLocationOption.setOnceLocation(true);
         mLocationOption.setOnceLocationLatest(false);
         mLocationOption.setNeedAddress(true);
         mLocationOption.setWifiActiveScan(false);
@@ -74,6 +77,7 @@ public class AMapLocationUtils {
                     aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
                     mLatitude = aMapLocation.getLatitude();//获取纬度
                     mLongitude = aMapLocation.getLongitude();//获取经度
+                    sLatLng = new LatLng(mLatitude, mLongitude);
                     if (mLatitude != getLatitude()) {
                         setLatitude(mLatitude);
                         setLongitude(mLongitude);
@@ -81,6 +85,7 @@ public class AMapLocationUtils {
                     aMapLocation.getAccuracy();//获取精度信息
                     mProvince = aMapLocation.getProvince();
                     mCity = aMapLocation.getCity();
+                    mDistrict = aMapLocation.getDistrict();
                     //                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     //                    Date date = new Date(aMapLocation.getTime());
                     //                    df.format(date);//定位时间
@@ -158,4 +163,6 @@ public class AMapLocationUtils {
     public static void setLocDetail(String mLocDetail) {
         AMapLocationUtils.mLocDetail = mLocDetail;
     }
+
+
 }

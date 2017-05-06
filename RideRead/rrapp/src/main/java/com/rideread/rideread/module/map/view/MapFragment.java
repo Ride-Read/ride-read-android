@@ -1,8 +1,13 @@
 package com.rideread.rideread.module.map.view;
 
 
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Point;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,7 +15,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.LinearInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +24,7 @@ import android.widget.ImageView;
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.LocationSource;
+import com.amap.api.maps.Projection;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
@@ -25,21 +32,36 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
-import com.amap.api.maps.model.animation.AlphaAnimation;
-import com.amap.api.maps.model.animation.Animation;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.badoo.mobile.util.WeakHandler;
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
 import com.rideread.rideread.common.dialog.SignInDialogFragment;
 import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.KeyboardUtils;
 import com.rideread.rideread.common.util.ListUtils;
+import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
+import com.rideread.rideread.common.util.Utils;
+import com.rideread.rideread.data.result.Moment;
+import com.rideread.rideread.function.net.qiniu.QiNiuUtils;
+import com.rideread.rideread.function.net.retrofit.ApiUtils;
+import com.rideread.rideread.function.net.retrofit.BaseCallback;
+import com.rideread.rideread.function.net.retrofit.BaseModel;
+import com.rideread.rideread.module.circle.view.MomentDetailActivity;
 
 import java.util.List;
 
@@ -129,13 +151,21 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
             }
         });
 
+        mAMap.setOnMarkerClickListener(marker -> {
+
+            Moment moment = (Moment) marker.getObject();
+            if (null != moment) {
+                Bundle bundle = new Bundle();
+                int isFollow = moment.getUser().getIsFollowed();
+                boolean isAttent = isFollow == 0 || isFollow == 1;
+                bundle.putInt(MomentDetailActivity.SELECTED_MOMENT_MID, moment.getMid());
+                bundle.putInt(MomentDetailActivity.USER_TYPE, isAttent ? MomentDetailActivity.USER_TYPE_ATTENTED : MomentDetailActivity.USER_TYPE_NEARBY);
+                getBaseActivity().gotoActivity(MomentDetailActivity.class, bundle);
+            }
+            return false;
+        });
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mMapView.onResume();
-    }
 
     private void searchKeyWord() {
         String keyWord = mEdtSearch.getText().toString();
@@ -154,6 +184,8 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         PoiSearch poiSearch = new PoiSearch(getActivity(), query);
         poiSearch.setOnPoiSearchListener(this);
         poiSearch.searchPOIAsyn();
+
+
     }
 
     @Override
@@ -187,10 +219,17 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         mMapView.onPause();
     }
+
 
     @Override
     public void onDestroy() {
@@ -207,6 +246,7 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
                 break;
             case R.id.btn_recently:
+                loadMapMoments();
                 break;
             case R.id.img_clear:
                 mEdtSearch.setText("");
@@ -216,37 +256,42 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
 
     @OnLongClick(R.id.btn_sign_in)
     public boolean onLongClick() {
-        addSignMarker();
+        addSignInMarker(new LatLng(AMapLocationUtils.getLatitude(), AMapLocationUtils.getLongitude()));
         return false;
     }
 
-    private void addSignMarker() {
-        mAMap.clear();
-        MarkerOptions markerOption = new MarkerOptions();
-        LatLng marketLatLng = new LatLng(AMapLocationUtils.getLatitude(), AMapLocationUtils.getLongitude());
-        markerOption.position(marketLatLng);
+    private void addSignInMarker(LatLng latLng) {
+        final Marker marker = addMarker(latLng);
 
-        markerOption.draggable(false);//设置Marker可拖动
-        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher)));
-        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(true);//设置marker平贴地图效果
-        final Marker marker = mAMap.addMarker(markerOption);
+        if (marker != null) {
+            final long start = SystemClock.uptimeMillis();
+            Projection proj = mAMap.getProjection();
+            Point markerPoint = proj.toScreenLocation(latLng);
+            markerPoint.offset(0, -500);
+            final LatLng startLatLng = proj.fromScreenLocation(markerPoint);
+            final long duration = 2000;
 
-        Animation animation = new AlphaAnimation(0F, 1F);
-        //        Animation animation = new RotateAnimation(marker.getRotateAngle(),marker.getRotateAngle()+180,0,0,0);
-        long duration = 800L;
-        animation.setDuration(duration);
-        animation.setInterpolator(new LinearInterpolator());
+            final Interpolator interpolator = new BounceInterpolator();
 
-        marker.setAnimation(animation);
-        marker.startAnimation();
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    long elapsed = SystemClock.uptimeMillis() - start;
+                    float t = interpolator.getInterpolation((float) elapsed / duration);
+                    double lng = t * latLng.longitude + (1 - t) * startLatLng.longitude;
+                    double lat = t * latLng.latitude + (1 - t) * startLatLng.latitude;
+                    marker.setPosition(new LatLng(lat, lng));
+                    if (t < 1.0) {
+                        mHandler.postDelayed(this, 16);
+                    }
+                }
+            });
+        }
 
         mHandler.postDelayed(() -> {
             mSignInDialogFragment = SignInDialogFragment.newInstance(AMapLocationUtils.getLocDetail());
             mSignInDialogFragment.show(getFragmentManager(), "sign_in");
         }, 1000L);
-
-
     }
 
     @Override
@@ -264,5 +309,82 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         //        mlocationClient = null;
     }
 
+    private void loadMapMoments() {
+        if (!NetworkUtils.isConnected()) {
+            ToastUtils.show(R.string.network_error_fail);
+        }
+        ApiUtils.loadMapMoments(16, new BaseCallback<BaseModel<List<Moment>>>() {
+            @Override
+            protected void onSuccess(BaseModel<List<Moment>> model) throws Exception {
 
+                List<Moment> tMoments = model.getData();
+                if (!ListUtils.isEmpty(tMoments)) {
+                    mAMap.clear();
+                    AMapLocationUtils.init();
+                    //                    for (Moment momentItem : tMoments) {
+                    //                        addMarker(new LatLng(momentItem.getLatitude(), momentItem.getLongitude()));
+                    //                    }
+
+                    showMomentsOnMap(tMoments);
+
+                    //                    RefreshMyMapEvent event = new RefreshMyMapEvent();
+                    //                    event.mMoments = tMoments;
+                    //                    EventBus.getDefault().postSticky(event);
+                }
+            }
+
+        });
+    }
+
+    private void showMomentsOnMap(List<Moment> moments) {
+        List<String> pictures;
+        for (Moment moment : moments) {
+            pictures = moment.getPictures();
+            if (!ListUtils.isEmpty(pictures)) {
+                addMoment2Map(moment);
+            }
+        }
+    }
+
+    private void addMoment2Map(final Moment moment) {
+        final LatLng latLng = new LatLng(moment.getLatitude(), moment.getLongitude());
+        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(moment.getPictures().get(0) + QiNiuUtils.CROP_SMALL_100)).setProgressiveRenderingEnabled(true).build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, Utils.getAppContext());
+        dataSource.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            public void onNewResultImpl(@Nullable Bitmap bitmap) {
+                addMomentMarker(latLng, bitmap, moment);
+            }
+
+            @Override
+            public void onFailureImpl(DataSource dataSource) {
+            }
+        }, CallerThreadExecutor.getInstance());
+    }
+
+    private void addMomentMarker(LatLng latLng, Bitmap bitmap, Moment moment) {
+        if (null == latLng || null == bitmap) return;
+        MarkerOptions markerOption = new MarkerOptions();
+        markerOption.position(latLng);
+
+        markerOption.draggable(false);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        Marker marker = mAMap.addMarker(markerOption);
+        marker.setObject(moment);
+    }
+
+    private Marker addMarker(LatLng latLng) {
+
+        MarkerOptions markerOption = new MarkerOptions();
+        markerOption.position(latLng);
+
+        markerOption.draggable(false);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_map_label)));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        return mAMap.addMarker(markerOption);
+    }
 }

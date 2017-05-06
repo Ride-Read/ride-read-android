@@ -40,6 +40,7 @@ import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.MomentUser;
 import com.rideread.rideread.data.result.ThumbsUpUser;
+import com.rideread.rideread.function.net.qiniu.QiNiuUtils;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
@@ -54,6 +55,7 @@ import butterknife.OnClick;
 public class MomentDetailActivity extends BaseActivity {
 
     public static String SELECTED_MOMENT = "selected_moment";
+    public static String SELECTED_MOMENT_MID = "selected_moment_mid";
     public static int USER_TYPE_ATTENTED = 1;
     public static int USER_TYPE_FANS = 2;
     public static int USER_TYPE_NEARBY = 3;
@@ -82,6 +84,9 @@ public class MomentDetailActivity extends BaseActivity {
 
     private boolean isAttention;
     private boolean isThumbsUp;
+    private SimpleDraweeView myAvatar;
+
+    private int mThumbUpCount;
 
     @Override
     public int getLayoutRes() {
@@ -93,25 +98,38 @@ public class MomentDetailActivity extends BaseActivity {
     public void initView() {
         new TitleBuilder(this).setTitleText(R.string.details).IsBack(true).setRightImage(R.drawable.icon_more).build();
 
-        View momentHeader = initMomentHeader();
-
-        mCurMoment = (Moment) getIntent().getExtras().getSerializable(SELECTED_MOMENT);
         curUserType = getIntent().getIntExtra(USER_TYPE, USER_TYPE_NEARBY);
-        if (null == mCurMoment) {
+        int tMid = getIntent().getIntExtra(SELECTED_MOMENT_MID, 0);
+        if (0 != tMid) {
+            ApiUtils.loadOneMoment(tMid, new BaseCallback<BaseModel<Moment>>() {
+                @Override
+                protected void onSuccess(BaseModel<Moment> model) throws Exception {
+                    mCurMoment = model.getData();
+                    if (null != mCurMoment) {
+                        refreshView();
+                    }
+                }
+            });
+        } else {
             ToastUtils.show("无数据");
-            return;
         }
 
+    }
+
+    private void refreshView() {
+        View momentHeader = initMomentHeader();
         mCurMomentUser = mCurMoment.getUser();
         if (null != mCurMomentUser) {
             ImgLoader.getInstance().displayImage(mCurMoment.getUser().getFaceUrl(), mImgAvatar);
             mTvName.setText(mCurMomentUser.getUsername());
             mTvTime.setText(TimeUtils.getFriendlyTimeSpanByNow(mCurMoment.getCreatedAt()));
-            isAttention = 0 == mCurMomentUser.getIsFollowed();
+            int isFollowInt = mCurMomentUser.getIsFollowed();
+            isAttention = isFollowInt == 0 || isFollowInt == 1;
             mBtnAttention.setBackgroundResource(isAttention ? R.drawable.icon_attented : R.drawable.icon_attention);
             mTvMomentText.setText(mCurMoment.getMsg());
             mTvCommentCount.setText("评论 " + mCurMoment.getComment().size());
-            mTvThumbCount.setText(Integer.toString(mCurMoment.getThumbsUp().size()));
+            mThumbUpCount = mCurMoment.getThumbsUp().size();
+            mTvThumbCount.setText(Integer.toString(mThumbUpCount));
 
             if (mCurMomentUser.getUid() == UserUtils.getUid())
                 mBtnAttention.setVisibility(View.GONE);
@@ -165,6 +183,10 @@ public class MomentDetailActivity extends BaseActivity {
             thumbUpUserAvatar.getHierarchy().setRoundingParams(roundingParams);
             ImgLoader.getInstance().displayImage(thumbsUpUser.getFaceUrl(), thumbUpUserAvatar);
             mHllThumpUps.addView(thumbUpUserAvatar);
+
+            if (UserUtils.getUid() == thumbsUpUser.getUid()) {
+                myAvatar = thumbUpUserAvatar;
+            }
             if (!mHllThumpUps.canAddView()) {
                 break;
             }
@@ -214,7 +236,7 @@ public class MomentDetailActivity extends BaseActivity {
     NineGridImgViewAdapter<String> nineGridAdapter = new NineGridImgViewAdapter<String>() {
         @Override
         protected void onDisplayImage(Context context, SimpleDraweeView imageView, String url) {
-            ImgLoader.getInstance().displayImage(url, imageView);
+            ImgLoader.getInstance().displayImage(url + QiNiuUtils.CROP_SMALL_300, imageView);
         }
 
         @Override
@@ -269,7 +291,9 @@ public class MomentDetailActivity extends BaseActivity {
                 protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                     isThumbsUp = !isThumbsUp;
                     mBtnThumbsUp.setBackgroundResource(R.drawable.ic_thumb_up_off);
-
+                    if (null != myAvatar) mHllThumpUps.removeView(myAvatar);
+                    mThumbUpCount--;
+                    mTvThumbCount.setText(Integer.toString(mThumbUpCount));
                 }
             });
         } else {
@@ -279,6 +303,18 @@ public class MomentDetailActivity extends BaseActivity {
                     isThumbsUp = !isThumbsUp;
                     mBtnThumbsUp.setBackgroundResource(R.drawable.ic_thumb_up_on);
 
+                    RoundingParams roundingParams = RoundingParams.fromCornersRadius(4f);
+                    roundingParams.setRoundAsCircle(true);
+                    myAvatar = new SimpleDraweeView(MomentDetailActivity.this);
+                    ViewGroup.LayoutParams params = new ViewGroup.LayoutParams((int) ScreenUtils.dp2px(28f), (int) ScreenUtils.dp2px(28f));
+                    myAvatar.setLayoutParams(params);
+                    myAvatar.getHierarchy().setRoundingParams(roundingParams);
+                    ImgLoader.getInstance().displayImage(UserUtils.getCurUser().getFaceUrl(), myAvatar);
+                    if (mHllThumpUps.canAddView()) {
+                        mHllThumpUps.addView(myAvatar, 0);
+                    }
+                    mThumbUpCount++;
+                    mTvThumbCount.setText(Integer.toString(mThumbUpCount));
                 }
             });
 
@@ -321,7 +357,6 @@ public class MomentDetailActivity extends BaseActivity {
 
     public void shareMoment() {
         ToastUtils.show("分享");
-
     }
 
     public void collectMoment() {
@@ -335,7 +370,6 @@ public class MomentDetailActivity extends BaseActivity {
                 ToastUtils.show("收藏成功");
             }
         });
-
     }
 
 }

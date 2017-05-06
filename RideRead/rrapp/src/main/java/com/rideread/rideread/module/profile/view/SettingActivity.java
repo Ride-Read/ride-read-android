@@ -13,6 +13,10 @@ import com.rideread.rideread.common.util.AppUtils;
 import com.rideread.rideread.common.util.FileUtils;
 import com.rideread.rideread.common.util.TitleBuilder;
 import com.rideread.rideread.common.util.UserUtils;
+import com.rideread.rideread.data.result.DefJsonResult;
+import com.rideread.rideread.function.net.retrofit.ApiUtils;
+import com.rideread.rideread.function.net.retrofit.BaseCallback;
+import com.rideread.rideread.function.net.retrofit.BaseModel;
 import com.rideread.rideread.rrapp.FrescoApp;
 
 import java.io.File;
@@ -103,7 +107,14 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     public void doPositiveClick() {
-        UserUtils.logout();
-        finish();
+
+        ApiUtils.logout(new BaseCallback<BaseModel<DefJsonResult>>() {
+            @Override
+            protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
+                UserUtils.logout();
+                finish();
+            }
+        });
+
     }
 }

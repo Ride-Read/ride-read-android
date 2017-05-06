@@ -9,7 +9,7 @@ import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.avos.avoscloud.im.v2.AVIMTypedMessageHandler;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.rideread.rideread.R;
-import com.rideread.rideread.common.event.ImTypeMessageEvent;
+import com.rideread.rideread.common.event.ImTypeMsgEvent;
 import com.rideread.rideread.rrapp.Constants;
 
 import org.greenrobot.eventbus.EventBus;
@@ -55,10 +55,11 @@ public class MessageHandler extends AVIMTypedMessageHandler<AVIMTypedMessage> {
      * @param conversation
      */
     private void sendEvent(AVIMTypedMessage message, AVIMConversation conversation) {
-        ImTypeMessageEvent event = new ImTypeMessageEvent();
+        ImTypeMsgEvent event = new ImTypeMsgEvent();
         event.message = message;
         event.conversation = conversation;
         EventBus.getDefault().post(event);
+
     }
 
     private void sendNotification(AVIMTypedMessage message, AVIMConversation conversation) {

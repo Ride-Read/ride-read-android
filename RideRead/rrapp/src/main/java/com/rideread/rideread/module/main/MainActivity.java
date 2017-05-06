@@ -56,7 +56,7 @@ public class MainActivity extends BaseActivity {
         //            }
         //        });
 
-        openClient();
+//        openClient();
     }
 
     private void openClient() {

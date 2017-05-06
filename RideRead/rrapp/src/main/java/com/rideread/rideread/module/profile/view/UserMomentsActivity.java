@@ -30,6 +30,7 @@ import com.rideread.rideread.common.widget.RecyclerViewHeader;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.DetailUserInfo;
 import com.rideread.rideread.data.result.Moment;
+import com.rideread.rideread.data.result.UserInfo;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
@@ -260,15 +261,24 @@ public class UserMomentsActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_personality_map:
-                gotoActivity(PersonalityMapActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt(PersonalityMapActivity.USER_ID, mUserInfo.getUid());
+                gotoActivity(PersonalityMapActivity.class, bundle);
                 break;
             case R.id.btn_attention:
                 followUser();
                 break;
             case R.id.btn_message:
                 ToastUtils.show("发消息");
+                sendMsg();
                 break;
         }
+    }
+
+    private void sendMsg() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(ChatSingleActivity.CHAT_USER, mUserInfo);
+        gotoActivity(ChatSingleActivity.class, bundle);
     }
 
     private void followUser() {
@@ -282,6 +292,11 @@ public class UserMomentsActivity extends BaseActivity {
                 protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                     isFollow = true;
                     refreshFollowAction(isFollow);
+
+                    UserInfo myInfo = UserUtils.getCurUser();
+                    int curFollowing = myInfo.getFollowing() + 1;
+                    myInfo.setFollowing(curFollowing);
+                    UserUtils.saveUserInfo(myInfo);
                 }
             });
         }
@@ -296,6 +311,11 @@ public class UserMomentsActivity extends BaseActivity {
             protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                 isFollow = false;
                 refreshFollowAction(isFollow);
+
+                UserInfo myInfo = UserUtils.getCurUser();
+                int curFollowing = myInfo.getFollowing() - 1;
+                myInfo.setFollowing(curFollowing);
+                UserUtils.saveUserInfo(myInfo);
             }
         });
     }

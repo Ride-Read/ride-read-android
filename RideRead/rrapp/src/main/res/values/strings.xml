@@ -109,6 +109,7 @@
     <string name="share_text">发现一款非常棒的App「骑阅」，骑行者都认可的骑行爱好者社区，旅途分享，精彩无限！这是我的骑阅号：%1$s 诚邀您加入！推荐~：https://www.pgyer.com/RideRead_Ad</string>
     <string name="message">消息</string>
     <string name="sure2unfollow">确定要取消关注吗？</string>
+    <string name="unsupport_message_type">暂不支持此消息类型</string>
 
 
 </resources>

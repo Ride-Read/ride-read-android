@@ -1,0 +1,74 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white_bg"
+              android:orientation="vertical">
+
+    <include
+        layout="@layout/include_simple_topbar"/>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.0">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dip"
+        android:background="@color/gray_hint"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingTop="4dp"
+        >
+
+        <ImageView
+            android:id="@+id/img_emoj"
+            android:layout_width="36dip"
+            android:layout_height="36dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:background="@drawable/ic_launcher"
+            android:contentDescription="emjio"/>
+
+        <EditText
+            android:id="@+id/edt_chat_input"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/bg_white_radius"
+            android:focusable="true"
+            android:maxLength="300"
+            android:maxLines="4"
+            android:padding="4dp"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/def_text_size"/>
+
+        <Button
+            android:id="@+id/btn_send"
+            android:layout_width="48dp"
+            android:layout_height="32dip"
+            android:layout_marginRight="8dp"
+            android:background="@drawable/btn_green_sel"
+            android:text="发送"
+            android:textColor="@color/white_normal"
+            android:textSize="@dimen/def_text_size"/>
+    </LinearLayout>
+
+
+</LinearLayout>

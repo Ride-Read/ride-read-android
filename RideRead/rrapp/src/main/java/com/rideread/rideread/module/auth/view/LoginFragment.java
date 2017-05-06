@@ -171,6 +171,7 @@ public class LoginFragment extends BaseFragment implements TextView.OnEditorActi
                 UserInfo userInfo = model.getData();
                 if (null != userInfo) {
                     UserUtils.login(userInfo);
+                    UserUtils.setLoginTimestamp(model.getTimestamp());
                     getBaseActivity().gotoActivity(MainActivity.class, true);
                 }
             }
@@ -223,36 +224,5 @@ public class LoginFragment extends BaseFragment implements TextView.OnEditorActi
             }
         });
     }
-
-
-    //
-    //    @Override
-    //    public void onLocationChanged(AMapLocation aMapLocation) {
-    //
-    //        if(aMapLocation.getErrorCode()==0){
-    //            longtitude=aMapLocation.getLongitude();
-    //            laititude=aMapLocation.getLatitude();
-    //        }else{
-    //            Toast.makeText(getContext(),"定位失败!",Toast.LENGTH_SHORT).show();
-    //        }
-
-    //        if(username==null||password==null){
-    //            Toast.makeText(getActivity(),"未填写用户名或密码",Toast.LENGTH_SHORT).show();
-    //        }else if(!hasNetWork()){
-    //            Toast.makeText(getActivity(),"未连接到网络",Toast.LENGTH_SHORT).show();
-    //        }else{
-    //            accountEdt.setEnabled(false);
-    //            passwordEdt.setEnabled(false);
-    //
-    ////            if(encodePwd==null){
-    ////                Toast.makeText(getContext(),"登录失败",Toast.LENGTH_SHORT).show();
-    ////                return;
-    ////            }
-    //
-    //            new LoginAsyncTask().execute(username,password, Api.USER_LOGIN);
-    //        }
-    //    }
-    //
-    //
 
 }

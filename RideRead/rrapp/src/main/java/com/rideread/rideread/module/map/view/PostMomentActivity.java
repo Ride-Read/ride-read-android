@@ -117,7 +117,7 @@ public class PostMomentActivity extends MPermissionsActivity {
         final int listSize = mSelectedPics.size();
         final String picPath = mSelectedPics.get(index);
         final String filename = "moment" + "_" + UserUtils.getUid() + "_" + DateUtils.getCurDateFormat() + "_" + index + ".jpg";
-        ApiUtils.getQiNiuTokenTest(filename, new BaseCallback<BaseModel<QiniuToken>>() {
+        ApiUtils.getQiNiuToken(filename, new BaseCallback<BaseModel<QiniuToken>>() {
             @Override
             protected void onSuccess(BaseModel<QiniuToken> model) throws Exception {
                 String token = model.getData().getUpToken();

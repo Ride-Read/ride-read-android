@@ -16,8 +16,6 @@ public class Test {
         String testStr=strs.toString();
         System.out.println(testStr.substring(1,testStr.length()-1));
 
-        String a=null;
-        System.out.println(a.isEmpty());
 
     }
 

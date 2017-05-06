@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.rideread.rideread.module.profile.view.ChatSingleActivity;
 import com.rideread.rideread.rrapp.Constants;
 
 
@@ -22,17 +23,16 @@ public class NotificationBroadcastReceiver extends BroadcastReceiver {
         }
     }
 
-
     /**
      * 跳转至单聊页面
+     *
      * @param context
      * @param intent
      */
     private void gotoSingleChatActivity(Context context, Intent intent) {
-        //TODO
-//        Intent startActivityIntent = new Intent(context, ChatActivity.class);
-//        startActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startActivityIntent.putExtra(Constants.MEMBER_ID, intent.getStringExtra(Constants.MEMBER_ID));
-//        context.startActivity(startActivityIntent);
+        Intent startActivityIntent = new Intent(context, ChatSingleActivity.class);
+        startActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivityIntent.putExtra(Constants.MEMBER_ID, intent.getStringExtra(Constants.MEMBER_ID));
+        context.startActivity(startActivityIntent);
     }
 }

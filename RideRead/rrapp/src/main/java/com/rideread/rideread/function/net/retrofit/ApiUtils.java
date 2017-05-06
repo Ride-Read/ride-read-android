@@ -75,7 +75,8 @@ public class ApiUtils {
     }
 
     private static Map<String, String> getParams(Map<String, String> paramsMap) {
-        paramsMap.put("timestamp", Long.toString(System.currentTimeMillis()));
+        //        paramsMap.put("timestamp", Long.toString(System.currentTimeMillis()));
+        paramsMap.put("timestamp", Long.toString(UserUtils.getLoginTimestamp()));
         paramsMap.put("uid", Integer.toString(UserUtils.getUid()));
         paramsMap.put("token", UserUtils.getToken());
         return paramsMap;
@@ -102,6 +103,13 @@ public class ApiUtils {
         params.put("timestamp", Long.toString(System.currentTimeMillis()));
 
         setCurrentCall(getApiStore().resetPassword(params), callBack);
+    }
+
+    public static void logout(@NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+
+        setCurrentCall(getApiStore().logout(getParams(params)), callBack);
     }
 
     public static void verifyRideReadId(@NonNull final String rideReadId, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
@@ -237,7 +245,7 @@ public class ApiUtils {
     }
 
     public static void updateThumbsUp(final int mid, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         params.put("mid", Integer.toString(mid));
         setCurrentCall(getApiStore().updateThumbsUp(getParams(params)), callBack);
@@ -260,7 +268,7 @@ public class ApiUtils {
     }
 
     public static void cancelThumbsUp(final int thumbsUpId, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
-        if (!onStart()) return;
+        if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         params.put("thumbs_up_id", Integer.toString(thumbsUpId));
         setCurrentCall(getApiStore().removeThumbsUp(getParams(params)), callBack);
@@ -308,6 +316,27 @@ public class ApiUtils {
         setCurrentCall(getApiStore().showMoment(getParams(params)), callBack);
     }
 
+    public static void loadOneMoment(final int mid, @NonNull final BaseCallback<BaseModel<Moment>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("mid", Integer.toString(mid));
+        params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
+        params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
+
+        setCurrentCall(getApiStore().showOneMoment(getParams(params)), callBack);
+    }
+
+
+    public static void loadMapMoments(final int scalingRatio, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {
+        if (!onStart(false)) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("scaling_ratio", Integer.toString(scalingRatio));
+        params.put("longitude", Double.toString(AMapLocationUtils.getLongitude()));
+        params.put("latitude", Double.toString(AMapLocationUtils.getLatitude()));
+
+        setCurrentCall(getApiStore().showMapMoments(getParams(params)), callBack);
+    }
+
     public static void getQiNiuToken(@NonNull final String filename, @NonNull final BaseCallback<BaseModel<QiniuToken>> callBack) {
         if (!onStart()) return;
         Map<String, String> params = new HashMap<>();
@@ -334,6 +363,15 @@ public class ApiUtils {
         params.put("timestamp", Long.toString(System.currentTimeMillis()));
 
         setCurrentCall(getApiStore().getVCode(params), callBack);
+    }
+
+    public static void verifyVersion(@NonNull final String phone, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("phonenumber", phone);
+        params.put("timestamp", Long.toString(System.currentTimeMillis()));
+
+        setCurrentCall(getApiStore().verifyVersion(params), callBack);
     }
 
     private static void setCurrentCall(Call call) {

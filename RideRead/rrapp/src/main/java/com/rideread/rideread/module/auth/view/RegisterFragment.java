@@ -214,7 +214,8 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
             protected void onSuccess(BaseModel<VCode> model) throws Exception {
                 mDownTimer.start();
                 mRandCode = model.getData().getRandCode();
-                ToastUtils.show("验证码已发送，请等待接收:" + mRandCode);
+                Logger.e("verifyCode", "验证码:" + mRandCode);
+                ToastUtils.show("验证码已发送，请等待接收:");
                 mEdtCode.requestFocus();
             }
         });
@@ -273,18 +274,26 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
         ApiUtils.register(mMyRideReadId, mPhone, mPassword, mMyRideReadId, mFaceUrl, new BaseCallback<BaseModel<UserInfo>>() {
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
-                UserInfo userInfo = model.getData();
-                if (null != userInfo) {
-                    UserUtils.login(userInfo);
-                    Bundle bundle = new Bundle();
-                    bundle.putString(MainActivity.INVITED_RIDE_READ_ID, mInvitedId);
-                    getBaseActivity().gotoActivity(MainActivity.class, bundle, true);
-                } else {
-                    ToastUtils.show("注册异常");
-                }
+                doLogin(mPhone, mPassword);//注册后进行登录操作
             }
         });
 
+    }
+
+    private void doLogin(String phone, String pwd) {
+        ApiUtils.login(phone, pwd, new BaseCallback<BaseModel<UserInfo>>() {
+            @Override
+            protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
+                UserInfo userInfo = model.getData();
+                if (null != userInfo) {
+                    UserUtils.login(userInfo);
+                    UserUtils.setLoginTimestamp(model.getTimestamp());
+                    Bundle bundle = new Bundle();
+                    bundle.putString(MainActivity.INVITED_RIDE_READ_ID, mInvitedId);
+                    getBaseActivity().gotoActivity(MainActivity.class, bundle, true);
+                }
+            }
+        });
     }
 
 

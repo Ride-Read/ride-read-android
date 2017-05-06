@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:fresco="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:id="@+id/cl_msg_user_view"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:descendantFocusability="blocksDescendants">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_avatar"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_marginLeft="4dp"
+        android:padding="4dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        fresco:placeholderImage="@drawable/ic_launcher"/>
+
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/gray_text_55"
+        android:textSize="@dimen/def_text_size"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"
+        app:layout_constraintTop_toTopOf="@id/img_avatar"
+        tools:text="张晓明"/>
+
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="2"
+        android:paddingLeft="12dp"
+        android:paddingTop="4dp"
+        android:textColor="@color/gray_text"
+        android:textSize="@dimen/def_text_size"
+        app:layout_constraintBottom_toBottomOf="@id/img_avatar"
+        app:layout_constraintLeft_toRightOf="@id/img_avatar"
+        tools:text="内容"/>
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="12dp"
+        android:text="2017-1-1"
+        android:textColor="@color/gray_text"
+        android:textSize="@dimen/def_text_size_mini"
+        app:layout_constraintBaseline_toBaselineOf="@id/tv_name"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/gray_hint"
+        app:layout_constraintTop_toBottomOf="@id/img_avatar"/>
+
+</android.support.constraint.ConstraintLayout>

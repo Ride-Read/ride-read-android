@@ -5,6 +5,8 @@
               android:layout_height="match_parent"
               android:background="@color/white_normal"
               android:gravity="bottom"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
               android:orientation="vertical">
 
     <include

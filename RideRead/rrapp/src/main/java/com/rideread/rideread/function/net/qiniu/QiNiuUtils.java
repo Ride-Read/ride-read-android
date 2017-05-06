@@ -16,6 +16,17 @@ import java.util.concurrent.Callable;
  *
  */
 public final class QiNiuUtils {
+    /**
+     * 裁剪正中部分，等比缩小生成200x200缩略图
+     */
+    public final static String CROP_SMALL_300 = "?imageView2/1/w/300/h/300";
+    /**
+     * 宽度固定为200px，生成高度等比缩略图
+     */
+    public final static String SMALL_WIDTH_200 = "?imageView2/2/w/200";
+    public final static String CROP_SMALL_100 = "?imageView2/1/w/100/h/100";
+
+
     private static UploadManager mUploadManager;
 
     static {

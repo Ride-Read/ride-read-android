@@ -214,7 +214,7 @@ public class UserInfoActivity extends BaseActivity {
     private void uploadFace() {
         if (TextUtils.isEmpty(mNick)) mNick = "user";
         final String filename = "face" + "_" + mNick + "_" + DateUtils.getCurDateFormat() + ".jpg";
-        ApiUtils.getQiNiuTokenTest(filename, new BaseCallback<BaseModel<QiniuToken>>() {
+        ApiUtils.getQiNiuToken(filename, new BaseCallback<BaseModel<QiniuToken>>() {
             @Override
             protected void onSuccess(BaseModel<QiniuToken> model) throws Exception {
                 String token = model.getData().getUpToken();

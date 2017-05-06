@@ -2,6 +2,7 @@ package com.rideread.rideread.module.profile.view;
 
 
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,20 +14,30 @@ import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
+import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.MarkerOptions;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseFragment;
+import com.rideread.rideread.common.event.RefreshMyMapEvent;
 import com.rideread.rideread.common.util.ImgLoader;
 import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.ShareUtils;
 import com.rideread.rideread.common.util.UserUtils;
+import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.UserInfo;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static org.greenrobot.eventbus.ThreadMode.MAIN;
 
 
 public class ProfileFragment extends BaseFragment {
@@ -107,10 +118,19 @@ public class ProfileFragment extends BaseFragment {
         mTvFans.setText("阅粉 " + mUserInfo.getFollower());
     }
 
+
     @Override
     public void onResume() {
         super.onResume();
+        EventBus.getDefault().register(this);
         mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -119,11 +139,6 @@ public class ProfileFragment extends BaseFragment {
         mMapView.onSaveInstanceState(bundle);
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        mMapView.onPause();
-    }
 
     @Override
     public void onDestroy() {
@@ -140,8 +155,9 @@ public class ProfileFragment extends BaseFragment {
                 targetActivity = UserInfoActivity.class;
                 break;
             case R.id.btn_personality_map:
-                targetActivity = PersonalityMapActivity.class;
-                break;
+                bundle.putInt(PersonalityMapActivity.USER_ID, mUserInfo.getUid());
+                getBaseActivity().gotoActivity(PersonalityMapActivity.class, bundle);
+                return;
             case R.id.tv_msg:
                 targetActivity = MsgActivity.class;
                 break;
@@ -172,5 +188,30 @@ public class ProfileFragment extends BaseFragment {
         }
         if (null != targetActivity) getBaseActivity().gotoActivity(targetActivity);
     }
+
+    @Subscribe(threadMode = MAIN, sticky = true)
+    public void onRefreshMyMap(RefreshMyMapEvent event) {
+        EventBus.getDefault().removeStickyEvent(RefreshMyMapEvent.class);
+        List<Moment> moments = event.mMoments;
+        if (!ListUtils.isEmpty(moments)) {
+            mAMap.clear();
+            for (Moment momentItem : moments) {
+                addSignInMarker(new LatLng(momentItem.getLatitude(), momentItem.getLongitude()));
+            }
+        }
+
+    }
+
+    private void addSignInMarker(LatLng latLng) {
+        MarkerOptions markerOption = new MarkerOptions();
+        markerOption.position(latLng);
+
+        markerOption.draggable(false);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.ic_map_label)));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        mAMap.addMarker(markerOption);
+    }
+
 
 }

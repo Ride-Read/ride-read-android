@@ -36,7 +36,6 @@ public interface ApiStore {
     public final static String TOKEN = "MRBbJCJr-MDVxa08p6eMv6SouPViY8wqSfZek7Pt:fYQJktezBxHakBx1UBvsfciRPjg=:eyJzY29wZSI6InJlYWRyaWRlIiwiZGVhZGxpbmUiOjE0ODU5MTMyNTd9";//测试用的token
 
 
-
     ////另一种方式，参数一一传递
     //    @POST("account/login")
     //    Call<BaseModel<LoginResult>> login(
@@ -48,6 +47,9 @@ public interface ApiStore {
 
     @POST("users/login")
     Call<BaseModel<UserInfo>> login(@QueryMap Map<String, String> params);
+
+    @POST("users/login_out")
+    Call<BaseModel<DefJsonResult>> logout(@QueryMap Map<String, String> params);
 
     @POST("users/reset_password")
     Call<BaseModel<DefJsonResult>> resetPassword(@QueryMap Map<String, String> params);
@@ -108,17 +110,26 @@ public interface ApiStore {
     @POST("moments/show_moment")
     Call<BaseModel<List<Moment>>> showMoment(@QueryMap Map<String, String> params);
 
+    @POST("moments/show_one_moment")
+    Call<BaseModel<Moment>> showOneMoment(@QueryMap Map<String, String> params);
+
     @POST("moments/collect_moment")
     Call<BaseModel<DefJsonResult>> collectMoment(@QueryMap Map<String, String> params);
 
     @POST("moments/show_collect_moment")
     Call<BaseModel<List<CollectInfo>>> loadCollectMoment(@QueryMap Map<String, String> params);
 
+    @POST("map/show_map_number")
+    Call<BaseModel<List<Moment>>> showMapMoments(@QueryMap Map<String, String> params);
+
     @POST("util/qiniu_token")
     Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);
 
     @POST("util/yun_pian_code")
     Call<BaseModel<VCode>> getVCode(@QueryMap Map<String, String> params);
+
+    @POST("util/verify_version_number")
+    Call<BaseModel<DefJsonResult>> verifyVersion(@QueryMap Map<String, String> params);
 
 
     //    @Multipart

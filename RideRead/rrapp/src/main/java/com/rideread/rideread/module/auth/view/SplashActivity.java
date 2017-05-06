@@ -1,7 +1,6 @@
 package com.rideread.rideread.module.auth.view;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -51,7 +50,7 @@ public class SplashActivity extends MPermissionsActivity {
             mHandler = new WeakHandler();
             // 判断是否已经登录，已登录闪屏后进入主页
             mHandler.postDelayed(() -> {
-                ObjectAnimator.ofFloat(mImgSplashAd, "alpha", 0f, 1f).setDuration(1200l).start();
+//                ObjectAnimator.ofFloat(mImgSplashAd, "alpha", 0f, 1f).setDuration(1200l).start();
                 startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 finish();
             }, 2000l);

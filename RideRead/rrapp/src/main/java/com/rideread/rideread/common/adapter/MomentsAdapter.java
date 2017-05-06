@@ -30,6 +30,7 @@ import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.MomentUser;
 import com.rideread.rideread.data.result.ThumbsUpUser;
+import com.rideread.rideread.function.net.qiniu.QiNiuUtils;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
@@ -117,7 +118,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             MomentViewHolder holder = (MomentViewHolder) tHolder;
             holder.mClMomentLayout.setOnClickListener(v -> {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable(MomentDetailActivity.SELECTED_MOMENT, moment);
+                bundle.putInt(MomentDetailActivity.SELECTED_MOMENT_MID, moment.getMid());
                 bundle.putInt(MomentDetailActivity.USER_TYPE, isAttent ? MomentDetailActivity.USER_TYPE_ATTENTED : MomentDetailActivity.USER_TYPE_NEARBY);
                 mActivity.gotoActivity(MomentDetailActivity.class, bundle);
             });
@@ -244,7 +245,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         @Override
         protected void onDisplayImage(Context context, SimpleDraweeView imageView, String url) {
             //            PicassoImgLoader.displayImage(imageView, url);
-            ImgLoader.getInstance().displayImage(url, imageView);
+            ImgLoader.getInstance().displayImage(url + QiNiuUtils.CROP_SMALL_300, imageView);
         }
 
         @Override

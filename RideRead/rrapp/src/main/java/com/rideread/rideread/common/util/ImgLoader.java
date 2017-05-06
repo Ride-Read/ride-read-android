@@ -62,6 +62,9 @@ public class ImgLoader {
             draweeControllerBuilder.setControllerListener(controllerListener);
         }
         simpleDraweeView.setController(draweeControllerBuilder.build());
+
+
+//        ImgFrescoLoadBuilder.start(simpleDraweeView, photoUrl).build();
     }
 
 

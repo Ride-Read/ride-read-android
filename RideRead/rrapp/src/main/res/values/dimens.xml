@@ -6,4 +6,6 @@
     <dimen name="def_text_size_mini">10sp</dimen>
     <dimen name="def_top_bar_height">@dimen/def_item_height</dimen>
     <dimen name="def_item_height">48dp</dimen>
+    <dimen name="def_margin_left">12dp</dimen>
+    <dimen name="def_margin_right">12dp</dimen>
 </resources>

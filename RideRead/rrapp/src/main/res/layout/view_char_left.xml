@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="@dimen/def_margin_left"
+              android:layout_marginRight="@dimen/def_margin_right"
+              android:layout_marginTop="4dp"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_chat_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/gray_hint"
+        android:textSize="@dimen/def_text_size_small"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="20dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/sdv_chat_avatar_left"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:src="@drawable/ic_chat_triangle_left"/>
+
+        <TextView
+            android:id="@+id/tv_chat_txt_left"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_marginLeft="-1dp"
+            android:background="@drawable/bg_white_radius"
+            android:gravity="left|center_vertical"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textSize="@dimen/def_text_size"
+            tools:text="你好"/>
+
+        <FrameLayout
+            android:id="@+id/fl_chat_status_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/def_margin_left"
+            android:visibility="visible">
+
+            <ProgressBar
+                android:id="@+id/pb_chat_progressbar_left"
+                style="@android:style/Widget.ProgressBar.Large"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"/>
+
+            <ImageView
+                android:id="@+id/img_chat_status_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>
