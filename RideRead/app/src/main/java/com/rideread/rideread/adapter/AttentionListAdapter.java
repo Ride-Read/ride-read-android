@@ -83,14 +83,14 @@ public class AttentionListAdapter extends BaseAdapter{
             }
         });
 
-        if(timeline.isHasText()==true){
+        if(timeline.isHasText()){
             viewHolder.text.setText(timeline.getText());
             viewHolder.text.setVisibility(View.VISIBLE);
         }else{
             viewHolder.text.setVisibility(View.GONE);
         }
 
-        if(timeline.isHasImg()==true){
+        if(timeline.isHasImg()){
             viewHolder.gridView.setAdapter(adapter);
             viewHolder.gridView.setImagesData(timeline.getImgs());
             viewHolder.gridView.setVisibility(View.VISIBLE);
@@ -99,7 +99,7 @@ public class AttentionListAdapter extends BaseAdapter{
         }
 
 
-        if(timeline.isHasVideo()==true){
+        if(timeline.isHasVideo()){
             Log.e("lllllll","hhh");
             viewHolder.videoTextureView.setVisibility(View.VISIBLE);
             viewHolder.iv_play.setVisibility(View.VISIBLE);

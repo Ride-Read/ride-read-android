@@ -3,6 +3,7 @@ package com.rideread.rideread.module.map.view;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,10 +29,12 @@ import com.amap.api.maps.Projection;
 import com.amap.api.maps.TextureMapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
+import com.amap.api.maps.model.CameraPosition;
 import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.Marker;
 import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.MyLocationStyle;
+import com.amap.api.maps.model.TextOptions;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.core.SuggestionCity;
@@ -56,6 +59,7 @@ import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.Utils;
+import com.rideread.rideread.data.result.MapMoment;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.function.net.qiniu.QiNiuUtils;
 import com.rideread.rideread.function.net.retrofit.ApiUtils;
@@ -81,6 +85,8 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
 
     private SignInDialogFragment mSignInDialogFragment;
     private WeakHandler mHandler;
+    private int mCurZoom;
+    private boolean mIsShowNearby;
 
     @Override
     public int getLayoutRes() {
@@ -106,7 +112,8 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         mUiSettings = mAMap.getUiSettings();//实例化UiSettings类对象
         mUiSettings.setZoomControlsEnabled(false);
         mUiSettings.setCompassEnabled(true);
-        mAMap.moveCamera(CameraUpdateFactory.zoomBy(18));
+        mCurZoom = 18;
+        mAMap.moveCamera(CameraUpdateFactory.zoomBy(mCurZoom));
         // 设置定位监听
         mAMap.setLocationSource(this);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -157,12 +164,28 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
             if (null != moment) {
                 Bundle bundle = new Bundle();
                 int isFollow = moment.getUser().getIsFollowed();
-                boolean isAttent = isFollow == 0 || isFollow == 1;
+//                boolean isAttent = isFollow == 0 || isFollow == 1;
                 bundle.putInt(MomentDetailActivity.SELECTED_MOMENT_MID, moment.getMid());
-                bundle.putInt(MomentDetailActivity.USER_TYPE, isAttent ? MomentDetailActivity.USER_TYPE_ATTENTED : MomentDetailActivity.USER_TYPE_NEARBY);
+                bundle.putInt(MomentDetailActivity.USER_TYPE, 0);
                 getBaseActivity().gotoActivity(MomentDetailActivity.class, bundle);
             }
             return false;
+        });
+
+        mAMap.setOnCameraChangeListener(new AMap.OnCameraChangeListener() {
+            @Override
+            public void onCameraChange(CameraPosition cameraPosition) {
+
+            }
+
+            @Override
+            public void onCameraChangeFinish(CameraPosition cameraPosition) {
+                int tempZoom = (int) cameraPosition.zoom;
+                if (mIsShowNearby && mCurZoom != tempZoom) {
+                    mCurZoom = tempZoom;
+                    loadMapMoments(mCurZoom);
+                }
+            }
         });
     }
 
@@ -246,7 +269,7 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
                 break;
             case R.id.btn_recently:
-                loadMapMoments();
+                loadMapMoments(mCurZoom);
                 break;
             case R.id.img_clear:
                 mEdtSearch.setText("");
@@ -309,15 +332,15 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         //        mlocationClient = null;
     }
 
-    private void loadMapMoments() {
+    private void loadMapMoments(int zoom) {
         if (!NetworkUtils.isConnected()) {
             ToastUtils.show(R.string.network_error_fail);
         }
-        ApiUtils.loadMapMoments(16, new BaseCallback<BaseModel<List<Moment>>>() {
+        ApiUtils.loadMapMoments(zoom, new BaseCallback<BaseModel<List<MapMoment>>>() {
             @Override
-            protected void onSuccess(BaseModel<List<Moment>> model) throws Exception {
+            protected void onSuccess(BaseModel<List<MapMoment>> model) throws Exception {
 
-                List<Moment> tMoments = model.getData();
+                List<MapMoment> tMoments = model.getData();
                 if (!ListUtils.isEmpty(tMoments)) {
                     mAMap.clear();
                     AMapLocationUtils.init();
@@ -336,9 +359,10 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         });
     }
 
-    private void showMomentsOnMap(List<Moment> moments) {
+    private void showMomentsOnMap(List<MapMoment> moments) {
+        mIsShowNearby = true;
         List<String> pictures;
-        for (Moment moment : moments) {
+        for (MapMoment moment : moments) {
             pictures = moment.getPictures();
             if (!ListUtils.isEmpty(pictures)) {
                 addMoment2Map(moment);
@@ -346,7 +370,7 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         }
     }
 
-    private void addMoment2Map(final Moment moment) {
+    private void addMoment2Map(final MapMoment moment) {
         final LatLng latLng = new LatLng(moment.getLatitude(), moment.getLongitude());
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(moment.getPictures().get(0) + QiNiuUtils.CROP_SMALL_100)).setProgressiveRenderingEnabled(true).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
@@ -363,7 +387,7 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         }, CallerThreadExecutor.getInstance());
     }
 
-    private void addMomentMarker(LatLng latLng, Bitmap bitmap, Moment moment) {
+    private void addMomentMarker(LatLng latLng, Bitmap bitmap, MapMoment moment) {
         if (null == latLng || null == bitmap) return;
         MarkerOptions markerOption = new MarkerOptions();
         markerOption.position(latLng);
@@ -371,9 +395,12 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         markerOption.draggable(false);//设置Marker可拖动
         markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
         // 将Marker设置为贴地显示，可以双指下拉地图查看效果
-        markerOption.setFlat(true);//设置marker平贴地图效果
+        markerOption.setFlat(false);//设置marker平贴地图效果
         Marker marker = mAMap.addMarker(markerOption);
         marker.setObject(moment);
+
+        TextOptions textOptions = new TextOptions().position(latLng).text(moment.getCount() + "").fontColor(Color.WHITE).backgroundColor(getResources().getColor(R.color.green_common)).fontSize(30).zIndex(1.f);
+        mAMap.addText(textOptions);
     }
 
     private Marker addMarker(LatLng latLng) {

@@ -22,7 +22,6 @@ public class MoreDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
         View mView=inflater.inflate(R.layout.more_dialog_fragment,container,false);
         initView(mView);

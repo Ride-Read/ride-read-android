@@ -5,6 +5,7 @@ import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.DetailUserInfo;
 import com.rideread.rideread.data.result.FollowUser;
+import com.rideread.rideread.data.result.MapMoment;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
 import com.rideread.rideread.data.result.SearchUsers;
@@ -29,7 +30,6 @@ import retrofit2.http.QueryMap;
  */
 public interface ApiStore {
 
-    public final static String USER_LOGIN = "http://121.42.195.113:3000/users/login";
     public final static String APP_KEY = "VQSndpkC1LxD73qK0pMcIWHl";
     public final static String APP_ID = "W8uDmfHGJ6bjr2x8vSG5O846-gzGzoHsz";
     public final static String USERHEAD_LINK = "http://om1ccbp21.bkt.clouddn.com/";
@@ -120,7 +120,7 @@ public interface ApiStore {
     Call<BaseModel<List<CollectInfo>>> loadCollectMoment(@QueryMap Map<String, String> params);
 
     @POST("map/show_map_number")
-    Call<BaseModel<List<Moment>>> showMapMoments(@QueryMap Map<String, String> params);
+    Call<BaseModel<List<MapMoment>>> showMapMoments(@QueryMap Map<String, String> params);
 
     @POST("util/qiniu_token")
     Call<BaseModel<QiniuToken>> getQiNiuToken(@QueryMap Map<String, String> params);
@@ -130,6 +130,9 @@ public interface ApiStore {
 
     @POST("util/verify_version_number")
     Call<BaseModel<DefJsonResult>> verifyVersion(@QueryMap Map<String, String> params);
+
+    @POST("map/show_other_user_map")
+    Call<BaseModel<List<MapMoment>>> showUserMapMoments(@QueryMap Map<String, String> params);
 
 
     //    @Multipart

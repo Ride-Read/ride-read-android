@@ -19,7 +19,6 @@ import android.widget.Toast;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVMobilePhoneVerifyCallback;
@@ -27,8 +26,8 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.im.v2.AVIMClient;
 import com.avos.avoscloud.im.v2.AVIMException;
 import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
-import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.R;
+import com.rideread.rideread.activity.MainActivity;
 import com.rideread.rideread.bean.LoginMessageEntity;
 import com.rideread.rideread.bean.LoginResponse;
 import com.rideread.rideread.bean.UserData;
@@ -36,7 +35,6 @@ import com.rideread.rideread.common.Api;
 import com.rideread.rideread.common.ConfirmPassword;
 import com.rideread.rideread.common.Constants;
 import com.rideread.rideread.common.OkHttpUtils;
-import com.rideread.rideread.common.SHA1Helper;
 import com.rideread.rideread.im.AVImClientManager;
 
 /**
@@ -51,8 +49,8 @@ public class LoginFragment  extends Fragment implements View.OnClickListener,AMa
     private String telPhone;
     private EditText accountEdt,passwordEdt;
     private String username,encodePwd,password;
-    private double longtitude;
-    private double laititude;
+    private double longtitude;//latitude": 23.136552
+    private double laititude;//"longitude": 113.314086
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
 //    //声明定位回调监听器
@@ -120,24 +118,31 @@ public class LoginFragment  extends Fragment implements View.OnClickListener,AMa
     }
 
     private void login() {
+        UserData data=new UserData("19900919","IT","123123","url",5,6,"广州","家乡","skyxiao","123456789","zhongshan",1,"oj","token",23423,"1111",null,113.314086D,23.136552D);
+        Intent intent=new Intent(getActivity(),MainActivity.class);
+        intent.putExtra("data",data);
+        intent.putExtra("timestamp", System.currentTimeMillis());
+        Log.e("userdata","data="+data.toString());
+        startActivity(intent);
+        return;
 
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-        //声明AMapLocationClientOption对象
-        AMapLocationClientOption mLocationOption = mLocationOption = new AMapLocationClientOption();;
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mLocationOption.setOnceLocation(true);
-        mLocationOption.setOnceLocationLatest(true);
-        mLocationOption.setNeedAddress(false);
-        mLocationOption.setWifiActiveScan(false);
-        mLocationOption.setHttpTimeOut(9000);//定位超时9秒
-        mLocationOption.setLocationCacheEnable(false);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
+//        //初始化定位
+//        mLocationClient = new AMapLocationClient(getActivity().getApplicationContext());
+//        //设置定位回调监听
+//        mLocationClient.setLocationListener(this);
+//        //声明AMapLocationClientOption对象
+//        AMapLocationClientOption mLocationOption = mLocationOption = new AMapLocationClientOption();;
+//        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+//        mLocationOption.setOnceLocation(true);
+//        mLocationOption.setOnceLocationLatest(true);
+//        mLocationOption.setNeedAddress(false);
+//        mLocationOption.setWifiActiveScan(false);
+//        mLocationOption.setHttpTimeOut(9000);//定位超时9秒
+//        mLocationOption.setLocationCacheEnable(false);
+//        //给定位客户端对象设置定位参数
+//        mLocationClient.setLocationOption(mLocationOption);
+//        //启动定位
+//        mLocationClient.startLocation();
     }
 
     @Override

@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="100dip"
-    android:orientation="vertical"
 
     >
+    <TextView
+        android:id="@+id/tv_third_account"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login_text_ortherway"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:textSize="17sp"
+        android:textColor="@color/login_textcolorhint_gray"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -20,14 +29,7 @@
             android:layout_height="1dip"
             android:layout_weight="1"
             android:background="@color/login_textcolorhint_gray"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/login_text_ortherway"
-            android:layout_marginLeft="10dip"
-            android:layout_marginRight="10dip"
-            android:textSize="34px"
-            android:textColor="@color/login_textcolorhint_gray"/>
+
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dip"
@@ -70,4 +72,4 @@
             android:layout_weight="1"
             android:src="@mipmap/weibo"/>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

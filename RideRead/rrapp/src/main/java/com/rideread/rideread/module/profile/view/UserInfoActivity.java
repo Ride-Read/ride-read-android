@@ -15,6 +15,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.rideread.rideread.R;
 import com.rideread.rideread.common.base.BaseActivity;
+import com.rideread.rideread.common.event.RefreshProfileEvent;
 import com.rideread.rideread.common.util.DateUtils;
 import com.rideread.rideread.common.util.GalleryUtils;
 import com.rideread.rideread.common.util.ImgLoader;
@@ -31,6 +32,7 @@ import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -242,6 +244,7 @@ public class UserInfoActivity extends BaseActivity {
                 if (null != userInfo) {
                     UserUtils.saveUserInfo(userInfo);
                     finish();
+                    EventBus.getDefault().postSticky(new RefreshProfileEvent());
                 }
             }
         });

@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/common_bg_white"
-    tools:context="com.rideread.rideread.activity.LoginActivity">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/activity_main"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/common_bg_white"
+              android:orientation="vertical"
+              tools:context="com.rideread.rideread.activity.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@mipmap/login_bg">
+        android:background="@mipmap/login_bg"
+        android:orientation="vertical">
+
         <ImageView
             android:id="@+id/login_logo_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="43dip"
             android:layout_marginTop="57dip"
-            android:src="@mipmap/logo"
-            android:layout_marginBottom="43dip"/>
+            android:src="@mipmap/logo"/>
+
         <com.rideread.rideread.widget.ScrollTabView
             android:id="@+id/login_scrollview_tab"
             android:layout_width="match_parent"
@@ -28,6 +30,7 @@
             >
 
         </com.rideread.rideread.widget.ScrollTabView>
+
         <ImageView
             android:id="@+id/login_tabview_square"
             android:layout_width="wrap_content"

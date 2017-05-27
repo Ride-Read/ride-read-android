@@ -16,6 +16,7 @@ import com.rideread.rideread.data.result.Comment;
 import com.rideread.rideread.data.result.DefJsonResult;
 import com.rideread.rideread.data.result.DetailUserInfo;
 import com.rideread.rideread.data.result.FollowUser;
+import com.rideread.rideread.data.result.MapMoment;
 import com.rideread.rideread.data.result.Moment;
 import com.rideread.rideread.data.result.QiniuToken;
 import com.rideread.rideread.data.result.SearchUsers;
@@ -327,7 +328,7 @@ public class ApiUtils {
     }
 
 
-    public static void loadMapMoments(final int scalingRatio, @NonNull final BaseCallback<BaseModel<List<Moment>>> callBack) {
+    public static void loadMapMoments(final int scalingRatio, @NonNull final BaseCallback<BaseModel<List<MapMoment>>> callBack) {
         if (!onStart(false)) return;
         Map<String, String> params = new HashMap<>();
         params.put("scaling_ratio", Integer.toString(scalingRatio));
@@ -363,6 +364,15 @@ public class ApiUtils {
         params.put("timestamp", Long.toString(System.currentTimeMillis()));
 
         setCurrentCall(getApiStore().getVCode(params), callBack);
+    }
+
+
+    public static void showUserMapMoment(@NonNull final int userId, @NonNull final BaseCallback<BaseModel<List<MapMoment>>> callBack) {
+        if (!onStart()) return;
+        Map<String, String> params = new HashMap<>();
+        params.put("user_id", Integer.toString(userId));
+
+        setCurrentCall(getApiStore().showUserMapMoments(getParams(params)), callBack);
     }
 
     public static void verifyVersion(@NonNull final String phone, @NonNull final BaseCallback<BaseModel<DefJsonResult>> callBack) {

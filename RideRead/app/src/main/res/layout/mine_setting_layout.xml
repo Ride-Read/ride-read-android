@@ -43,7 +43,7 @@
                 android:layout_marginBottom="8dip"
                 android:layout_marginRight="20dip"
                 android:layout_gravity="center_vertical"
-                slideswitch:isOpen="false"
+                slideswitch:isOpen="true"
                 slideswitch:shape="circle"
                 slideswitch:themeColor="@color/login_btncolor_dodgerblue_normal"/>
         </TableRow>
