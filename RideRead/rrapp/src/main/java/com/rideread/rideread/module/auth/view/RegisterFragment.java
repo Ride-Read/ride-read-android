@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -26,6 +27,8 @@ import com.rideread.rideread.common.util.DateUtils;
 import com.rideread.rideread.common.util.FileUtils;
 import com.rideread.rideread.common.util.FrescoImgLoader;
 import com.rideread.rideread.common.util.KeyboardUtils;
+import com.rideread.rideread.common.util.PermissionUtils;
+import com.rideread.rideread.common.util.RawUtils;
 import com.rideread.rideread.common.util.RegexUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.UserUtils;
@@ -50,7 +53,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
 
+import static android.R.attr.key;
 import static com.rideread.rideread.R.id.btn_pwd_next;
 
 
@@ -163,11 +168,16 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
 
     @OnClick({R.id.btn_invite_next, R.id.tv_send_code, R.id.btn_code_next, R.id.tv_agree_protocol, btn_pwd_next, R.id.img_avatar, R.id.btn_complete})
     public void onClick(View view) {
+        //创建权限申请对象
+        PermissionUtils permission = new PermissionUtils(getActivity());
         switch (view.getId()) {
             case R.id.btn_invite_next:
                 verifyInviteId();
                 break;
             case R.id.tv_send_code:
+                mPhone = mEdtPhone.getText().toString().trim();
+
+
                 getVerifyCode();
                 break;
             case R.id.btn_code_next:
@@ -180,9 +190,16 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
                 checkPwd();
                 break;
             case R.id.img_avatar:
+                //存储和拍照权限
+                permission.grantPermission(getActivity(), Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
                 setAvatarImg();
                 break;
             case R.id.btn_complete:
+                mMyRideReadId = mEdtNick.getText().toString();
+                if (TextUtils.isEmpty(mMyRideReadId)) {
+                    ToastUtils.show("骑阅号不能为空");
+                    return;
+                }
                 getFaceUrl();
                 break;
         }
@@ -199,12 +216,15 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
             @Override
             protected void onSuccess(BaseModel<DefJsonResult> model) throws Exception {
                 showCodeView();
+                //申请发送短信权限
+                PermissionUtils permission = new PermissionUtils(getActivity());
+                permission.grantPermission(getActivity(), Manifest.permission.READ_PHONE_STATE);
+                //permission.grantPermission(getActivity(), Manifest.permission.SEND_SMS);
             }
         });
     }
 
     public void getVerifyCode() {
-        mPhone = mEdtPhone.getText().toString().trim();
         if (!RegexUtils.isMobileSimple(mPhone)) {
             ToastUtils.show("请填写11位正确手机号");
             return;
@@ -246,31 +266,45 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
         mMyRideReadId = mEdtNick.getText().toString();
         if (TextUtils.isEmpty(mMyRideReadId)) mMyRideReadId = "user";
         final String filename = "face" + "_" + mMyRideReadId + "_" + DateUtils.getCurDateFormat() + ".jpg";
+
         ApiUtils.getQiNiuTokenTest(filename, new BaseCallback<BaseModel<QiniuToken>>() {
             @Override
             protected void onSuccess(BaseModel<QiniuToken> model) throws Exception {
                 String token = model.getData().getUpToken();
+                if (filePath == null) {
+                    //设置默认头像
+                    mFaceUrl = "http://om1ccbp21.bkt.clouddn.com/face_HelloKitty_20170603071507071.jpg";
+                    register();
+//
+//                    byte[] bytes = RawUtils.getBytes(getActivity(),R.raw.defaultheader);
+//
+//                    QiNiuUtils.uploadFile(token, bytes, filename, (key, info, response) -> {
+//                        Logger.e("http", "key:" + key + "-info:" + info.toString() + "-response:" + response);
+//                        if (info.isOK()) {
+//                            mFaceUrl = ApiStore.USERHEAD_LINK + key;
+//                            register();
+//                        } else {
+//                            ToastUtils.show("网络异常");
+//                        }
+//                    }, null, null);
+//
+                } else {
+                    QiNiuUtils.uploadFile(token, filePath, filename, (key, info, response) -> {
+                        Logger.e("http", "key:" + key + "-info:" + info.toString() + "-response:" + response);
+                        if (info.isOK()) {
+                            mFaceUrl = ApiStore.USERHEAD_LINK + key;
+                            register();
+                        } else {
+                            ToastUtils.show("头像上传失败");
+                        }
+                    }, null, null);
+                }
 
-                QiNiuUtils.uploadFile(token, filePath, filename, (key, info, response) -> {
-                    Logger.e("http", "key:" + key + "-info:" + info.toString() + "-response:" + response);
-                    if (info.isOK()) {
-                        mFaceUrl = ApiStore.USERHEAD_LINK + key;
-                        register();
-                    } else {
-                        ToastUtils.show("头像上传失败");
-                    }
-                }, null, null);
             }
         });
     }
 
     private void register() {
-
-        mMyRideReadId = mEdtNick.getText().toString();
-        if (TextUtils.isEmpty(mMyRideReadId)) {
-            ToastUtils.show("骑阅号不能为空");
-            return;
-        }
         ApiUtils.register(mMyRideReadId, mPhone, mPassword, mMyRideReadId, mFaceUrl, new BaseCallback<BaseModel<UserInfo>>() {
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
@@ -284,6 +318,7 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
         ApiUtils.login(phone, pwd, new BaseCallback<BaseModel<UserInfo>>() {
             @Override
             protected void onSuccess(BaseModel<UserInfo> model) throws Exception {
+                Log.d("registeryayiji", "登录成功");
                 UserInfo userInfo = model.getData();
                 if (null != userInfo) {
                     UserUtils.login(userInfo);
@@ -299,7 +334,7 @@ public class RegisterFragment extends BaseFragment implements TextView.OnEditorA
 
     private void setAvatarImg() {
         galleryConfig.getBuilder().isOpenCamera(false).build();
-        initPermissions();
+        //initPermissions();
     }
 
 

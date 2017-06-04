@@ -12,6 +12,8 @@ import com.rideread.rideread.function.Action;
 
 import java.util.concurrent.Callable;
 
+import static android.R.attr.path;
+
 /**
  *
  */
@@ -44,6 +46,26 @@ public final class QiNiuUtils {
 
     public static void uploadFile(@NonNull final String token, @NonNull final String path, @NonNull final String name, @Nullable final UpCompletionHandler complete, @Nullable final Action<Double> progress, @Nullable final Callable<Boolean> cancel) {
         mUploadManager.put(path, name, token, complete, new UploadOptions(null, null, false, (key, percent) -> {
+            if (progress == null) return;
+            try {
+                progress.call(percent);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }, () -> {
+            if (cancel == null) return false;
+            try {
+                return cancel.call();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return true;
+            }
+        }));
+    }
+
+    //增加一个接受字节数组的方法
+    public static void uploadFile(@NonNull final String token, @NonNull final byte[] bytes, @NonNull final String name, @Nullable final UpCompletionHandler complete, @Nullable final Action<Double> progress, @Nullable final Callable<Boolean> cancel) {
+        mUploadManager.put(bytes, name, token, complete, new UploadOptions(null, null, false, (key, percent) -> {
             if (progress == null) return;
             try {
                 progress.call(percent);

@@ -58,9 +58,9 @@ public class SplashActivity extends MPermissionsActivity {
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }
-
-        String[] permission = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
-        requestPermission(permission, 0x0001);
+            //todo 这里申请权限有跳转不当的问题，暂时先注释
+//        String[] permission = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.READ_PHONE_STATE};
+//        requestPermission(permission, 0x0001);
     }
 
 

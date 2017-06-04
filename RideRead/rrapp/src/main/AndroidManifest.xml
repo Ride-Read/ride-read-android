@@ -2,6 +2,21 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.rideread.rideread">
 
+    <!--动态申请的权限，需要先声明-->
+    <!--短信-->
+    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+    <!--定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--本地存储-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!--相机-->
+    <uses-permission android:name="android.permission.CAMERA"></uses-permission>
+    <!--电话-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+
+
+
     <!--用于进行网络定位-->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
     <!--用于访问GPS定位-->
@@ -106,6 +121,7 @@
             android:name="com.amap.api.v2.apikey"
             android:value="39d52ac6ee246b5cadaed64dde0f9758"/>
 
+ 
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.rideread.rideread.fileprovider"

@@ -1,8 +1,11 @@
 package com.rideread.rideread.module.map.view;
 
 
+import android.Manifest;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.net.Uri;
@@ -12,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +25,8 @@ import android.view.animation.Interpolator;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.CameraUpdateFactory;
@@ -41,6 +47,9 @@ import com.amap.api.services.core.SuggestionCity;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
 import com.badoo.mobile.util.WeakHandler;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.facebook.common.executors.CallerThreadExecutor;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
@@ -57,6 +66,7 @@ import com.rideread.rideread.common.util.AMapLocationUtils;
 import com.rideread.rideread.common.util.KeyboardUtils;
 import com.rideread.rideread.common.util.ListUtils;
 import com.rideread.rideread.common.util.NetworkUtils;
+import com.rideread.rideread.common.util.PermissionUtils;
 import com.rideread.rideread.common.util.ToastUtils;
 import com.rideread.rideread.common.util.Utils;
 import com.rideread.rideread.data.result.MapMoment;
@@ -66,6 +76,7 @@ import com.rideread.rideread.function.net.retrofit.ApiUtils;
 import com.rideread.rideread.function.net.retrofit.BaseCallback;
 import com.rideread.rideread.function.net.retrofit.BaseModel;
 import com.rideread.rideread.module.circle.view.MomentDetailActivity;
+import com.rideread.rideread.module.profile.view.PersonalityMapActivity;
 
 import java.util.List;
 
@@ -73,6 +84,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.os.Build.VERSION_CODES.M;
 
 
 public class MapFragment extends BaseFragment implements LocationSource, PoiSearch.OnPoiSearchListener {
@@ -113,7 +127,10 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         mUiSettings.setZoomControlsEnabled(false);
         mUiSettings.setCompassEnabled(true);
         mCurZoom = 18;
-        mAMap.moveCamera(CameraUpdateFactory.zoomBy(mCurZoom));
+        //mAMap.moveCamera(CameraUpdateFactory.zoomBy(10));
+       // aMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition(new LatLng(aMapLocation.getLatitude(), aMapLocation.getLongitude()), 16, 0, 0)));
+
+
         // 设置定位监听
         mAMap.setLocationSource(this);
         // 设置为true表示显示定位层并可触发定位，false表示隐藏定位层并不可触发定位，默认是false
@@ -129,7 +146,21 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         mAMap.setMyLocationStyle(myLocationStyle);
 
         mAMap.setMyLocationType(AMap.LOCATION_TYPE_LOCATE);
+
+
+        //在地图上加载moments
+        loadMapMoments(mCurZoom);
+
+
+
+        //定位之前申请权限
+        PermissionUtils permission = new PermissionUtils(getActivity());
+        permission.grantPermission(getActivity(),Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        //定位
         AMapLocationUtils.init();
+        LatLng center = new LatLng(AMapLocationUtils.getLatitude(), AMapLocationUtils.getLongitude());
+        mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
 
         mEdtSearch.setOnEditorActionListener((v, actionId, event) -> {
             if (KeyEvent.KEYCODE_ENTER == event.getKeyCode()) {
@@ -163,11 +194,12 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
             Moment moment = (Moment) marker.getObject();
             if (null != moment) {
                 Bundle bundle = new Bundle();
-                int isFollow = moment.getUser().getIsFollowed();
+                //int isFollow = moment.getUser().getIsFollowed();
 //                boolean isAttent = isFollow == 0 || isFollow == 1;
                 bundle.putInt(MomentDetailActivity.SELECTED_MOMENT_MID, moment.getMid());
                 bundle.putInt(MomentDetailActivity.USER_TYPE, 0);
                 getBaseActivity().gotoActivity(MomentDetailActivity.class, bundle);
+            } else {
             }
             return false;
         });
@@ -269,7 +301,24 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
                 mAMap.moveCamera(CameraUpdateFactory.changeLatLng(center));
                 break;
             case R.id.btn_recently:
-                loadMapMoments(mCurZoom);
+                List<Marker> markers = mAMap.getMapScreenMarkers();
+
+                if (markers.size() == 0) {
+                    loadMapMoments(mCurZoom);
+                } else {
+                    Marker marker = markers.get(0);
+                    if (marker.isVisible()) {
+                        for (Marker marker1 : markers) {
+                            marker1.setVisible(false);
+                        }
+                    } else {
+                        for (Marker marker1 : markers) {
+                            marker1.setVisible(true);
+                        }
+                    }
+                }
+
+
                 break;
             case R.id.img_clear:
                 mEdtSearch.setText("");
@@ -365,7 +414,8 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         for (MapMoment moment : moments) {
             pictures = moment.getPictures();
             if (!ListUtils.isEmpty(pictures)) {
-                addMoment2Map(moment);
+                //addMoment2Map(moment);
+                addMomentToMap(moment);
             }
         }
     }
@@ -402,6 +452,62 @@ public class MapFragment extends BaseFragment implements LocationSource, PoiSear
         TextOptions textOptions = new TextOptions().position(latLng).text(moment.getCount() + "").fontColor(Color.WHITE).backgroundColor(getResources().getColor(R.color.green_common)).fontSize(30).zIndex(1.f);
         mAMap.addText(textOptions);
     }
+
+    private void addMomentToMap(MapMoment moment) {
+        LatLng latLng = new LatLng(moment.getLatitude(), moment.getLongitude());
+
+        //imageView.setImageResource(R.raw.landing_hot_product_1);
+        String uri01 =moment.getPictures().get(0);
+        String uri02 =moment.getPictures().get(0) + QiNiuUtils.CROP_SMALL_100;
+        SimpleTarget target = new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap bitmap, GlideAnimation glideAnimation) {
+                Bitmap bitmap1 = convertBitmapFromXML(getActivity(),moment.getCount(),bitmap);
+                addMarker(latLng, bitmap1, moment);
+            }
+        };
+
+        Glide.with(this).load(uri01).asBitmap().into(target);
+
+    }
+
+
+    public static Bitmap convertBitmapFromXML(Context context,int count,Bitmap bitmap) {
+
+        View view = LayoutInflater.from(context).inflate(R.layout.item_picture_location, null);
+        View bitmapView = view.findViewById(R.id.layout);
+        TextView text = (TextView) view.findViewById(R.id.textView);
+        CircleImageView image = (CircleImageView) view.findViewById(R.id.circleImageView);
+        image.setImageBitmap(bitmap);
+        text.setText(count+"");
+
+        bitmapView.measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+
+        bitmapView.layout(0, 0, bitmapView.getMeasuredWidth(), bitmapView.getMeasuredHeight());
+
+        final Bitmap clusterBitmap = Bitmap.createBitmap(bitmapView.getMeasuredWidth(), bitmapView.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+
+        Canvas canvas = new Canvas(clusterBitmap);
+        bitmapView.draw(canvas);
+        return clusterBitmap;
+    }
+
+    private void addMarker(LatLng latLng, Bitmap bitmap, Moment moment) {
+        if (null == latLng || null == bitmap) return;
+        MarkerOptions markerOption = new MarkerOptions();
+        markerOption.position(latLng);
+
+        markerOption.draggable(false);//设置Marker可拖动
+        markerOption.icon(BitmapDescriptorFactory.fromBitmap(bitmap));
+        // 将Marker设置为贴地显示，可以双指下拉地图查看效果
+        markerOption.setFlat(true);//设置marker平贴地图效果
+        Marker marker = mAMap.addMarker(markerOption);
+        marker.setObject(moment);
+    }
+
+
+
+
 
     private Marker addMarker(LatLng latLng) {
 

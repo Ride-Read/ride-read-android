@@ -89,7 +89,7 @@ public abstract class JsonCallback<T> implements Callback<T> {
         //            case 9999:
         //                //                //TODO:
         //                break;
-        //            default:
+        //            default_header:
         //                //                if (TextUtils.isEmpty(message))
         //                //                    onFail(RuijiaApp.getAppContext().getString(R.string.error_server_fail));
         //                //                else

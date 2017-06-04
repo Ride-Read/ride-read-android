@@ -30,9 +30,9 @@ public class NetworkUtils {
      */
     public static void openWirelessSettings() {
         if (android.os.Build.VERSION.SDK_INT > GINGERBREAD_MR1) {
-            Utils.getAppContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            Utils.getAppContext().getApplicationContext().startActivity(new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         } else {
-            Utils.getAppContext().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+            Utils.getAppContext().getApplicationContext().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
         }
     }
 
@@ -129,7 +129,7 @@ public class NetworkUtils {
      * @return {@code true}: 是<br>{@code false}: 否
      */
     public static boolean getWifiEnabled() {
-        WifiManager wifiManager = (WifiManager) Utils.getAppContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) Utils.getAppContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         return wifiManager.isWifiEnabled();
     }
 
@@ -140,7 +140,7 @@ public class NetworkUtils {
      * @param enabled {@code true}: 打开<br>{@code false}: 关闭
      */
     public static void setWifiEnabled(boolean enabled) {
-        WifiManager wifiManager = (WifiManager) Utils.getAppContext().getSystemService(Context.WIFI_SERVICE);
+        WifiManager wifiManager = (WifiManager) Utils.getAppContext().getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         if (enabled) {
             if (!wifiManager.isWifiEnabled()) {
                 wifiManager.setWifiEnabled(true);
